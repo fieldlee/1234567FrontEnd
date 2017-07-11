@@ -3,17 +3,17 @@
     <div class="bg-light lter b-b wrapper-md">
       <h1 class="m-n font-thin h3">首页广告位配置</h1>
     </div>
-    <div class="wrapper-md" ng-controller="FormDemoCtrl">
+    <div class="wrapper-md">
       <div class="panel panel-default">
         <div class="panel-heading font-bold">
           广告位信息表
         </div>
         <div class="panel-body">
-          <form class="form-horizontal" method="get" #f = "ngForm" (ngSubmit)="submit()">
+          <form class="form-horizontal" method="get" #f="ngForm" (ngSubmit)="submit()">
             <div class="form-group">
               <label class="col-sm-2 control-label">标题</label>
               <div class="col-sm-10">
-                <input type="text" name="title" [(ngModel)] = "editAds.title" id="adsTitle" class="form-control rounded">
+                <input type="text" name="adsTitle" [(ngModel)]="editAds.title" id="adsTitle" class="form-control rounded">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -21,26 +21,30 @@
               <label class="col-sm-2 control-label">点击广告图片操作</label>
               <div class="col-sm-10">
                 <div class="radio">
-                  <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios1" value="url" [(ngModel)]= "editAds.type" checked>
+                  <label class="i-checks">
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="url" [(ngModel)]= "editAds.type">
+                <i></i>
                 打开指定的链接地址
               </label>
                 </div>
                 <div class="radio">
-                  <label>
+                  <label class="i-checks">
                 <input type="radio" name="optionsRadios" id="optionsRadios2" [(ngModel)]= "editAds.type" value="brand">
+                <i></i>
                 打开指定的品牌信息
               </label>
                 </div>
                 <div class="radio">
-                  <label>
+                  <label class="i-checks">
                 <input type="radio" name="optionsRadios" id="optionsRadios3" [(ngModel)]= "editAds.type" value="product">
+                <i></i>
                 打开指定的产品信息
               </label>
                 </div>
                 <div class="radio">
-                  <label>
+                  <label class="i-checks">
                 <input type="radio" name="optionsRadios" id="optionsRadios4" [(ngModel)]= "editAds.type" value="news">
+                <i></i>
                 打开指定的新闻信息
               </label>
                 </div>
@@ -50,37 +54,35 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">指定信息配置</label>
               <div class="col-sm-10">
-                <input type="text" name="value" id="adsValue" [(ngModel)]= "editAds.value" class="form-control rounded">
+                <input type="text" name="adsValue" id="adsValue" [(ngModel)]="editAds.value" class="form-control rounded">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in"></div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">广告有效开始</label>
-          <div class="col-sm-4">
-            <input ui-jq="daterangepicker" ui-options="{
+            <div class="form-group">
+              <label class="col-sm-2 control-label">广告有效开始</label>
+              <div class="col-sm-4">
+                <input ui-jq="daterangepicker" ui-options="{
                 format: 'YYYY-MM-DD',
                 startDate: '2018-01-01',
                 endDate: '2018-12-31'
               }" name="dateValidRange" id="dateValid" class="form-control w-md" />
-          </div>
-        </div>
-        
+              </div>
+            </div>
+
             <div class="line line-dashed b-b line-lg pull-in"></div>
             <div class="form-group">
               <label class="col-sm-2 control-label">广告图片</label>
               <div class="col-sm-10">
-                <form id="uploadForm"
-          enctype="multipart/form-data"
-          action="/api/web/file"
-          method="post">
-                <input ui-jq="filestyle" name="userPhoto" type="file"  data-icon="false" (change)="changeListener($event)" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
+                <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
+                  <input ui-jq="filestyle" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)" data-classButton="btn btn-default"
+                    data-classInput="form-control inline v-middle input-s">
                 </form>
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in"></div>
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-2">
-                <button type="button" (click)="cancle()"  class="btn btn-default">取消</button>
+                <button type="button" (click)="cancle()" class="btn btn-default">取消</button>
                 <button type="submit" class="btn btn-primary">保存</button>
               </div>
             </div>
@@ -101,11 +103,11 @@
           <table id="adsListTable" ui-jq="dataTable" class="table table-striped b-t b-b">
             <thead>
               <tr>
-                <th style="width:20%">标题</th>
-                <th style="width:25%">类型</th>
-                <th style="width:25%">值</th>
-                <th style="width:20%">图片地址</th>
-                <th style="width:10%">修改</th>
+                <th style="width:15%">标题</th>
+                <th style="width:10%">类型</th>
+                <th style="width:20%">值</th>
+                <th style="width:35%">图片地址</th>
+                <th style="width:20%">修改</th>
               </tr>
             </thead>
             <tbody>
@@ -114,8 +116,10 @@
                 <td>{{ads.type}}</td>
                 <td>{{ads.value}}</td>
                 <td>{{ads.path}}</td>
-                <td><button class="delete"
-      (click)="update(ads); $event.stopPropagation()">x</button></td>
+                <td>
+                  <button class="col-sm-1 btn m-b-xs w-xs btn-info " style="width:50px" (click)="update(ads); $event.stopPropagation()">U</button>                  &nbsp;&nbsp;
+                  <button class="col-sm-1 col-sm-offset-1 btn m-b-xs w-xs btn-danger"  style="width:50px" (click)="delete(ads); $event.stopPropagation()">X</button>
+                </td>
               </tr>
             </tbody>
           </table>

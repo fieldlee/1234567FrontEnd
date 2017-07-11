@@ -50,6 +50,14 @@ export class HttpService {
       .catch(this.handleError);
   }
 
+  deleteAds(ads:Ads):Promise<any>{
+    const url = `${this.rootUrl}/web/ads/delete`;
+    return this.http.post(url, JSON.stringify(ads), { headers: this.headers })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
   // 论坛活动
   getActions(): Promise<ForumAction[]> {
     const url = `${this.rootUrl}/web/action`;

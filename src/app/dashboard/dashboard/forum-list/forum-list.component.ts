@@ -3,6 +3,7 @@ import { ForumInfo } from '../../../class/forum-info';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
 declare var $: any;
+declare var BootstrapDialog: any;
 @Component({
   selector: 'app-forum-list',
   templateUrl: './forum-list.component.html',
@@ -53,19 +54,36 @@ export class ForumListComponent implements OnInit {
   }
   submit() {
     console.log(this.forum);
-    if (this.forum.title == "") {
-      alert("请输入论坛标题");
-      return
-    }
-    if (this.forum.content == "") {
-      alert("请输入论坛内容");
-      return
-    }
-    this.httpService.createForum(this.forum).then(resp => {
-      console.log(resp);
-      this.httpService.getForums().then(responses => {
-        this.forums = responses
-      });
+
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要提交该信息吗?',
+      type: BootstrapDialog.TYPE_PRIMARY, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '提交', // <-- Default value is 'OK',
+      btnOKClass: 'btn-success', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          if (self.forum.title == "") {
+            alert("请输入论坛标题");
+            return
+          }
+          if (self.forum.content == "") {
+            alert("请输入论坛内容");
+            return
+          }
+          self.httpService.createForum(self.forum).then(resp => {
+            console.log(resp);
+            self.httpService.getForums().then(responses => {
+              self.forums = responses
+            });
+          });
+        }
+      }
     });
   }
 }

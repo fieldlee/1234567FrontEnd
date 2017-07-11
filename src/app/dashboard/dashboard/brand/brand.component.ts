@@ -5,7 +5,7 @@ import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
 import { Image } from '../../../class/image';
 declare var $: any;
-
+declare var BootstrapDialog: any;
 @Component({
   selector: 'app-brand',
   templateUrl: './brand.component.html',
@@ -58,15 +58,31 @@ export class BrandComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.brand.name == undefined) {
-      alert("请输入品牌名称");
-      return
-    }
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要提交该信息吗?',
+      type: BootstrapDialog.TYPE_PRIMARY, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '提交', // <-- Default value is 'OK',
+      btnOKClass: 'btn-success', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          if (self.brand.name == undefined) {
+            alert("请输入品牌名称");
+            return
+          }
 
-    this.httpService.createBrand(this.brand).then(resp => {
-      this.httpService.getBrands().then(resp => {
-        this.brands = resp;
-      });
+          self.httpService.createBrand(self.brand).then(resp => {
+            self.httpService.getBrands().then(resp => {
+              self.brands = resp;
+            });
+          });
+        }
+      }
     });
   }
 }

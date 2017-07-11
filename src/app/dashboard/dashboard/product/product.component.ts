@@ -4,6 +4,7 @@ import { Brand } from '../../../class/brand';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
 declare var $: any;
+declare var BootstrapDialog: any;
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -18,7 +19,7 @@ export class ProductComponent implements OnInit {
   subtypes: Array<any>;
   configlist: Array<string>;
   configvalues: Array<string>;
-  uploadFileName:string;
+  uploadFileName: string;
   constructor(private httpService: HttpService, private loadJq: LoadJQService) {
     this.product = new Product();
   }
@@ -57,7 +58,7 @@ export class ProductComponent implements OnInit {
       })
   }
 
-  selectType(t:string){
+  selectType(t: string) {
     this.product.type = t;
     this.httpService.getSubType(this.product.type).then(
       resp => {
@@ -102,7 +103,7 @@ export class ProductComponent implements OnInit {
   deleteImage(imagepath: string) {
     // var tempPath = imagepath.substring(imagepath.lastIndexOf("/") + 1);
     // alert(tempPath);
-    var postImagePath = {"imagepath":imagepath};
+    var postImagePath = { "imagepath": imagepath };
     this.httpService.deleteImage(postImagePath).then(resp => {
       console.log(resp);
       if (resp["success"]) {
@@ -110,7 +111,7 @@ export class ProductComponent implements OnInit {
           return element != imagepath
         });
         console.log(this.product.images);
-        
+
       }
     });
     return false;
@@ -145,26 +146,49 @@ export class ProductComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.product.name == undefined) {
-      alert("请输入产品名称");
-      return
-    }
-    // config 设置
+
     var configObj = {};
     for (var i in this.configlist) {
       configObj[this.configlist[i]] = this.configvalues[i];
     }
     this.product.config = configObj;
+//  提交提示
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要提交该信息吗?',
+      type: BootstrapDialog.TYPE_PRIMARY, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '提交', // <-- Default value is 'OK',
+      btnOKClass: 'btn-primary', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
 
-    this.httpService.createProduct(this.product).then(resp => {
-      console.log(resp);
-      this.product = new Product();
-      this.configlist = new Array();
-      this.httpService.getProducts().then(resp => {
-        console.log(resp);
-        this.products = resp;
-      });
+          if (self.product.name == undefined) {
+            alert("请输入产品名称");
+            return
+          }
+          // config 设置
+
+
+          self.httpService.createProduct(self.product).then(resp => {
+            console.log(resp);
+            self.product = new Product();
+            self.configlist = new Array();
+            self.httpService.getProducts().then(resp => {
+              console.log(resp);
+              self.products = resp;
+            });
+          });
+        }
+      }
     });
+
+
+
   }
 
 }

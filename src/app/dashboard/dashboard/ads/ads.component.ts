@@ -4,7 +4,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
 declare var $: any;
-
+declare var BootstrapDialog: any;
 @Component({
   selector: 'app-ads',
   templateUrl: './ads.component.html',
@@ -16,22 +16,17 @@ export class AdsComponent implements OnInit {
   headers: Headers;
   url: string;
   adsList: Ads[];
-
   constructor(private http: Http, private httpService: HttpService, private loadJq: LoadJQService) {
     this.editAds = new Ads();
   }
 
   ngOnInit() {
-
     this.httpService.getAds().then(adslist => {
       this.adsList = adslist;
-      console.log(this.adsList);
     });
   }
 
   ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     const self = this;
     this.loadJq.reloadJQ(function (startDate, endDate) {
       self.editAds.startTime = startDate;
@@ -41,9 +36,6 @@ export class AdsComponent implements OnInit {
 
   //onChange file listener
   changeListener($event): void {
-    console.log($event.target);
-    // this.postFile($event.target);
-
     const _this = this;
     $('#uploadForm').ajaxSubmit({
       error: function (xhr) {
@@ -59,41 +51,72 @@ export class AdsComponent implements OnInit {
         }
         _this.editAds.path = respJson["path"];
         _this.editAds.imagename = respJson["originName"];
-        console.log(_this.editAds);
       }
     });
 
   }
   update(ads: Ads) {
     this.editAds = ads;
-    $('#dateValid').dateRangePicker('setDate', this.editAds.startTime);
-
+    $('#dateValid').daterangepicker({ startDate: this.editAds.startTime, endDate: this.editAds.endTime });
   }
 
+  delete(ads: Ads) {
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要删除该信息吗?',
+      type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '删除', // <-- Default value is 'OK',
+      btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          self.httpService.deleteAds(ads).then(resp => {
+            self.editAds = new Ads();
+            self.httpService.getAds().then(adslist => {
+              self.adsList = adslist;
+            });
+          });
+        }
+      }
+    });
+  }
 
   cancle(): void {
     this.editAds = new Ads();
-    console.log($('#adsListTable'));
   }
 
   submit(): void {
-    // console.log(this.editAds);
-    // console.log(new Date($('#dateValid').data('daterangepicker').startDate._i));
-    // console.log(new Date($('#dateValid').data('daterangepicker').endDate._i));
-    if (this.editAds.startTime) {
-      // this.editAds.startTime = new Date($('#dateValid').data('daterangepicker').startDate._i);
-      // this.editAds.endTime = new Date($('#dateValid').data('daterangepicker').endDate._i);
-      this.httpService.createAds(this.editAds).then(response => {
-        console.log(response);
-        this.editAds = new Ads();
-        this.httpService.getAds().then(adslist => {
-          this.adsList = adslist;
-          console.log(this.adsList);
-        });
-      });
-    } else {
-      alert("请选择日期范围");
-      return
-    }
+
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要提交该信息吗?',
+      type: BootstrapDialog.TYPE_PRIMARY, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '提交', // <-- Default value is 'OK',
+      btnOKClass: 'btn-primary', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          if (self.editAds.startTime) {
+            self.httpService.createAds(self.editAds).then(response => {
+              self.editAds = new Ads();
+              self.httpService.getAds().then(adslist => {
+                self.adsList = adslist;
+              });
+            });
+          } else {
+            alert("请选择日期范围");
+            return
+          }
+        }
+      }
+    });
   }
 }
