@@ -1,0 +1,187 @@
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">产品信息配置</h1>
+    </div>
+    <div class="wrapper-md" ng-controller="FormDemoCtrl">
+      <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+          产品信息表
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" method="get" #f="ngForm" (ngSubmit)="submit()">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">产品名称</label>
+              <div class="col-sm-10">
+                <input type="text" name="productname" [(ngModel)]="product.name" id="productTitle" class="form-control">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">产品品牌</label>
+              <div class="col-sm-10">
+                <select name="brand" class="form-control m-b" [(ngModel)]="product.brand" (change)="brandListener()">
+                <option></option>
+                <option *ngFor="let b of brands">{{b.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">推荐价格</label>
+              <div class="col-sm-4">
+                <input type="text" name="name" [(ngModel)]="product.recommentPrice" id="recommentPrice" class="form-control ">
+              </div>
+
+              <label class="col-sm-2 control-label">主打产品</label>
+              <div class="col-sm-2  radio">
+                <label class="i-checks">
+                <input type="radio" name="isHotProduct" id="isHotProduct" [(ngModel)]= "product.recomment" value="1">
+                <i></i>
+                主打产品
+              </label>
+              </div>
+              <div class="col-sm-2 radio">
+                <label class="i-checks">
+                <input type="radio" name="isNotHotProduct" id="isNotHotProduct" [(ngModel)]= "product.recomment" value="0">
+                <i></i>
+                不是主打
+              </label>
+              </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">产品状态</label>
+              <div class="col-sm-3  radio">
+                <label class="i-checks">
+                <input type="radio" name="productstatus" id="isHotBrand" [(ngModel)]= "product.status" value="waiting">
+                <i></i>
+                待上市
+              </label>
+              </div>
+              <div class="col-sm-3  radio">
+                <label class="i-checks">
+                <input type="radio" name="productstatus" id="isHotBrand" [(ngModel)]= "product.status" value="insale">
+                <i></i>
+                销售中
+              </label>
+              </div>
+              <div class="col-sm-3 radio">
+                <label class="i-checks">
+                <input type="radio" name="productstatus" id="isNotHotBrand" [(ngModel)]= "product.status" value="outsale">
+                <i></i>
+                已下市
+              </label>
+              </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">产品分类</label>
+              <div class="col-sm-4">
+                <select name="type" class="form-control m-b" [(ngModel)]="product.type" (change)="typeListener()">
+                <option></option>
+                <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
+                </select>
+              </div>
+              <label class="col-sm-2 control-label">产品子类</label>
+              <div class="col-sm-4">
+                <select name="subtype" class="form-control m-b" [(ngModel)]="product.subType" (change)="subtypeListener()">
+                <option></option>
+                <option *ngFor="let sub of subtypes" value="{{sub['subType']}}">{{sub["subType"]}}</option>
+                </select>
+              </div>
+            </div>
+            <!--产品配置信息-->
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group" *ngFor="let configname of configlist;let i = index">
+              <label class="col-sm-2 control-label">{{configname}}</label>
+              <div class="col-sm-10">
+                <input type="text" name="configname{{i}}" [(ngModel)]="configvalues[i]" id="configname{{i}}" class="form-control">
+              </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">产品图片</label>
+              <div class="col-sm-10">
+
+                <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
+                  <input ui-jq="filestyle" [(ngModel)]="uploadFileName" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)"
+                    data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
+                </form>
+              </div>
+            </div>
+            <!--图片信息-->
+            <div class="col-sm-10 col-sm-offset-2 table-responsive">
+              <table id="productImagesListTable" ui-jq="dataTable" class="table table-striped b-t b-b">
+                <thead>
+                  <tr>
+                    <th style="width:80%">图片地址</th>
+                    <th style="width:20%">删除</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let ima of product.images">
+                    <td>{{ima}}</td>
+                    <td><button class="delete" (click)="deleteImage(ima);">x</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <label class="col-sm-2 control-label">产品简介</label>
+            <div class="col-sm-10">
+              <div [froalaEditor] name="productContent" id="productContent" [(ngModel)]="product.content"></div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="form-group">
+              <div class="col-sm-4 col-sm-offset-2">
+                <button type="button" (click)="cancle()" class="btn btn-default">取消</button>
+                <button type="submit" class="btn btn-primary">保存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">已配置的产品信息列表</h1>
+    </div>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          产品信息列表
+        </div>
+        <div class="table-responsive">
+          <table id="adsListTable" ui-jq="dataTable" class="table table-striped b-t b-b">
+            <thead>
+              <tr>
+                <th style="width:20%">产品名称</th>
+                <th style="width:25%">品牌</th>
+                <th style="width:25%">是否主打</th>
+                <th style="width:10%">大类别</th>
+                <th style="width:10%">小类别</th>
+                <th style="width:10%">修改</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pro of products">
+                <td>{{pro.name}}</td>
+                <td>{{pro.brand}}</td>
+                <td>{{pro.recomment=="0"?"非主打":"主打"}}</td>
+                <td>{{pro.type}}</td>
+                <td>{{pro.subType}}</td>
+                <td><button class="delete" (click)="update(pro); $event.stopPropagation()">x</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

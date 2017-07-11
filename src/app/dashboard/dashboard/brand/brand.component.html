@@ -1,0 +1,124 @@
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">品牌信息配置</h1>
+    </div>
+    <div class="wrapper-md" ng-controller="FormDemoCtrl">
+      <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+          品牌信息表
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" method="get" #f="ngForm" (ngSubmit)="submit()">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">公司名称</label>
+              <div class="col-sm-10">
+                <input type="text" name="company" [(ngModel)]="brand.company" id="brandTitle" class="form-control rounded">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">公司地址</label>
+              <div class="col-sm-10">
+                <input type="text" name="address" [(ngModel)]="brand.address" id="brandAddress" class="form-control rounded">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">品牌名称</label>
+              <div class="col-sm-4">
+                <input type="text" name="name" [(ngModel)]="brand.name" id="brandName" class="form-control rounded">
+              </div>
+
+              <label class="col-sm-2 control-label">推荐品牌</label>
+              <div class="col-sm-2  radio">
+                <label class="i-checks">
+                <input type="radio" name="isHotBrand" id="isHotBrand" [(ngModel)]= "brand.recommend" value="1">
+                <i></i>
+                推荐品牌
+              </label>
+              </div>
+              <div class="col-sm-2 radio" >
+                <label class="i-checks">
+                <input type="radio" name="isNotHotBrand" id="isNotHotBrand" [(ngModel)]= "brand.recommend" value="0">
+                <i></i>
+                不是推荐品牌
+              </label>
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">公司电话</label>
+              <div class="col-sm-4">
+                <input type="text" name="tel" [(ngModel)]="brand.tel" id="brandtel" class="form-control rounded">
+              </div>
+              <label class="col-sm-2 control-label">公司邮件</label>
+              <div class="col-sm-4">
+                <input type="text" name="email" [(ngModel)]="brand.email" id="brandemail" class="form-control rounded">
+              </div>
+            </div>
+
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">品牌logo</label>
+              <div class="col-sm-10">
+                <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
+                  <input ui-jq="filestyle" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)" data-classButton="btn btn-default"
+                    data-classInput="form-control inline v-middle input-s">
+                </form>
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <label class="col-sm-2 control-label">请输入论坛信息</label>
+            <div class="col-sm-10">
+              <div [froalaEditor] name="brandContent" id="brandContent" [(ngModel)]="brand.content"></div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <div class="col-sm-4 col-sm-offset-2">
+                <button type="button" (click)="cancle()" class="btn btn-default">取消</button>
+                <button type="submit" class="btn btn-primary">保存</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">已配置的品牌信息列表</h1>
+    </div>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          品牌信息列表
+        </div>
+        <div class="table-responsive">
+          <table id="adsListTable" ui-jq="dataTable" class="table table-striped b-t b-b">
+            <thead>
+              <tr>
+                <th style="width:20%">名称</th>
+                <th style="width:25%">公司</th>
+                <th style="width:25%">地址</th>
+                <th style="width:20%">logo地址</th>
+                <th style="width:10%">修改</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let brandinfo of brands">
+                <td>{{brandinfo.name}}</td>
+                <td>{{brandinfo.company}}</td>
+                <td>{{brandinfo.address}}</td>
+                <td>{{brandinfo.icon}}</td>
+                <td><button class="delete" (click)="update(brandinfo); $event.stopPropagation()">x</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
