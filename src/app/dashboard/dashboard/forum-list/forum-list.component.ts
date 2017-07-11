@@ -20,9 +20,10 @@ export class ForumListComponent implements OnInit {
   ngOnInit() {
 
     const self = this;
-    this.loadJqService.reloadJQ(null);
     this.httpService.getForums().then(responses => {
       this.forums = responses
+      // 重构dataTable
+      this.loadJqService.reloadJQ(null);
     });
     this.loadJqService.froalaEditor("forumContent", function (imageurl: string) {
       if (self.forum.images == undefined) {
@@ -46,9 +47,40 @@ export class ForumListComponent implements OnInit {
       })
     });
   }
+
+
+  ngAfterViewInit() {
+    
+  }
+
   update(pro: ForumInfo) {
     this.forum = pro;
   }
+
+delete(pro: ForumInfo) {
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要删除该信息吗?',
+      type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '删除', // <-- Default value is 'OK',
+      btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          self.httpService.deleteForum(pro).then(resp => {
+           self.httpService.getForums().then(responses => {
+              self.forums = responses
+            });
+          });
+        }
+      }
+    });
+  }
+
   cancel() {
     this.forum = new ForumInfo();
   }
@@ -64,7 +96,7 @@ export class ForumListComponent implements OnInit {
       draggable: true, // <-- Default value is false
       btnCancelLabel: '取消', // <-- Default value is 'Cancel',
       btnOKLabel: '提交', // <-- Default value is 'OK',
-      btnOKClass: 'btn-success', // <-- If you didn't specify it, dialog type will be used,
+      btnOKClass: 'btn-primary', // <-- If you didn't specify it, dialog type will be used,
       callback: function (result) {
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if (result) {

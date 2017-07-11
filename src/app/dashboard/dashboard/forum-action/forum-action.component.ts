@@ -19,15 +19,22 @@ export class ForumActionComponent implements OnInit {
   ) { this.action = new ForumAction(); }
 
   ngOnInit() {
-    this.loadJqService.reloadJQ(function (startDate, endDate) {
-      this.action.startTime = startDate;
-      this.action.endTime = endDate;
-    });
+
     this.httpService.getActions().then(response => {
       this.actions = response
+      // 重构DataTable
+      const self = this;
+      this.loadJqService.reloadJQ(function (startDate, endDate) {
+        self.action.startTime = startDate;
+        self.action.endTime = endDate;
+      });
     });
   }
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
 
+  }
   //onChange file listener
   changeListener($event): void {
     const _this = this;
@@ -52,6 +59,31 @@ export class ForumActionComponent implements OnInit {
   update(action: ForumAction) {
     this.action = action;
   }
+
+  delete(action: ForumAction) {
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要删除该信息吗?',
+      type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '删除', // <-- Default value is 'OK',
+      btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          self.httpService.deleteAction(action).then(resp => {
+            self.httpService.getActions().then(response => {
+              self.actions = response
+            });
+          });
+        }
+      }
+    });
+  }
+
   cancel() {
     this.action = new ForumAction();
   }
@@ -70,7 +102,7 @@ export class ForumActionComponent implements OnInit {
       draggable: true, // <-- Default value is false
       btnCancelLabel: '取消', // <-- Default value is 'Cancel',
       btnOKLabel: '提交', // <-- Default value is 'OK',
-      btnOKClass: 'btn-success', // <-- If you didn't specify it, dialog type will be used,
+      btnOKClass: 'btn-primary', // <-- If you didn't specify it, dialog type will be used,
       callback: function (result) {
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if (result) {

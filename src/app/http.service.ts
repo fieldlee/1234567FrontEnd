@@ -75,6 +75,13 @@ export class HttpService {
       .catch(this.handleError);
   }
 
+  deleteAction(action:ForumAction):Promise<any>{
+    const url = `${this.rootUrl}/web/action/delete`;
+    return this.http.post(url, JSON.stringify(action), { headers: this.headers })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   // 新闻发布
   getNews(): Promise<News[]> {
     const url = `${this.rootUrl}/web/news`;
@@ -89,6 +96,13 @@ export class HttpService {
     return this.http.post(url, JSON.stringify(news), { headers: this.headers })
       .toPromise()
       .then(response => response.json().data as News)
+      .catch(this.handleError);
+  }
+  deleteNews(news: News): Promise<any> {
+    const url = `${this.rootUrl}/web/news/delete`;
+    return this.http.post(url, JSON.stringify(news), { headers: this.headers })
+      .toPromise()
+      .then(response => response.json())
       .catch(this.handleError);
   }
   // 论坛发布
@@ -108,6 +122,13 @@ export class HttpService {
       .then(response => {console.log("----");console.log(response.json().data);response.json().data as ForumInfo})
       .catch(this.handleError);
   }
+  deleteForum(forum: ForumInfo): Promise<any> {
+    const url = `${this.rootUrl}/web/forum/delete`;
+    return this.http.post(url, JSON.stringify(forum), { headers: this.headers })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
 //  品牌信息
   getBrands(): Promise<Brand[]> {
     const url = `${this.rootUrl}/web/brand`;
@@ -122,6 +143,15 @@ export class HttpService {
     .then(response => {response.json().data as Brand})
     .catch(this.handleError);
   }
+
+  deleteBrand(brand:Brand):Promise<any>{
+    const url = `${this.rootUrl}/web/brand/delete`;
+    return this.http.post(url, JSON.stringify(brand), { headers: this.headers })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
 //  产品信息
   getProducts(): Promise<Product[]> {
     const url = `${this.rootUrl}/web/product`;
@@ -136,7 +166,12 @@ export class HttpService {
     .then(response => {response.json().data as Product})
     .catch(this.handleError);
   }
-
+  deleteProduct(product:Product):Promise<any>{
+    const url = `${this.rootUrl}/web/product/delete`;
+    return this.http.post(url,JSON.stringify(product),{headers:this.headers}).toPromise()
+    .then(response => {response.json()})
+    .catch(this.handleError);
+  }
   // 省市区
   createProvince(provinceList: any) {
     const url = `${this.rootUrl}/basic/city`;

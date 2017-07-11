@@ -59,8 +59,11 @@
                 <td>{{for.author}}</td>
                 <td>{{for.issueTime}}</td>
                 
-                <td><button class="delete"
-      (click)="update(for); $event.stopPropagation()">x</button></td>
+                <td>
+      <button class="col-sm-1 btn m-b-xs w-xs btn-info " style="width:50px" (click)="update(for); $event.stopPropagation()">U</button>                  &nbsp;&nbsp;
+                  <button class="col-sm-1 col-sm-offset-1 btn m-b-xs w-xs btn-danger"  style="width:50px" (click)="delete(for); $event.stopPropagation()">X</button>
+                
+      </td>
               </tr>
             </tbody>
           </table>

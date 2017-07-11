@@ -25,10 +25,12 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadJq.reloadJQ(null);
+
     this.httpService.getProducts().then(resp => {
       console.log(resp);
       this.products = resp;
+      //    重构dataTable
+      this.loadJq.reloadJQ(null);
     });
     this.httpService.getBrands().then(resp => {
       this.brands = resp;
@@ -42,6 +44,12 @@ export class ProductComponent implements OnInit {
         this.types.push(element.type);
       });
     });
+  }
+
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+
   }
 
   brandListener() {
@@ -145,6 +153,31 @@ export class ProductComponent implements OnInit {
       })
   }
 
+  delete(pro: Product) {
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要删除该信息吗?',
+      type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '删除', // <-- Default value is 'OK',
+      btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          self.httpService.deleteProduct(pro).then(resp => {
+            self.httpService.getProducts().then(resp => {
+              console.log(resp);
+              self.products = resp;
+            });
+          });
+        }
+      }
+    });
+  }
+
   submit(): void {
 
     var configObj = {};
@@ -152,7 +185,7 @@ export class ProductComponent implements OnInit {
       configObj[this.configlist[i]] = this.configvalues[i];
     }
     this.product.config = configObj;
-//  提交提示
+    //  提交提示
     const self = this;
     BootstrapDialog.confirm({
       title: '确认',
@@ -166,14 +199,11 @@ export class ProductComponent implements OnInit {
       callback: function (result) {
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if (result) {
-
           if (self.product.name == undefined) {
             alert("请输入产品名称");
             return
           }
           // config 设置
-
-
           self.httpService.createProduct(self.product).then(resp => {
             console.log(resp);
             self.product = new Product();
@@ -186,9 +216,5 @@ export class ProductComponent implements OnInit {
         }
       }
     });
-
-
-
   }
-
 }

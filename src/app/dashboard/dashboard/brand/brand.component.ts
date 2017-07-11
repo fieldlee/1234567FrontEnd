@@ -21,9 +21,11 @@ export class BrandComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadJqService.reloadJQ(null);
+    
     this.httpService.getBrands().then(resp => {
       this.brands = resp;
+      // 重构dataTable
+      this.loadJqService.reloadJQ(null);
     });
   }
   //onChange file listener
@@ -57,6 +59,30 @@ export class BrandComponent implements OnInit {
     this.brand = brand;
   }
 
+  delete(brand: Brand) {
+    const self = this;
+    BootstrapDialog.confirm({
+      title: '确认',
+      message: '确定要删除该信息吗?',
+      type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+      closable: true, // <-- Default value is false
+      draggable: true, // <-- Default value is false
+      btnCancelLabel: '取消', // <-- Default value is 'Cancel',
+      btnOKLabel: '删除', // <-- Default value is 'OK',
+      btnOKClass: 'btn-warning', // <-- If you didn't specify it, dialog type will be used,
+      callback: function (result) {
+        // result will be true if button was click, while it will be false if users close the dialog directly.
+        if (result) {
+          self.httpService.deleteBrand(brand).then(resp => {
+            self.httpService.getBrands().then(resp => {
+              self.brands = resp;
+            });
+          });
+        }
+      }
+    });
+  }
+
   submit(): void {
     const self = this;
     BootstrapDialog.confirm({
@@ -67,7 +93,7 @@ export class BrandComponent implements OnInit {
       draggable: true, // <-- Default value is false
       btnCancelLabel: '取消', // <-- Default value is 'Cancel',
       btnOKLabel: '提交', // <-- Default value is 'OK',
-      btnOKClass: 'btn-success', // <-- If you didn't specify it, dialog type will be used,
+      btnOKClass: 'btn-primary', // <-- If you didn't specify it, dialog type will be used,
       callback: function (result) {
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if (result) {

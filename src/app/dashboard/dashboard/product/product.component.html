@@ -163,10 +163,10 @@
               <tr>
                 <th style="width:20%">产品名称</th>
                 <th style="width:25%">品牌</th>
-                <th style="width:25%">是否主打</th>
+                <th style="width:20%">是否主打</th>
                 <th style="width:10%">大类别</th>
                 <th style="width:10%">小类别</th>
-                <th style="width:10%">修改</th>
+                <th style="width:15%">修改</th>
               </tr>
             </thead>
             <tbody>
@@ -176,7 +176,14 @@
                 <td>{{pro.recomment=="0"?"非主打":"主打"}}</td>
                 <td>{{pro.type}}</td>
                 <td>{{pro.subType}}</td>
-                <td><button class="delete" (click)="update(pro); $event.stopPropagation()">x</button></td>
+                <td>
+                  
+                  <!--<button class="delete" (click)="update(pro); $event.stopPropagation()">x</button>-->
+                  <button class="col-sm-1 btn m-b-xs w-xs btn-info " style="width:50px" (click)="update(pro); $event.stopPropagation()">U</button>                  &nbsp;&nbsp;
+                  <button class="col-sm-1 col-sm-offset-1 btn m-b-xs w-xs btn-danger"  style="width:50px" (click)="delete(pro); $event.stopPropagation()">X</button>
+             
+                  
+                  </td>
               </tr>
             </tbody>
           </table>

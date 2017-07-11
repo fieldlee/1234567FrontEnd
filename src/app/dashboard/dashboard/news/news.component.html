@@ -61,8 +61,12 @@
                 <td>{{n.author}}</td>
                 <td>{{n.issueTime}}</td>
                 
-                <td><button class="delete"
-      (click)="update(n); $event.stopPropagation()">x</button></td>
+                <td>
+       <button class="col-sm-1 btn m-b-xs w-xs btn-info " style="width:50px" (click)="update(n); $event.stopPropagation()">U</button>                  &nbsp;&nbsp;
+                  <button class="col-sm-1 col-sm-offset-1 btn m-b-xs w-xs btn-danger"  style="width:50px" (click)="delete(n); $event.stopPropagation()">X</button>
+             
+      
+      </td>
               </tr>
             </tbody>
           </table>

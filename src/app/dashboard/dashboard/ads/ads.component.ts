@@ -23,15 +23,17 @@ export class AdsComponent implements OnInit {
   ngOnInit() {
     this.httpService.getAds().then(adslist => {
       this.adsList = adslist;
+      // 重构dataTable
+      const self = this;
+      this.loadJq.reloadJQ(function (startDate, endDate) {
+        self.editAds.startTime = startDate;
+        self.editAds.endTime = endDate;
+      });
     });
   }
 
   ngAfterViewInit() {
-    const self = this;
-    this.loadJq.reloadJQ(function (startDate, endDate) {
-      self.editAds.startTime = startDate;
-      self.editAds.endTime = endDate;
-    });
+
   }
 
   //onChange file listener
