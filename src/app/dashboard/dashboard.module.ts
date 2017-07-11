@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {DashboardRoutingModule} from './dashboard.routing';
+import { DashboardRoutingModule} from './dashboard.routing';
 import { AdsComponent } from './dashboard/ads/ads.component';
 import { NewsComponent } from './dashboard/news/news.component';
 import { ForumActionComponent } from './dashboard/forum-action/forum-action.component';
@@ -9,7 +11,7 @@ import { ForumListComponent } from './dashboard/forum-list/forum-list.component'
 import { BrandComponent } from './dashboard/brand/brand.component';
 import { ProductComponent } from './dashboard/product/product.component';
 // import { BrandHotComponent } from './dashboard/brand-hot/brand-hot.component';
-import {FroalaEditorModule, FroalaViewModule} from 'angular2-froala-wysiwyg';
+import { FroalaEditorModule, FroalaViewModule} from 'angular2-froala-wysiwyg';
 import { BasicProviceComponent } from './basic-provice/basic-provice.component';
 import { BasicCityComponent } from './basic-city/basic-city.component';
 import { BasicDistrictComponent } from './basic-district/basic-district.component';
@@ -20,6 +22,7 @@ import { BasicTagsComponent } from './basic-tags/basic-tags.component';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     DashboardRoutingModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
@@ -31,11 +34,17 @@ import { BasicTagsComponent } from './basic-tags/basic-tags.component';
    ForumActionComponent, 
    ForumListComponent, 
    BrandComponent, 
-   ProductComponent, BasicProviceComponent, BasicCityComponent, BasicDistrictComponent, BasicTypeComponent, BasicSubtypeComponent, BasicConfigComponent, BasicTagsComponent
+   ProductComponent, 
+   BasicProviceComponent, 
+   BasicCityComponent, 
+   BasicDistrictComponent, 
+   BasicTypeComponent, 
+   BasicSubtypeComponent, 
+   BasicConfigComponent, 
+   BasicTagsComponent
    ]
 })
 export class DashboardModule { 
   constructor(){
-    alert("1")
   }
 }
