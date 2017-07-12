@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { HomeRoutingModule } from './home.routing';
 import { FroalaEditorModule, FroalaViewModule} from 'angular2-froala-wysiwyg';
 import { HomeComponent } from './home/home.component';
+import { HomedashboardComponent } from './home/homedashboard/homedashboard.component';
+
 
 
 @NgModule({
@@ -16,7 +18,8 @@ import { HomeComponent } from './home/home.component';
     FroalaViewModule.forRoot()
   ],
   declarations: [
-  HomeComponent
+  HomeComponent,
+  HomedashboardComponent
   ]
 })
 export class HomeModule { }

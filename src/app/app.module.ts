@@ -8,14 +8,15 @@ import { HttpService } from './http.service';
 import { ContantService } from './contant.service';
 import { LoginComponent } from './home/home/login/login.component';
 import { RegisterComponent } from './home/home/register/register.component';
-
+import { ForgetComponent } from './home/home/forget/forget.component';
 
 @NgModule({
   declarations: [
     AppComponent
     ,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ForgetComponent
   ],
   imports: [
     BrowserModule,

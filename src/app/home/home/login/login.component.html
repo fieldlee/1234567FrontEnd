@@ -19,8 +19,13 @@
             <input type="password" name="password" placeholder="密码" class="form-control no-border" [(ngModel)]="password" required>
           </div>
         </div>
+        <div class="alert alert-danger" *ngIf="isErr">
+        <ul class="margin-bottom-none padding-left-lg">
+          <li *ngFor="let msg of messages">{{msg}}</li>
+        </ul>
+      </div>
         <button type="submit" class="btn btn-lg btn-primary btn-block" (click)="login()" ng-disabled='form.$invalid'>登录</button>
-        <div class="text-center m-t m-b"><a ui-sref="access.forgotpwd">忘记密码?</a></div>
+        <div class="text-center m-t m-b"><a  (click)="forget()">忘记密码?</a></div>
         <div class="line line-dashed"></div>
         <p class="text-center"><small>还没有账号?</small></p>
         <a ui-sref="access.signup" [routerLink]="['/register']" class="btn btn-lg btn-default btn-block">创建账号</a>

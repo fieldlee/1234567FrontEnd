@@ -10,10 +10,55 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class HttpService {
-  private headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+  // private headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
   private fileheaders = new Headers({ 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarysd3pNkhHgm8eLc2k' });//{ 'Content-Type': 'multipart/form-data'}
   private rootUrl = '/api';
   constructor(private http: Http) { }
+
+  constructHeader(){
+    var header = new Headers();
+    header.append('Content-Type','application/json');
+    header.append('Access-Control-Allow-Origin','*');
+    if (window.localStorage.getItem("x-access-token")){
+      header.append('x-access-token',window.localStorage.getItem("x-access-token"));
+    }
+    if (window.localStorage.getItem("username")){
+      header.append('x-access-username',window.localStorage.getItem("username"));
+    }
+    if (window.localStorage.getItem("avator")){
+      header.append('x-access-avator',window.localStorage.getItem("avator"));
+    }
+    return header;
+  }
+  // Login
+
+  login(formdata:any): Promise<any>{
+    const url = `${this.rootUrl}/auth/login`;
+    const header = this.constructHeader();
+    return this.http.post(url, formdata, { headers: header })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  // register
+   register(formdata:any): Promise<any>{
+    const url = `${this.rootUrl}/auth/register`;
+    const header = this.constructHeader();
+    return this.http.post(url, formdata, { headers: header })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  // forget
+  forget(formdata:any) : Promise<any>{
+    const url = `${this.rootUrl}/auth/forget`;
+    const header = this.constructHeader();
+    return this.http.post(url, formdata, { headers: header })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
   // 图片信息配置
 
   uploadFile(formdata: any): Promise<any> {
@@ -27,7 +72,7 @@ export class HttpService {
 
   deleteImage(deleteJson:any){
     const url = `${this.rootUrl}/web/file/delete`;
-    return this.http.post(url,JSON.stringify(deleteJson), { headers: this.headers }).toPromise()
+    return this.http.post(url,JSON.stringify(deleteJson), { headers: this.constructHeader() }).toPromise()
     .then(response=>response.json())
     .catch(this.handleError);
   }
@@ -44,7 +89,7 @@ export class HttpService {
 
   createAds(ads: Ads): Promise<Ads> {
     const url = `${this.rootUrl}/web/ads`;
-    return this.http.post(url, JSON.stringify(ads), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(ads), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json().data as Ads)
       .catch(this.handleError);
@@ -52,7 +97,7 @@ export class HttpService {
 
   deleteAds(ads:Ads):Promise<any>{
     const url = `${this.rootUrl}/web/ads/delete`;
-    return this.http.post(url, JSON.stringify(ads), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(ads), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -69,7 +114,7 @@ export class HttpService {
 
   createAction(action: ForumAction): Promise<ForumAction> {
     const url = `${this.rootUrl}/web/action`;
-    return this.http.post(url, JSON.stringify(action), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(action), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json().data as ForumAction)
       .catch(this.handleError);
@@ -77,7 +122,7 @@ export class HttpService {
 
   deleteAction(action:ForumAction):Promise<any>{
     const url = `${this.rootUrl}/web/action/delete`;
-    return this.http.post(url, JSON.stringify(action), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(action), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -93,14 +138,14 @@ export class HttpService {
 
   createNews(news: News): Promise<News> {
     const url = `${this.rootUrl}/web/news`;
-    return this.http.post(url, JSON.stringify(news), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(news), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json().data as News)
       .catch(this.handleError);
   }
   deleteNews(news: News): Promise<any> {
     const url = `${this.rootUrl}/web/news/delete`;
-    return this.http.post(url, JSON.stringify(news), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(news), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -117,14 +162,14 @@ export class HttpService {
 
   createForum(forum: ForumInfo): Promise<ForumInfo> {
     const url = `${this.rootUrl}/web/forum`;
-    return this.http.post(url, JSON.stringify(forum), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(forum), { headers: this.constructHeader() })
       .toPromise()
       .then(response => {console.log("----");console.log(response.json().data);response.json().data as ForumInfo})
       .catch(this.handleError);
   }
   deleteForum(forum: ForumInfo): Promise<any> {
     const url = `${this.rootUrl}/web/forum/delete`;
-    return this.http.post(url, JSON.stringify(forum), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(forum), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -139,14 +184,14 @@ export class HttpService {
   }
   createBrand(brand:Brand):Promise<Brand>{
     const url = `${this.rootUrl}/web/brand`;
-    return this.http.post(url,JSON.stringify(brand),{headers:this.headers}).toPromise()
+    return this.http.post(url,JSON.stringify(brand),{headers:this.constructHeader()}).toPromise()
     .then(response => {response.json().data as Brand})
     .catch(this.handleError);
   }
 
   deleteBrand(brand:Brand):Promise<any>{
     const url = `${this.rootUrl}/web/brand/delete`;
-    return this.http.post(url, JSON.stringify(brand), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(brand), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -162,34 +207,34 @@ export class HttpService {
   }
   createProduct(product:Product):Promise<Product>{
     const url = `${this.rootUrl}/web/product`;
-    return this.http.post(url,JSON.stringify(product),{headers:this.headers}).toPromise()
+    return this.http.post(url,JSON.stringify(product),{headers:this.constructHeader()}).toPromise()
     .then(response => {response.json().data as Product})
     .catch(this.handleError);
   }
   deleteProduct(product:Product):Promise<any>{
     const url = `${this.rootUrl}/web/product/delete`;
-    return this.http.post(url,JSON.stringify(product),{headers:this.headers}).toPromise()
+    return this.http.post(url,JSON.stringify(product),{headers:this.constructHeader()}).toPromise()
     .then(response => {response.json()})
     .catch(this.handleError);
   }
   // 省市区
   createProvince(provinceList: any) {
     const url = `${this.rootUrl}/basic/city`;
-    this.http.post(url, JSON.stringify(provinceList), { headers: this.headers })
+    this.http.post(url, JSON.stringify(provinceList), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp.json) })
       .catch(this.handleError);
   }
   createCity(province: String, cityList: any) {
     const url = `${this.rootUrl}/basic/city/${province}`;
-    this.http.post(url, JSON.stringify(cityList), { headers: this.headers })
+    this.http.post(url, JSON.stringify(cityList), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp.json) })
       .catch(this.handleError);
   }
   createDistrict(province: String, city: String, districtList: any) {
     const url = `${this.rootUrl}/basic/city/${province}/${city}`;
-    this.http.post(url, JSON.stringify(districtList), { headers: this.headers })
+    this.http.post(url, JSON.stringify(districtList), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp.json) })
       .catch(this.handleError);
@@ -215,7 +260,7 @@ export class HttpService {
   // 配置信息
   createType(typeList: any) {
     const url = `${this.rootUrl}/basic/type`;
-    this.http.post(url, JSON.stringify(typeList), { headers: this.headers })
+    this.http.post(url, JSON.stringify(typeList), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp.json) })
       .catch(this.handleError);
@@ -230,14 +275,14 @@ export class HttpService {
   }
   createSubType(type: String, subtypeList: any) {
     const url = `${this.rootUrl}/basic/type/${type}`;
-    this.http.post(url, JSON.stringify(subtypeList), { headers: this.headers })
+    this.http.post(url, JSON.stringify(subtypeList), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp.json) })
       .catch(this.handleError);
   }
   createTypeConfigs(type: String, subtype: String,configs:any) {
     const url = `${this.rootUrl}/basic/type/${type}/${subtype}`;
-    this.http.post(url, JSON.stringify(configs), { headers: this.headers })
+    this.http.post(url, JSON.stringify(configs), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp) })
       .catch(this.handleError);
@@ -253,7 +298,7 @@ export class HttpService {
 // tags 信息配置
   createTags(configInfo:any){
     const url = `${this.rootUrl}/basic/configpraise`;
-    this.http.post(url, JSON.stringify(configInfo), { headers: this.headers })
+    this.http.post(url, JSON.stringify(configInfo), { headers: this.constructHeader() })
       .toPromise()
       .then(resp => { console.log(resp) })
       .catch(this.handleError);
