@@ -1,0 +1,332 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+    <ol class="breadcrumb">
+      <li><a routerLink="/home">首页</a></li>
+      <li class="active">个人信息</li>
+    </ol> 
+  <div class="app-content-body ">
+
+
+    <div class="hbox hbox-auto-xs hbox-auto-sm">
+      <div class="col">
+        <div [ngStyle]="{background:urlbackground}" style="background-size:cover">
+          <div class="wrapper-lg bg-white-opacity">
+            <div class="row m-t">
+              <div class="col-sm-7">
+                <a href class="thumb-lg pull-left m-r">
+                  <img src="{{avatorPath}}" class="img-circle">
+                </a>
+                <div class="clear m-b">
+                  <div class="m-b m-t-sm">
+                    <span class="h3 text-black">{{avator}}</span>
+                    <small class="m-l" *ngIf="havLoaction">{{province}}, {{city}}</small>
+                  </div>
+                  <p class="m-b">
+                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a>
+                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a>
+                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>
+                  </p>
+                  <a href class="btn btn-sm btn-success btn-rounded" >+关注</a>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="pull-right pull-none-xs text-center">
+                  <a href class="m-b-md inline m">
+                <span class="h3 block font-bold">2k</span>
+                <small>关注我</small>
+              </a>
+                  <a href class="m-b-md inline m">
+                <span class="h3 block font-bold">250</span>
+                <small>我关注</small>
+              </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper bg-white b-b">
+          <ul class="nav nav-pills nav-sm">
+            <li [ngClass]="{active: currentTab==0 }"><a (click)="changeTab(0)">发布帖子</a></li>
+            <li [ngClass]="{active: currentTab==1 }"><a (click)="changeTab(1)">回复的帖子</a></li>
+            <li [ngClass]="{active: currentTab==2 }"><a (click)="changeTab(2)">个人信息</a></li>
+          </ul>
+        </div>
+        <!--发布的帖子  -->
+        <div class="padder" *ngIf="currentTab==0">
+          <div class="streamline b-l b-info m-l-lg m-b padder-v">
+            <div>
+              <a class="pull-left thumb-sm avatar m-l-n-md">
+              <img src="./public/img/a9.jpg" class="img-circle" alt="...">
+              </a>
+              <div class="m-l-lg">
+                <div class="m-b-xs">
+                  <a href class="h4">John smith</a>
+                  <span class="text-muted m-l-sm pull-right">
+                Just now
+              </span>
+                </div>
+                <div class="m-b">
+                  <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
+                    ullamcorper sodales nisi nec adipiscing elit. Morbi id neque quam. Aliquam sollicitudin </div>
+                  <div class="m-t-sm">
+                    <a href class="text-muted m-xs"><i class="icon-action-redo"></i></a>
+                    <a href class="text-muted m-xs"><i class="icon-star"></i></a>
+                    <a href class="text-muted m-xs"><i class="icon-refresh"></i> 13</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--回复过的帖子  -->
+        <div class="padder" *ngIf="currentTab==1">
+          <div class="streamline b-l b-info m-l-lg m-b padder-v">
+            <div>
+              <a class="pull-left thumb-sm avatar m-l-n-md">
+              <img src="./public/img/a9.jpg" class="img-circle" alt="...">
+              </a>
+              <div class="m-l-lg">
+                <div class="m-b-xs">
+                  <a href class="h4">John smith</a>
+                  <span class="text-muted m-l-sm pull-right">
+                Just now
+              </span>
+                </div>
+                <div class="m-b">
+                  <div>Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.
+                    ullamcorper sodales nisi nec adipiscing elit. Morbi id neque quam. Aliquam sollicitudin </div>
+                  <div class="m-t-sm">
+                    <a href class="text-muted m-xs"><i class="icon-action-redo"></i></a>
+                    <a href class="text-muted m-xs"><i class="icon-star"></i></a>
+                    <a href class="text-muted m-xs"><i class="icon-refresh"></i> 13</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--编辑个人信息  -->
+
+
+    <div class="panel panel-default" *ngIf="currentTab==2" style="padding:10px">
+      <form class="form-horizontal" #f="ngForm" (ngSubmit)="submit()">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">昵称</label>
+          <div class="col-sm-8">
+            <input type="text" name='avator' class="form-control rounded" [(ngModel)]="avator" >                        
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+              <label class="col-sm-2 control-label">头像</label>
+              <div class="col-sm-10">
+                <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
+                  <input ui-jq="filestyle" accept="image/*" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)" data-classButton="btn btn-default"
+                    data-classInput="form-control inline v-middle input-s">
+                </form>
+              </div>
+            </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+              <label class="col-sm-2 control-label">个人背景</label>
+              <div class="col-sm-10">
+                <form id="uploadForm2" enctype="multipart/form-data" action="/api/web/file" method="post">
+                  <input ui-jq="filestyle" accept="image/*" name="userPhoto" type="file" data-icon="false" (change)="changeListener2($event)" data-classButton="btn btn-default"
+                    data-classInput="form-control inline v-middle input-s">
+                </form>
+              </div>
+            </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">手机</label>
+          <div class="col-sm-8">
+            <input type="text" name="phone" class="form-control" [(ngModel)]="phone">
+            <span class="help-block m-b-none">可以通过手机短信登录，以及找回密码。</span>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-8">
+            <input type="email" name="email" class="form-control" [(ngModel)]="email">
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">性别</label>
+          <div class="col-sm-8">
+            <label class="radio-inline">
+              <input type="radio" name="sex" [(ngModel)]="sex" value="男"> 男
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="sex" [(ngModel)]="sex" value="女"> 女
+            </label>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">出生日期</label>
+          <div class="col-sm-8">
+            <input ui-jq="daterangepicker" name="birthday" value="{{birthdayString}}"  ui-options="{
+                format: 'YYYY-MM-DD',
+                singleDatePicker: true,
+                showDropdowns: true
+              }" class="form-control w-md" />
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">地址</label>
+          <div class="col-sm-3">
+            <select name="province" [(ngModel)]="province" class="form-control m-b" (change)="provinceListener()">
+              <option value="">请选择省份</option>
+              <option *ngFor="let p of provinces" value="{{p}}">{{p}}</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <select name="city" [(ngModel)]="city" class="form-control m-b" (change)="cityListener()">
+              <option value="">请选择所在市</option>
+              <option *ngFor="let c of citys" value="{{c}}">{{c}}</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <select name="district" [(ngModel)]="district" class="form-control m-b">
+              <option value="">请选择所在区县</option>
+              <option *ngFor="let dis of districts" value="{{dis}}"> {{dis}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">地址</label>
+          <div class="col-sm-8">
+            <input type="text" name="address" class="form-control" [(ngModel)]="address">
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">技能</label>
+          <div class="col-sm-8">
+            <input ui-jq="tagsinput" name="skill" [(ngModel)]="skills" ui-options="" class="form-control w-md" />
+            <span class="help-block m-b-none">输入后回车，可输入多项</span>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">关注的乐器</label>
+          <div class="col-sm-8">
+            <select ui-jq="chosen" id="focusselect" name="focus" [(ngModel)]="focus" multiple class="w-md">
+              <option *ngFor="let st of allSubTypes" value="{{st}}">{{st}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+            <button type="submit" class="btn btn-primary">提交修改</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+      </div>
+      <div class="col w-lg bg-light lter b-l bg-auto">
+        <div class="wrapper">
+          <!--关注我的  -->
+          <div class="">
+            <h4 class="m-t-xs m-b-xs">关注我的</h4>
+            <ul class="list-group no-bg no-borders pull-in">
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a4.jpg" alt="..." class="img-circle">
+              <i class="on b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Chris Fox</a></div>
+                  <small class="text-muted">Designer, Blogger</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a5.jpg" alt="..." class="img-circle">
+              <i class="on b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Mogen Polish</a></div>
+                  <small class="text-muted">Writter, Mag Editor</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a6.jpg" alt="..." class="img-circle">
+              <i class="busy b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Joge Lucky</a></div>
+                  <small class="text-muted">Art director, Movie Cut</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a7.jpg" alt="..." class="img-circle">
+              <i class="away b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Folisise Chosielie</a></div>
+                  <small class="text-muted">Musician, Player</small>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!--我关注的  -->
+          <div class="">
+            <h4 class="m-t-xs m-b-xs">我关注的</h4>
+            <ul class="list-group no-bg no-borders pull-in">
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a4.jpg" alt="..." class="img-circle">
+              <i class="on b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Chris Fox</a></div>
+                  <small class="text-muted">Designer, Blogger</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a5.jpg" alt="..." class="img-circle">
+              <i class="on b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Mogen Polish</a></div>
+                  <small class="text-muted">Writter, Mag Editor</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a6.jpg" alt="..." class="img-circle">
+              <i class="busy b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Joge Lucky</a></div>
+                  <small class="text-muted">Art director, Movie Cut</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a herf class="pull-left thumb-sm avatar m-r">
+              <img src="./public/img/a7.jpg" alt="..." class="img-circle">
+              <i class="away b-white bottom"></i>
+            </a>
+                <div class="clear">
+                  <div><a href>Folisise Chosielie</a></div>
+                  <small class="text-muted">Musician, Player</small>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /content -->

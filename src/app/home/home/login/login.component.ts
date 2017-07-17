@@ -46,9 +46,16 @@ export class LoginComponent implements OnInit {
           var userObj = resp["data"];
           window.localStorage.setItem("username", userObj["username"]);
           window.localStorage.setItem("avator", userObj["avator"]);
-          window.localStorage.setItem("admin", userObj["admin"]);
-          window.localStorage.setItem("phone", userObj["phone"]);
-          window.localStorage.setItem("email", userObj["email"]);
+          if(userObj["admin"]){
+            window.localStorage.setItem("admin", userObj["admin"]);
+          }
+          if(userObj["phone"]){
+            window.localStorage.setItem("phone", userObj["phone"]);
+          }
+          if(userObj["email"]){
+            window.localStorage.setItem("email", userObj["email"]);
+          }
+
         }
         this.router.navigate(['/home']);
       } else {

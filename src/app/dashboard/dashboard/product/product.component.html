@@ -108,7 +108,7 @@
               <div class="col-sm-10">
 
                 <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
-                  <input ui-jq="filestyle" [(ngModel)]="uploadFileName" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)"
+                  <input ui-jq="filestyle" accept="image/*" [(ngModel)]="uploadFileName" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)"
                     data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
                 </form>
               </div>

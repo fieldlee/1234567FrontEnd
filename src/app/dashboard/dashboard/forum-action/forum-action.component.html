@@ -74,7 +74,7 @@
               <label class="col-sm-2 control-label">活动图片</label>
               <div class="col-sm-10">
                 <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
-                  <input ui-jq="filestyle" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)" data-classButton="btn btn-default"
+                  <input ui-jq="filestyle" name="userPhoto" accept="image/*" type="file" data-icon="false" (change)="changeListener($event)" data-classButton="btn btn-default"
                     data-classInput="form-control inline v-middle input-s">
                 </form>
               </div>

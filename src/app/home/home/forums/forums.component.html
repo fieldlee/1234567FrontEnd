@@ -1,0 +1,128 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <ol class="breadcrumb">
+      <li><a routerLink="/home">首页</a></li>
+      <li class="active">论坛</li>
+    </ol> 
+  <div class="app-content-body ">
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel panel-info">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+        <!--广告位信息  -->
+        <!--论坛的位子  -->
+        <div class="col-lg-8 col-md-12 col-sm-12">
+          <!-- 论坛分类-->
+          <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
+            <div class="panel panel-default">
+              <div class="app-content-body " style="padding:0">
+                <div class="wrapper-xs">
+                  <div class="tab-container">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href data-toggle="tab" data-target="#tab_1"> 全部 <span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_2">钢琴<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_2">其他<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                        <div class="figure flex-block">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="../../content/00001" title="人民日报再评王者荣耀：别让网游成生活全部"> 人民日报再评王者荣耀：别让网游成生活全部别让网游成生活全部别让网游成生活全部</a></h2>
+                            <div class="subtitle"><span>人民网</span><span>1小时前</span><span>15 评论</span></div>
+                          </div>
+                          <a routerLink="content/00001" title=" 人民日报再评王者荣耀：别让网游成生活全部" class="img" style="background-image:url(//zkres2.myzaker.com/201707/59656a301bc8e0626800010a_320.jpg);"></a>
+                        </div>
+
+                        <div class="figure flex-block">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="../../content/00001" title=" 银行“被逼”减免手续费 老百姓能省多少？"> 银行“被逼”减免手续费 老百姓能省多少？</a></h2>
+                            <br>
+                            <div class="subtitle"><span>融360</span><span>1小时前</span><span>4 评论</span></div>
+                          </div>
+                        </div>
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('news')"><i class="fa fa-bars pull-left"></i>点击查看全部</button>
+                        </p> 
+                      </div>
+                      <div class="tab-pane" id="tab_2">
+                        <p>
+                        <button class="btn btn-default btn-block" (click)="changetoNews('keys')"><i class="fa fa-bars pull-left"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tab_3">
+                        <p>
+                        <button class="btn btn-default btn-block" (click)="changetoNews('pipe')"><i class="fa fa-bars pull-left"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--找琴的位子  -->
+        <!--广告位信息  -->
+        <div class="col-lg-4 col-md-8 col-sm-12">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img src="./public/img/1.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test1</h3>
+                  <p>subtitle1</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/2.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test2</h3>
+                  <p>subtitle2</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/3.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test3</h3>
+                  <p>subtitle3</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/4.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test4</h3>
+                  <p>subtitle4</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">上一页</span>
+  </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">下一页</span>
+  </a>
+          </div>
+        </div>
+        <!--广告位信息  -->
+      </div>
+    </div>
+  </div>
+</div>

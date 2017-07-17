@@ -7,7 +7,7 @@ import { ForumInfo } from "./class/forum-info";
 import { Brand } from "./class/brand";
 import { Product } from "./class/product";
 import 'rxjs/add/operator/toPromise';
-
+declare var $: any;
 @Injectable()
 export class HttpService {
   // private headers = new Headers({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
@@ -15,24 +15,24 @@ export class HttpService {
   private rootUrl = '/api';
   constructor(private http: Http) { }
 
-  constructHeader(){
+  constructHeader() {
     var header = new Headers();
-    header.append('Content-Type','application/json');
-    header.append('Access-Control-Allow-Origin','*');
-    if (window.localStorage.getItem("x-access-token")){
-      header.append('x-access-token',window.localStorage.getItem("x-access-token"));
+    header.append('Content-Type', 'application/json');
+    header.append('Access-Control-Allow-Origin', '*');
+    if (window.localStorage.getItem("x-access-token")) {
+      header.append('x-access-token', window.localStorage.getItem("x-access-token"));
     }
-    if (window.localStorage.getItem("username")){
-      header.append('x-access-username',window.localStorage.getItem("username"));
+    if (window.localStorage.getItem("username")) {
+      header.append('x-access-username', window.localStorage.getItem("username"));
     }
-    if (window.localStorage.getItem("avator")){
-      header.append('x-access-avator',window.localStorage.getItem("avator"));
+    if (window.localStorage.getItem("avator")) {
+      header.append('x-access-avator', window.localStorage.getItem("avator"));
     }
     return header;
   }
   // Login
 
-  login(formdata:any): Promise<any>{
+  login(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/login`;
     const header = this.constructHeader();
     return this.http.post(url, formdata, { headers: header })
@@ -40,8 +40,24 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+// getUsername
+  getUser(username: any): Promise<any> {
+    const url = `${this.rootUrl}/auth/user/${username}`;
+    const header = this.constructHeader();
+    return this.http.get(url, { headers: header })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+    updateUser(user:any):Promise<any>{
+      const url = `${this.rootUrl}/auth/user/update`;
+      const header = this.constructHeader();
+      return this.http.post(url,user,{ headers: header }).toPromise()
+        .then(response=>response.json())
+        .catch(this.handleError);
+    }
   // register
-   register(formdata:any): Promise<any>{
+  register(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/register`;
     const header = this.constructHeader();
     return this.http.post(url, formdata, { headers: header })
@@ -50,7 +66,7 @@ export class HttpService {
       .catch(this.handleError);
   }
   // forget
-  forget(formdata:any) : Promise<any>{
+  forget(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/forget`;
     const header = this.constructHeader();
     return this.http.post(url, formdata, { headers: header })
@@ -62,7 +78,6 @@ export class HttpService {
   // 图片信息配置
 
   uploadFile(formdata: any): Promise<any> {
-    // const url = `${this.rootUrl}/web/file`;
     const url = `${this.rootUrl}/web/upload/upload_image`;
     return this.http.post(url, formdata, { headers: this.fileheaders })
       .toPromise()
@@ -70,11 +85,11 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-  deleteImage(deleteJson:any){
+  deleteImage(deleteJson: any) {
     const url = `${this.rootUrl}/web/file/delete`;
-    return this.http.post(url,JSON.stringify(deleteJson), { headers: this.constructHeader() }).toPromise()
-    .then(response=>response.json())
-    .catch(this.handleError);
+    return this.http.post(url, JSON.stringify(deleteJson), { headers: this.constructHeader() }).toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
 
   // 广告信息配置
@@ -83,7 +98,24 @@ export class HttpService {
     const url = `${this.rootUrl}/web/ads`;
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json().results as Ads[])
+      .then(response => {
+        if (response.json()) {
+          if (response.json().success == false) {
+            $.notify(response.json().message, {
+              type: 'warning'
+            }, {
+                animate: {
+                  enter: 'animated lightSpeedIn',
+                  exit: 'animated lightSpeedOut'
+                }
+              });
+
+            return;
+          }
+          response.json().results as Ads[]
+        }
+
+      })
       .catch(this.handleError);
   }
 
@@ -91,15 +123,47 @@ export class HttpService {
     const url = `${this.rootUrl}/web/ads`;
     return this.http.post(url, JSON.stringify(ads), { headers: this.constructHeader() })
       .toPromise()
-      .then(response => response.json().data as Ads)
+      .then(response => {
+        if (response.json()) {
+          if (response.json().success == false) {
+            $.notify(response.json().message, {
+              type: 'warning'
+            }, {
+                animate: {
+                  enter: 'animated lightSpeedIn',
+                  exit: 'animated lightSpeedOut'
+                }
+              });
+
+            return;
+          }
+          response.json().data as Ads
+        }
+      })
       .catch(this.handleError);
   }
 
-  deleteAds(ads:Ads):Promise<any>{
+  deleteAds(ads: Ads): Promise<any> {
     const url = `${this.rootUrl}/web/ads/delete`;
     return this.http.post(url, JSON.stringify(ads), { headers: this.constructHeader() })
       .toPromise()
-      .then(response => response.json())
+      .then(response => {
+        if (response.json()) {
+          if (response.json().success == false) {
+            $.notify(response.json().message, {
+              type: 'warning'
+            }, {
+                animate: {
+                  enter: 'animated lightSpeedIn',
+                  exit: 'animated lightSpeedOut'
+                }
+              });
+
+            return;
+          }
+          response.json()
+        }
+      })
       .catch(this.handleError);
   }
 
@@ -120,7 +184,7 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-  deleteAction(action:ForumAction):Promise<any>{
+  deleteAction(action: ForumAction): Promise<any> {
     const url = `${this.rootUrl}/web/action/delete`;
     return this.http.post(url, JSON.stringify(action), { headers: this.constructHeader() })
       .toPromise()
@@ -132,7 +196,23 @@ export class HttpService {
     const url = `${this.rootUrl}/web/news`;
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json().results as News[])
+      .then(response => {
+        if (response.json()) {
+          if (response.json().success == false) {
+            $.notify(response.json().message, {
+              type: 'warning'
+            }, {
+                animate: {
+                  enter: 'animated lightSpeedIn',
+                  exit: 'animated lightSpeedOut'
+                }
+              });
+
+            return;
+          }
+          response.json().results as News[]
+        }
+      } )
       .catch(this.handleError);
   }
 
@@ -164,7 +244,7 @@ export class HttpService {
     const url = `${this.rootUrl}/web/forum`;
     return this.http.post(url, JSON.stringify(forum), { headers: this.constructHeader() })
       .toPromise()
-      .then(response => {console.log("----");console.log(response.json().data);response.json().data as ForumInfo})
+      .then(response => { console.log("----"); console.log(response.json().data); response.json().data as ForumInfo })
       .catch(this.handleError);
   }
   deleteForum(forum: ForumInfo): Promise<any> {
@@ -174,7 +254,7 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-//  品牌信息
+  //  品牌信息
   getBrands(): Promise<Brand[]> {
     const url = `${this.rootUrl}/web/brand`;
     return this.http.get(url)
@@ -182,14 +262,14 @@ export class HttpService {
       .then(response => response.json().results as Brand[])
       .catch(this.handleError);
   }
-  createBrand(brand:Brand):Promise<Brand>{
+  createBrand(brand: Brand): Promise<Brand> {
     const url = `${this.rootUrl}/web/brand`;
-    return this.http.post(url,JSON.stringify(brand),{headers:this.constructHeader()}).toPromise()
-    .then(response => {response.json().data as Brand})
-    .catch(this.handleError);
+    return this.http.post(url, JSON.stringify(brand), { headers: this.constructHeader() }).toPromise()
+      .then(response => { response.json().data as Brand })
+      .catch(this.handleError);
   }
 
-  deleteBrand(brand:Brand):Promise<any>{
+  deleteBrand(brand: Brand): Promise<any> {
     const url = `${this.rootUrl}/web/brand/delete`;
     return this.http.post(url, JSON.stringify(brand), { headers: this.constructHeader() })
       .toPromise()
@@ -197,7 +277,7 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-//  产品信息
+  //  产品信息
   getProducts(): Promise<Product[]> {
     const url = `${this.rootUrl}/web/product`;
     return this.http.get(url)
@@ -205,17 +285,17 @@ export class HttpService {
       .then(response => response.json().results as Product[])
       .catch(this.handleError);
   }
-  createProduct(product:Product):Promise<Product>{
+  createProduct(product: Product): Promise<Product> {
     const url = `${this.rootUrl}/web/product`;
-    return this.http.post(url,JSON.stringify(product),{headers:this.constructHeader()}).toPromise()
-    .then(response => {response.json().data as Product})
-    .catch(this.handleError);
+    return this.http.post(url, JSON.stringify(product), { headers: this.constructHeader() }).toPromise()
+      .then(response => { response.json().data as Product })
+      .catch(this.handleError);
   }
-  deleteProduct(product:Product):Promise<any>{
+  deleteProduct(product: Product): Promise<any> {
     const url = `${this.rootUrl}/web/product/delete`;
-    return this.http.post(url,JSON.stringify(product),{headers:this.constructHeader()}).toPromise()
-    .then(response => {response.json()})
-    .catch(this.handleError);
+    return this.http.post(url, JSON.stringify(product), { headers: this.constructHeader() }).toPromise()
+      .then(response => { response.json() })
+      .catch(this.handleError);
   }
   // 省市区
   createProvince(provinceList: any) {
@@ -280,7 +360,7 @@ export class HttpService {
       .then(resp => { console.log(resp.json) })
       .catch(this.handleError);
   }
-  createTypeConfigs(type: String, subtype: String,configs:any) {
+  createTypeConfigs(type: String, subtype: String, configs: any) {
     const url = `${this.rootUrl}/basic/type/${type}/${subtype}`;
     this.http.post(url, JSON.stringify(configs), { headers: this.constructHeader() })
       .toPromise()
@@ -294,9 +374,15 @@ export class HttpService {
       .then(repsonse => repsonse.json())
       .catch(this.handleError);
   }
-
-// tags 信息配置
-  createTags(configInfo:any){
+  getAllSubType(): Promise<any> {
+    const url = `${this.rootUrl}/basic/type/allsubtype`;
+    return this.http.get(url)
+      .toPromise()
+      .then(repsonse => repsonse.json())
+      .catch(this.handleError);
+  }
+  // tags 信息配置
+  createTags(configInfo: any) {
     const url = `${this.rootUrl}/basic/configpraise`;
     this.http.post(url, JSON.stringify(configInfo), { headers: this.constructHeader() })
       .toPromise()
@@ -304,7 +390,7 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-  getTags() : Promise<any> {
+  getTags(): Promise<any> {
     const url = `${this.rootUrl}/basic/configpraise`;
     return this.http.get(url)
       .toPromise()

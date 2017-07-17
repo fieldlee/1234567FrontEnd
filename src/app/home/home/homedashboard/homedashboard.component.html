@@ -1,119 +1,271 @@
 <!-- content -->
 <div id="content" class="app-content" role="main">
   <div class="app-content-body ">
-
-    <ol class="breadcrumb">
+    <!-- <ol class="breadcrumb">
       <li><a href="#">Home</a></li>
       <li><a href="#">2013</a></li>
       <li class="active">十一月</li>
-    </ol>
-    <div class="wrapper-md">
+    </ol> -->
+    <div class="wrapper-sm">
       <div class="row">
         <!--广告位信息  -->
         <div class="col-lg-12">
-          <div class="panel panel-default">
+          <div class="panel panel-info">
             <div class="panel-body">col-lg-12</div>
           </div>
         </div>
         <!--广告位信息  -->
         <!--找琴的位子  -->
         <div class="col-lg-8 col-md-12 col-sm-12">
-
-          <div class="col-lg-12" style="padding:0">
-            <div class="panel panel-default">
-              <div class="panel-heading font-bold">找乐器</div>
+          <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
+            <div class="panel panel-info">
               <div class="panel-body">
-                <ul class="nav nav-tabs">
-                  <li class="active"><a href="#findInstrucment" data-toggle="tab">找乐器</a></li>
-                  <li><a href="#findDelegate" data-toggle="tab">找琴行</a></li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="findInstrucment">
-                    <form role="form">
-                      <div class="form-group">
-                        <input type="email" placeholder="请选择乐器类型" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请选择乐器具体分类">
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请选择品牌">
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请选择价格范围">
-                      </div>
-                      <button type="submit" class="btn btn-sm btn-primary">查看</button>
-                    </form>
-                  </div>
-                  <div class="tab-pane" id="findDelegate">
-                    <form role="form">
-                      <div class="form-group">
-                        <input type="email" placeholder="请选择乐器类型" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请选择乐器具体分类">
-                      </div>
-                      <button type="submit" class="btn btn-sm btn-primary">查看</button>
-                    </form>
-                  </div>
+                <div class="app-content-body " style="padding:0">
+                  <div class="wrapper-xs">
+                    <div class="tab-container">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a href="#findInstrucment" data-toggle="tab">找乐器</a></li>
+                        <li><a href="#findDelegate" data-toggle="tab">找琴行</a></li>
+                      </ul>
+                      <div class="tab-content">
+                        <div class="tab-pane active" id="findInstrucment">
+                          <div class="panel-body">
+                            <form class="form-horizontal" role="form">
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">分类</label>
+                                <div class="col-sm-10">
+                                  <select name="type" [(ngModel)]="type" placeholder="请选择分类" class="form-control m-b" (change)="typeListener()">
+                                <option value="">请选择乐器类别</option>
+                                <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
+                              </select>
+                                </div>
 
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">具体分类</label>
+                                <div class="col-sm-10">
+                                  <select name="subtype" [(ngModel)]="subType" placeholder="请选择具体分类" class="form-control m-b">
+                                <option value="">请选择具体分类</option>
+                                <option *ngFor="let s of subtypes" value="{{s}}">{{s}}</option>
+                              </select>
+                                </div>
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">品牌</label>
+                                <div class="col-sm-10">
+                                  <select ui-jq="chosen" name="focus" placeholder="请品牌可多选"  multiple class="w-md">
+ 
+                                <option *ngFor="let b of brands" value="{{b}}">{{b}}</option>
+                              </select>
+                                </div>
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">价格范围</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" placeholder="请选择价格范围">
+                                </div>
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="col-lg-2 col-lg-offset-10">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-circle"></i><b>   查看 </b>  </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        <div class="tab-pane" id="findDelegate">
+                          <div class="panel-body">
+                            <form class="form-horizontal">
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">分类</label>
+                                <div class="col-sm-10">
+                                  <select name="typefordelegate" [(ngModel)]="type" placeholder="请选择分类" class="form-control m-b" (change)="typeListener()">
+                                <option value="">请选择乐器类别</option>
+                                <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
+                              </select>
+                                </div>
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">具体分类</label>
+                                <div class="col-sm-10">
+                                  <select name="subtypefordelegate" [(ngModel)]="subType" placeholder="请选择具体分类" class="form-control m-b">
+                                <option value="">请选择具体分类</option>
+                                <option *ngFor="let s of subtypes" value="{{s}}">{{s}}</option>
+                              </select>
+                                </div>
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">区域</label>
+                                <div class="col-sm-10">
+                                  <div class="col-sm-4">
+
+                                    <select name="province" [(ngModel)]="province" class="form-control m-b" (change)="provinceListener()">
+                                <option value="">请选择省份</option>
+                                <option *ngFor="let p of provinces" value="{{p}}">{{p}}</option>
+                              </select>
+                                  </div>
+                                  <div class="col-sm-4 ">
+
+                                    <select name="city" [(ngModel)]="city" class="form-control m-b">
+                                <option value="">请选择市</option>
+                                <option *ngFor="let c of citys" value="{{c}}">{{c}}</option>
+                              </select>
+                                  </div>
+                                  <div class="col-sm-4 ">
+                                    <select name="district" [(ngModel)]="district" class="form-control m-b">
+                                <option value="">请选择区县</option>
+                                <option *ngFor="let dis of districts" value="{{dis}}">{{dis}}</option>
+                              </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="line line-dashed b-b line-lg pull-in"></div>
+                              <div class="col-lg-2 col-lg-offset-10">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-circle"></i><b>   查看 </b>  </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!--新闻资讯  -->
-          <div class="col-lg-12" style="padding:0">
+          <!--新闻资讯  论坛分类-->
+          <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
             <div class="panel panel-default">
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#news" data-toggle="tab">资讯</a></li>
-                <li><a href="#piano" data-toggle="tab">钢琴</a></li>
-                <li><a href="#guita" data-toggle="tab">吉他</a></li>
-                <li><a href="#saxophone" data-toggle="tab">萨克斯</a></li>
-              </ul>
+              <div class="app-content-body " style="padding:0">
+                <div class="wrapper-xs">
+                  <div class="tab-container">
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href data-toggle="tab" data-target="#tab_1"> 资讯 <span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_2">键盘乐器<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_3">管式乐器<span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_4">拉弦乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_5">弹拨乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_6">打击乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_7">吹奏乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                        <div class="figure flex-block">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a href="//www.myzaker.com/article/59658de99490cb520c000038/" title="人民日报再评王者荣耀：别让网游成生活全部"> 人民日报再评王者荣耀：别让网游成生活全部别让网游成生活全部别让网游成生活全部</a></h2>
+                            <div class="subtitle"><span>人民网</span><span>1小时前</span><span>15 评论</span></div>
+                          </div>
+                          <a href="//www.myzaker.com/article/59658de99490cb520c000038/" title=" 人民日报再评王者荣耀：别让网游成生活全部" class="img" style="background-image:url(//zkres2.myzaker.com/201707/59656a301bc8e0626800010a_320.jpg);"></a>
+                        </div>
 
-              <div class="tab-content">
-                <div class="tab-pane active" id="news">
-                  <div class="figure flex-block">
-                    <div class="article flex-1">
-                      <h2 class="figcaption"><a href="//www.myzaker.com/article/59658de99490cb520c000038/" title="人民日报再评王者荣耀：别让网游成生活全部"> 人民日报再评王者荣耀：别让网游成生活全部</a></h2>
-                      <div class="subtitle"><span>人民网</span><span>1小时前</span><span>15 评论</span></div>
-                    </div>
-                    <a href="//www.myzaker.com/article/59658de99490cb520c000038/" title=" 人民日报再评王者荣耀：别让网游成生活全部" class="img" style="background-image:url(//zkres2.myzaker.com/201707/59656a301bc8e0626800010a_320.jpg);"></a>
-                  </div>
-
-                  <div class="figure flex-block">
-                    <div class="article flex-1">
-                      <h2 class="figcaption"><a href="//www.myzaker.com/article/596583be9490cb410c000035/" title=" 银行“被逼”减免手续费 老百姓能省多少？"> 银行“被逼”减免手续费 老百姓能省多少？</a></h2>
-                      <br>
-                      <div class="subtitle"><span>融360</span><span>1小时前</span><span>4 评论</span></div>
+                        <div class="figure flex-block">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a href="//www.myzaker.com/article/596583be9490cb410c000035/" title=" 银行“被逼”减免手续费 老百姓能省多少？"> 银行“被逼”减免手续费 老百姓能省多少？</a></h2>
+                            <br>
+                            <div class="subtitle"><span>融360</span><span>1小时前</span><span>4 评论</span></div>
+                          </div>
+                        </div>
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('news')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                        </p> 
+                      </div>
+                      <div class="tab-pane" id="tab_2">
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('键盘乐器')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tab_3">
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('管式乐器')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tab_4">
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('拉弦乐器')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tab_5">
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('弹拨乐器')"><i class="fa fa-circle"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tab_6">
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('打击乐器')"><i class="fa fa-circle"></i>点击查看全部</button>
+                        </p>
+                      </div>
+                      <div class="tab-pane" id="tab_7">
+                        <p>
+                        <button class="btn btn-primary btn-block" (click)="changetoNews('吹奏乐器')"><i class="fa fa-circle"></i>点击查看全部</button>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="tab-pane" id="piano">
-
-
-                </div>
-                <div class="tab-pane" id="guita">333</div>
-                <div class="tab-pane" id="saxophone">444.</div>
               </div>
             </div>
           </div>
+
 
         </div>
         <!--找琴的位子  -->
         <!--广告位信息  -->
-        <div class="col-lg-4 col-md-12 col-sm-12">
-          <div class="wow bounceInUp" data-wow-delay="0.4s">
-            <div id="owl-works" class="owl-carousel">
-              <div class="item"><a href="./public/img/2.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/2.jpg" class="img-responsive " alt="img"></a><span> is an image title</span></div>
-              <div class="item"><a href="./public/img/3.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/3.jpg" class="img-responsive " alt="img"></a><span>This is an image title</span></div>
-              <div class="item"><a href="./public/img/4.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/4.jpg" class="img-responsive " alt="img"></a><span>This is an image title</span></div>
-              <div class="item"><a href="./public/img/5.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/5.jpg" class="img-responsive " alt="img"></a><span>This is an image title</span></div>
-              <div class="item"><a href="./public/img/6.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/6.jpg" class="img-responsive " alt="img"></a><span>This is an image title</span></div>
-              <div class="item"><a href="./public/img/7.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/7.jpg" class="img-responsive " alt="img"></a><span>This is an image title</span></div>
-              <div class="item"><a href="./public/img/8.jpg" title="This is an image title" data-lightbox-gallery="gallery1"><img src="./public/img/8.jpg" class="img-responsive " alt="img"></a><span>This is an image title</span></div>
+        <div class="col-lg-4 col-md-8 col-sm-12">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img src="./public/img/1.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test1</h3>
+                  <p>subtitle1</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/2.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test2</h3>
+                  <p>subtitle2</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/3.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test3</h3>
+                  <p>subtitle3</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/4.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test4</h3>
+                  <p>subtitle4</p>
+                </div>
+              </div>
             </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">上一页</span>
+  </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">下一页</span>
+  </a>
           </div>
         </div>
         <!--广告位信息  -->

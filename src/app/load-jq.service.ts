@@ -5,11 +5,11 @@ declare var jp_config: any;
 @Injectable()
 export class LoadJQService {
 
-  constructor() { 
+  constructor() {
 
   }
 
-  reloadJQ(callback:(start:Date,end:Date)=>void) {
+  reloadJQ(callback: (start: Date, end: Date) => void) {
     $("[ui-jq]").each(function () {
       var self = $(this);
       var options = eval('[' + self.attr('ui-options') + ']');
@@ -24,35 +24,41 @@ export class LoadJQService {
       }
     });
 
-    $('input[ui-jq="daterangepicker"]').on('apply.daterangepicker', function(ev, picker) {
-      if(callback){
+    $('input[ui-jq="daterangepicker"]').on('apply.daterangepicker', function (ev, picker) {
+      if (callback) {
         callback(new Date(picker.startDate.format('YYYY-MM-DD')), new Date(picker.endDate.format('YYYY-MM-DD')));
       }
     });
-    $('input[ui-jq="daterangepicker"]').on('cancel.daterangepicker', function(ev, picker) {
+    $('input[ui-jq="daterangepicker"]').on('cancel.daterangepicker', function (ev, picker) {
       $(this).val('');
-      if(callback){
-        callback(null,null);
+      if (callback) {
+        callback(null, null);
       }
-  });
+    });
   }
 
-  froalaEditor(froalaEditorObjid:string,callback1:(imageurl:string)=>void,callback2:(imageurl:string)=>void,
-  callback3:(videourl:string)=>void,callback4:(videourl:string)=>void){
-    $('#'+froalaEditorObjid).froalaEditor({
-        // Set the image upload URL.
-        fileUploadURL: '/api/web/upload/upload_file',
-        videoUploadURL: '/api/web/upload/upload_file',
-        imageUploadURL: '/api/web/upload/upload_image',
-        // Set max image size to 5MB.
-        imageMaxSize: 5 * 1024 * 1024,
-        fileMaxSize: 5 * 1024 * 1024,
-        videoMaxSize: 15 * 1024 * 1024,
-        // Allow to upload PNG and JPG.
-        fileAllowedTypes: ['*'],
-        videoAllowedTypes: ['webm', 'mp4', 'ogg'],
-        imageAllowedTypes: ['jpeg', 'jpg', 'png']
-      })
+  froalaEditorComment(froalaEditorObjid: string) {
+    $('#' + froalaEditorObjid).froalaEditor({
+      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent']
+    });
+  }
+  froalaEditor(froalaEditorObjid: string, callback1: (imageurl: string) => void, callback2: (imageurl: string) => void,
+    callback3: (videourl: string) => void, callback4: (videourl: string) => void) {
+
+    $('#' + froalaEditorObjid).froalaEditor({
+      // Set the image upload URL.
+      fileUploadURL: '/api/web/upload/upload_file',
+      videoUploadURL: '/api/web/upload/upload_file',
+      imageUploadURL: '/api/web/upload/upload_image',
+      // Set max image size to 5MB.
+      imageMaxSize: 5 * 1024 * 1024,
+      fileMaxSize: 5 * 1024 * 1024,
+      videoMaxSize: 15 * 1024 * 1024,
+      // Allow to upload PNG and JPG.
+      fileAllowedTypes: ['*'],
+      videoAllowedTypes: ['webm', 'mp4', 'ogg'],
+      imageAllowedTypes: ['jpeg', 'jpg', 'png']
+    })
       .on('froalaEditor.image.beforeUpload', function (e, editor, images) {
         // Return false if you want to stop the image upload.
       })
@@ -62,9 +68,9 @@ export class LoadJQService {
       })
       .on('froalaEditor.image.inserted', function (e, editor, $img, response) {
         // Image was inserted in the editor.
-         var respJson = response ;
-        if (typeof response == "string"){
-            respJson = JSON.parse(response);
+        var respJson = response;
+        if (typeof response == "string") {
+          respJson = JSON.parse(response);
         }
         console.log(respJson["link"]);
         callback1($img.attr('src'));
@@ -77,13 +83,13 @@ export class LoadJQService {
             src: $img.attr('src')
           }
         })
-        .done (function (data) {
-          callback2($img.attr('src'));
-          console.log ('image was deleted');
-        })
-        .fail (function () {
-          console.log ('image delete problem');
-        })
+          .done(function (data) {
+            callback2($img.attr('src'));
+            console.log('image was deleted');
+          })
+          .fail(function () {
+            console.log('image delete problem');
+          })
       })
       .on('froalaEditor.video.inserted', function (e, editor, $img, response) {
         callback3($img.attr('src'));

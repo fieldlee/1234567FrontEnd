@@ -4179,7 +4179,7 @@ a.text-#000000:hover {
 }
 
 .wrapper-xs {
-  padding: 5px;
+  padding: 0,0,5px,5px;
 }
 
 .wrapper-sm {
@@ -5207,7 +5207,7 @@ a.text-#000000:hover {
 	overflow:hidden;
 	border-bottom:#e8e8e8 solid 1px;
 	margin:0 7% 0 0;
-	padding:20px;
+	padding:10px;
 }
 
 .figure .article
@@ -5221,6 +5221,7 @@ a.text-#000000:hover {
 
 .figure .figcaption
 {
+  width: 90%;
 	font-size:25px;
 	font-weight:400;
 	max-height:3em;
@@ -5266,9 +5267,10 @@ a.text-#000000:hover {
 
 .figure .img
 {
+  vertical-align:text-top;
 	float:right;
-	width:30%;
-	height:130px;
+	width:20%;
+	height:90px;
 	background-size:cover;
 	background-position:center;
 }
