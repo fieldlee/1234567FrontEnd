@@ -6,6 +6,8 @@ import { ForumAction } from "./class/forum-action";
 import { ForumInfo } from "./class/forum-info";
 import { Brand } from "./class/brand";
 import { Product } from "./class/product";
+import { Comment } from "./class/comment";
+import { Praise } from "./class/praise";
 import 'rxjs/add/operator/toPromise';
 declare var $: any;
 @Injectable()
@@ -68,6 +70,15 @@ export class HttpService {
   // forget
   forget(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/forget`;
+    const header = this.constructHeader();
+    return this.http.post(url, formdata, { headers: header })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  // changepassword
+  changepassword(formdata: any): Promise<any> {
+    const url = `${this.rootUrl}/auth/changepassword`;
     const header = this.constructHeader();
     return this.http.post(url, formdata, { headers: header })
       .toPromise()
@@ -168,6 +179,7 @@ export class HttpService {
   }
 
   // 论坛活动
+  
   getActions(): Promise<ForumAction[]> {
     const url = `${this.rootUrl}/web/action`;
     return this.http.get(url)
@@ -192,27 +204,32 @@ export class HttpService {
       .catch(this.handleError);
   }
   // 新闻发布
-  getNews(): Promise<News[]> {
-    const url = `${this.rootUrl}/web/news`;
+  getNews(page:string): Promise<News[]> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/news/${page}?${time}`;
     return this.http.get(url)
       .toPromise()
-      .then(response => {
-        if (response.json()) {
-          if (response.json().success == false) {
-            $.notify(response.json().message, {
-              type: 'warning'
-            }, {
-                animate: {
-                  enter: 'animated lightSpeedIn',
-                  exit: 'animated lightSpeedOut'
-                }
-              });
-
-            return;
-          }
+      .then(response => 
           response.json().results as News[]
-        }
-      } )
+      )
+      .catch(this.handleError);
+  }
+
+  getNewsById(id:string): Promise<any> {
+    const url = `${this.rootUrl}/web/news/byid/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => 
+          response.json().data
+      )
+      .catch(this.handleError);
+  }
+
+  supportNewsById(id:String):Promise<any>{
+    const url = `${this.rootUrl}/web/news/support`;
+    return this.http.post(url,JSON.stringify({"id":id}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
       .catch(this.handleError);
   }
 
@@ -230,21 +247,90 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+  // 关注
+  getFollow():Promise<any>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/follow?${time}`;
+    return this.http.get(url,{ headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  createFollow(folwJson:any):Promise<any>{
+    const url = `${this.rootUrl}/web/follow`;
+    return this.http.post(url, JSON.stringify(folwJson), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   // 论坛发布
-
+  getRecentForums():Promise<any>{
+    const url = `${this.rootUrl}/web/forum/sub/recent`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getForumsByUsername(username:String): Promise<any> {
+    const url = `${this.rootUrl}/web/forum/sub/byusername/${username}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getForumsByType(type:String,page:string): Promise<any> {
+    console.log(page);
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/forum/${type}/${page}?${time}`;
+    console.log(url);
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getForumsByTypeAndSub(type:String,subtype:String,page:string): Promise<any> {
+     console.log(page);
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/forum/${type}/${subtype}/${page}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+   getForumsById(id:String): Promise<ForumInfo> {
+    const url = `${this.rootUrl}/web/forum/sub/byid/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json().data as ForumInfo)
+      .catch(this.handleError);
+  }
+  supportForumById(id:String):Promise<any>{
+    const url = `${this.rootUrl}/web/forum/sub/support/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  supportCommentById(id:String):Promise<any>{
+    const url = `${this.rootUrl}/web/comment/support`;
+    return this.http.post(url,JSON.stringify({"id":id}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   getForums(): Promise<ForumInfo[]> {
-    const url = `${this.rootUrl}/web/forum`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/forum?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json().results as ForumInfo[])
       .catch(this.handleError);
   }
-
-  createForum(forum: ForumInfo): Promise<ForumInfo> {
+  createForum(forum: ForumInfo): Promise<any> {
     const url = `${this.rootUrl}/web/forum`;
     return this.http.post(url, JSON.stringify(forum), { headers: this.constructHeader() })
       .toPromise()
-      .then(response => { console.log("----"); console.log(response.json().data); response.json().data as ForumInfo })
+      .then(response => response.json().data)
       .catch(this.handleError);
   }
   deleteForum(forum: ForumInfo): Promise<any> {
@@ -254,9 +340,34 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+  //  回帖
+  getComment(pid:String):Promise<Comment[]>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/comment/${pid}?${time}`;
+    return this.http.get(url).toPromise()
+    .then(response=>response.json().results as Comment[])
+    .catch(this.handleError);
+  } 
+
+  createComment(comment:Comment):Promise<any>{
+    const url = `${this.rootUrl}/web/comment`;
+    return this.http.post(url,JSON.stringify(comment), { headers: this.constructHeader() })
+    .toPromise()
+    .then(response=>response.json().data)
+    .catch(this.handleError);
+    }
   //  品牌信息
+  getBrandById(id:string): Promise<Brand> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/brand/${id}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json().data as Brand)
+      .catch(this.handleError);
+  }
   getBrands(): Promise<Brand[]> {
-    const url = `${this.rootUrl}/web/brand`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/brand?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json().results as Brand[])
@@ -276,10 +387,40 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+  //  产品口碑信息
+  createParise(praise:Praise):Promise<Praise>{
+    const url = `${this.rootUrl}/web/praise`;
+    return this.http.post(url, JSON.stringify(praise), { headers: this.constructHeader() }).toPromise()
+      .then(response =>  response.json().data as Praise)
+      .catch(this.handleError);
+  }
 
+  getPariseById(id:string):Promise<Praise>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/praise/${id}?${time}`;
+    return this.http.get(url).toPromise()
+      .then(response => { response.json().data as Praise })
+      .catch(this.handleError);
+  }
+  getPariseByProductId(id:string):Promise<any>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/praise/byproduct/${id}?${time}`;
+    return this.http.get(url).toPromise()
+      .then(response => { response.json()})
+      .catch(this.handleError);
+  }
   //  产品信息
+  getProductById(id:string): Promise<any> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/product/${id}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   getProducts(): Promise<Product[]> {
-    const url = `${this.rootUrl}/web/product`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/product?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json().results as Product[])
@@ -288,13 +429,13 @@ export class HttpService {
   createProduct(product: Product): Promise<Product> {
     const url = `${this.rootUrl}/web/product`;
     return this.http.post(url, JSON.stringify(product), { headers: this.constructHeader() }).toPromise()
-      .then(response => { response.json().data as Product })
+      .then(response =>  response.json().data as Product )
       .catch(this.handleError);
   }
   deleteProduct(product: Product): Promise<any> {
     const url = `${this.rootUrl}/web/product/delete`;
     return this.http.post(url, JSON.stringify(product), { headers: this.constructHeader() }).toPromise()
-      .then(response => { response.json() })
+      .then(response =>  response.json())
       .catch(this.handleError);
   }
   // 省市区
@@ -320,19 +461,22 @@ export class HttpService {
       .catch(this.handleError);
   }
   getProvinces(): Promise<any> {
-    const url = `${this.rootUrl}/basic/city`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/city?${time}`;
     return this.http.get(url).toPromise()
       .then(repsonse => repsonse.json())
       .catch(this.handleError);
   }
   getCitys(province: String): Promise<any> {
-    const url = `${this.rootUrl}/basic/city/${province}`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/city/${province}?${time}`;
     return this.http.get(url).toPromise()
       .then(repsonse => repsonse.json())
       .catch(this.handleError);
   }
   getDistricts(province: String, city: String): Promise<any> {
-    const url = `${this.rootUrl}/basic/city/${province}/${city}`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/city/${province}/${city}?${time}`;
     return this.http.get(url).toPromise()
       .then(repsonse => repsonse.json())
       .catch(this.handleError);
@@ -347,7 +491,8 @@ export class HttpService {
   }
 
   getType(): Promise<any> {
-    const url = `${this.rootUrl}/basic/type`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/type?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(repsonse => repsonse.json())
@@ -368,14 +513,16 @@ export class HttpService {
       .catch(this.handleError);
   }
   getSubType(type: String): Promise<any> {
-    const url = `${this.rootUrl}/basic/type/${type}`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/type/${type}?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(repsonse => repsonse.json())
       .catch(this.handleError);
   }
   getAllSubType(): Promise<any> {
-    const url = `${this.rootUrl}/basic/type/allsubtype`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/type/allsubtype?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(repsonse => repsonse.json())
@@ -391,7 +538,17 @@ export class HttpService {
   }
 
   getTags(): Promise<any> {
-    const url = `${this.rootUrl}/basic/configpraise`;
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/basic/configpraise?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(resp => resp.json())
+      .catch(this.handleError);
+  }
+// 品牌产品信息
+  getBrandProducts():Promise<any>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/brand?${time}`;
     return this.http.get(url)
       .toPromise()
       .then(resp => resp.json())

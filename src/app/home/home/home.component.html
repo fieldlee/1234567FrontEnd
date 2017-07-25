@@ -11,7 +11,7 @@
           <i class="glyphicon glyphicon-align-justify"></i>
         </button>
         <!-- brand -->
-        <a href="#/" class="navbar-brand text-lt">
+        <a routerLink="/home" class="navbar-brand text-lt">
           <i class="fa fa-btc"></i>
           <img src="./public/img/logo.png" alt="." class="hide">
           <span class="hidden-folded m-l-xs">乐器有家</span>
@@ -24,11 +24,11 @@
     <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
       <!-- buttons -->
       <div class="nav navbar-nav hidden-xs">
-        <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
+        <a href="/#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
             <i class="fa fa-dedent fa-fw text"></i>
             <i class="fa fa-indent fa-fw text-active"></i>
           </a>
-        <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
+        <a href="/#" class="btn no-shadow navbar-btn" ui-toggle-class="show" target="#aside-user">
             <i class="icon-user fa-fw"></i>
           </a>
       </div>
@@ -187,19 +187,19 @@
         <li class="dropdown">
           <a href="#" data-toggle="dropdown" class="dropdown-toggle">
               <i class="icon-bell fa-fw"></i>
-              <span class="visible-xs-inline">Notifications</span>
+              <span class="visible-xs-inline">通知</span>
               <span class="badge badge-sm up bg-danger pull-right-xs">2</span>
             </a>
           <!-- dropdown -->
           <div class="dropdown-menu w-xl animated fadeInUp">
             <div class="panel bg-white">
               <div class="panel-heading b-light bg-light">
-                <strong>You have <span>2</span> notifications</strong>
+                <strong>您有 <span>2</span> 个通知</strong>
               </div>
               <div class="list-group">
                 <a href class="list-group-item">
                     <span class="pull-left m-r thumb-sm">
-                      <img src="./public/img/a0.jpg" alt="..." class="img-circle">
+                      <img src="{{avatorPath}}" alt="..." class="img-circle">
                     </span>
                     <span class="clear block m-b-none">
                       Use awesome animate.css<br>
@@ -235,7 +235,7 @@
         <li class="dropdown" *ngIf="isAnymouse">
           <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-                <img src="./public/img/a0.jpg" alt="...">
+                <img src="{{avatorPath}}" alt="...">
                 <i class="on md b-white bottom"></i>
               </span>
               <span class="hidden-sm hidden-md">{{avatorName}}</span> <b class="caret"></b>
@@ -252,7 +252,7 @@
             </li>
             <li>
               <a routerLink="profile" >
-                  <span class="badge bg-danger pull-right">30%</span>
+                  <span class="badge bg-danger pull-right">{{percent}}</span>
                   <span>设置</span>
                 </a>
             </li>
@@ -267,8 +267,10 @@
             </li>
             <li class="divider"></li>
             <li>
-             <button type="button" class="btn btn-link" (click)="logout()">退出</button>
-             
+             <!-- <button type="button" class="btn btn-link" (click)="logout()">退出</button> -->
+             <a (click)="logout()">
+                  退出
+             </a>
             </li>
           </ul>
           <!-- / dropdown -->
@@ -291,9 +293,9 @@
           <!-- user -->
           <div class="clearfix hidden-xs text-center hide" id="aside-user">
             <div class="dropdown wrapper">
-              <a href="app.page.profile">
+              <a routerLink="/home/home/profile/{{username}}">
                 <span class="thumb-lg w-auto-folded avatar m-t-sm">
-                  <img src="./public/img/a0.jpg" class="img-full" alt="...">
+                  <img src="{{avatorPath}}" class="img-full" alt="...">
                 </span>
               </a>
               <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
@@ -319,7 +321,7 @@
                   <a href>Settings</a>
                 </li>
                 <li>
-                  <a href="page_profile.html">Profile</a>
+                  <a routerLink="/home/home/profile">个人信息</a>
                 </li>
                 <li>
                   <a href>
@@ -329,7 +331,7 @@
                 </li>
                 <li class="divider"></li>
                 <li>
-                  <a href="page_signin.html">Logout</a>
+                  <a (click)="logout()">退出</a>
                 </li>
               </ul>
               <!-- / dropdown -->
@@ -340,19 +342,19 @@
          <!-- nav -->
           <nav ui-nav class="navi clearfix">
             <ul class="nav">
-              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                <span>Navigation</span>
+               <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
+                <span><b>乐器有家</b></span>
               </li>
               <li>
-                <a href [ngClass]="{auto:true,dk:true}">      
-                  <span class="pull-right text-muted">
+                <a routerLink="/home" class="auto" >      
+                  <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span>
+                  </span> -->
                   <i class="glyphicon glyphicon-home icon text-primary-dker" style="font-size: 25px"></i>
-                  <span class="font-bold">Dashboard</span>
+                  <span class="font-bold">首页</span>
                 </a>
-                <ul class="nav nav-sub dk">
+                <!-- <ul class="nav nav-sub dk">
                   <li class="nav-sub-header">
                     <a href>
                       <span>Dashboard</span>
@@ -369,257 +371,95 @@
                       <span>Dashboard v2</span>
                     </a>
                   </li>
-                </ul>
+                </ul> -->
               </li>
               <li>
-                <a href="mail.html">
-                  <b class="badge bg-info pull-right">9</b>
-                  <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
-                  <span class="font-bold">Email</span>
+                <a routerLink="/home/home/find" [ngClass]="{auto:true}">
+                 <b class="badge bg-info pull-right">9</b>
+                  <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i> 
+                  <span class="font-bold">发现</span>
                 </a>
               </li>
               <li class="line dk"></li>
 
-              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
-                <span>Components</span>
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
+                <span><b>乐器论坛</b></span>
               </li>
               <li>
-                <a href [ngClass]="{auto:true,dk:false}">      
-                  <span class="pull-right text-muted">
+                <a routerLink="/home/home/forum/A" class="auto" >      
+                  <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span>
-                  <b class="badge bg-info pull-right">3</b>
-                  <i class="glyphicon glyphicon-th" style="font-size: 25px"></i>
-                  <span>Layout</span>
+                  </span> -->
+                  <!-- <b class="badge bg-info pull-right">3</b> -->
+                  <i class="glyphicon glyphicon-th text-info-lter" style="font-size: 25px"></i>
+                  <span>键盘乐器</span>
                 </a>
-                <ul class="nav nav-sub dk">
-                  <li class="nav-sub-header">
-                    <a href>
-                      <span>Layout</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="layout_app.html">
-                      <span>Application</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="layout_fullwidth.html">
-                      <span>Full width</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="layout_boxed.html">
-                      <span>Boxed layout</span>
-                    </a>
-                  </li>      
-                </ul>
+
               </li>
               <li>
-                <a href class="auto">
-                  <span class="pull-right text-muted">
+                <a routerLink="/home/home/forum/B" class="auto" >
+                  <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span>
+                  </span> -->
                   <i class="glyphicon glyphicon-briefcase icon" style="font-size: 25px"></i>
-                  <span>UI Kits</span>
+                  <span>管式乐器</span>
                 </a>
-                <ul class="nav nav-sub dk">
-                  <li class="nav-sub-header">
-                    <a href>
-                      <span>UI Kits</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_button.html">
-                      <span>Buttons</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_icon.html">
-                      <b class="badge bg-info pull-right">3</b>
-                      <span>Icons</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_grid.html">
-                      <span>Grid</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_widget.html">
-                      <b class="badge bg-success pull-right">13</b>
-                      <span>Widgets</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_sortable.html">
-                      <span>Sortable</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_portlet.html">
-                      <span>Portlet</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_timeline.html">
-                      <span>Timeline</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ui_jvectormap.html">
-                      <span>Vector Map</span>
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li>
-                <a href class="auto">
-                  <span class="pull-right text-muted">
+                <a routerLink="/home/home/forum/C" class="auto" >
+                  <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span>
-                  <b class="label bg-primary pull-right">2</b>
-                  <i class="glyphicon glyphicon-list"></i>
-                  <span>Table</span>
+                  </span> -->
+                  <!-- <b class="label bg-primary pull-right">2</b> -->
+                  <i class="glyphicon glyphicon-list" style="font-size: 25px"></i>
+                  <span>拉弦乐器</span>
                 </a>
-                <ul class="nav nav-sub dk">
-                  <li class="nav-sub-header">
-                    <a href>
-                      <span>Table</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="table_static.html">
-                      <span>Table static</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="table_datatable.html">
-                      <span>Datatable</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="table_footable.html">
-                      <span>Footable</span>
-                    </a>
-                  </li>
-                </ul>
+                
               </li>
               <li>
-                <a href class="auto">
-                  <span class="pull-right text-muted">
+                <a routerLink="/home/home/forum/D" class="auto" >
+                  <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span>
+                  </span> -->
                   <i class="glyphicon glyphicon-edit" style="font-size: 25px"></i>
-                  <span>Form</span>
+                  <span>弹拨乐器</span>
                 </a>
-                <ul class="nav nav-sub dk">
-                  <li class="nav-sub-header">
-                    <a href>
-                      <span>Form</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="form_element.html">
-                      <span>Form elements</span>
-                    </a>
-                  </li>
-                </ul>
+
               </li>
               <li>
-                <a href="ui_chart.html">
-                  <i class="glyphicon glyphicon-signal"></i>
-                  <span>Chart</span>
+                <a routerLink="/home/home/forum/E" class="auto" >
+                  <i class="glyphicon glyphicon-signal" style="font-size:25px"></i>
+                  <span>打击乐器</span>
                 </a>
               </li>
               <li>
-                <a href class="auto">
-                  <span class="pull-right text-muted">
+                <a routerLink="/home/home/forum/F" class="auto" >
+                  <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span>
-                  <i class="glyphicon glyphicon-file icon"></i>
-                  <span>Pages</span>
+                  </span> -->
+                  <i class="glyphicon glyphicon-file icon" style="font-size:25px"></i>
+                  <span>吹奏乐器</span>
                 </a>
-                <ul class="nav nav-sub dk">
-                  <li class="nav-sub-header">
-                    <a href>
-                      <span>Pages</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_profile.html">
-                      <span>Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_post.html">
-                      <span>Post</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_search.html">
-                      <span>Search</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_invoice.html">
-                      <span>Invoice</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_price.html">
-                      <span>Price</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_lockme.html">
-                      <span>Lock screen</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_signin.html">
-                      <span>Signin</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_signup.html">
-                      <span>Signup</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_forgotpwd.html">
-                      <span>Forgot password</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="page_404.html">
-                      <span>404</span>
-                    </a>
-                  </li>
-                </ul>
               </li>
 
-              <li class="line dk hidden-folded"></li>
-
-              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">          
-                <span>Your Stuff</span>
-              </li>  
+              <li class="line dk"></li>
+              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs"  style="font-size:15px">
+                <span><b>设置</b></span>
+              </li>
               <li>
-                <a href="page_profile.html">
-                  <i class="icon-user icon text-success-lter"></i>
-                  <b class="badge bg-success pull-right">30%</b>
-                  <span>Profile</span>
+                <a routerLink="/home/home/profile" class="auto" >
+                  <i class="icon-user icon text-success-lter" style="font-size:25px"></i><span>个人信息</span>
+                  <b class="badge bg-success pull-right">{{percent}}</b>
                 </a>
               </li>
               <li>
-                <a href>
-                  <i class="icon-question icon"></i>
-                  <span>Documents</span>
+                <a routerLink="/home/home/help" class="auto" >
+                  <i class="icon-question icon" style="font-size:25px"></i><span>帮助</span>
                 </a>
               </li>
             </ul>
@@ -651,7 +491,7 @@
   </aside>
   <!-- / aside -->
 
-  <router-outlet></router-outlet>
+  <router-outlet ></router-outlet>
   <!-- footer -->
   <footer id="footer" class="app-footer" role="footer">
     <div class="wrapper b-t bg-light">

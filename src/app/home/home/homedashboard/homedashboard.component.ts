@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
+import { ContantService } from '../../../contant.service';
+import {News} from '../../../class/news';
+import {ForumInfo} from '../../../class/forum-info';
 import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 @Component({
@@ -21,11 +24,19 @@ export class HomedashboardComponent implements OnInit {
   citys:string[];
   district:string;
   districts:string[];
-  constructor(private httpService: HttpService, private loadJqService: LoadJQService,
+  newslist:News[];
+  forumlist:ForumInfo[];
+  forumrecent:ForumInfo[];
+  page:Number = 1;
+  constructor(private httpService: HttpService,
+    private contantService:ContantService, 
+    private loadJqService: LoadJQService,
   private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
+    
+
     this.type = "";
     this.subType = "";
     this.province = "";
@@ -53,6 +64,15 @@ export class HomedashboardComponent implements OnInit {
         this.provinces.push(element.name);
       });
     });
+
+    this.httpService.getNews(this.page.toString()).then(resp=>{
+        console.log(resp);
+        this.newslist = resp;
+    });
+
+    this.httpService.getRecentForums().then(resp=>{
+      this.forumrecent = resp.results as ForumInfo[];
+    });
   }
   typeListener(): void {
     this.httpService.getSubType(this.type).then(
@@ -66,10 +86,44 @@ export class HomedashboardComponent implements OnInit {
         });
       })
   }
+
+
   ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.loadJqService.reloadJQ(null);
+    
+  }
+  changeTab(index:Number){
+    this.forumlist = []; // 初始化论坛数据
+    this.page = 1;
+    if(index==1){
+         this.httpService.getNews(this.page.toString()).then(resp=>{
+          console.log(resp);
+          this.newslist = resp;
+        });
+    }else{
+      var type="键盘乐器";
+        if(index==2){
+          type="键盘乐器";
+        }
+        if(index==3){
+          type="管式乐器";
+        }
+        if(index==4){
+          type="拉弦乐器";
+        }
+        if(index==5){
+          type="弹拨乐器";
+        }
+        if(index==6){
+          type="打击乐器";
+        }
+        if(index==7){
+          type="吹奏乐器";
+        }
+        this.httpService.getForumsByType(type,this.page.toString() ).then(resp=>{
+            this.forumlist = resp.results as ForumInfo[] ;
+        })
+    }
   }
 
   provinceListener(): void {

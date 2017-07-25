@@ -10,7 +10,7 @@
       <div class="row">
         <!--广告位信息  -->
         <div class="col-lg-12">
-          <div class="panel panel-info">
+          <div class="panel ">
             <div class="panel-body">col-lg-12</div>
           </div>
         </div>
@@ -18,7 +18,7 @@
         <!--找琴的位子  -->
         <div class="col-lg-8 col-md-12 col-sm-12">
           <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
-            <div class="panel panel-info">
+            <div class="panel ">
               <div class="panel-body">
                 <div class="app-content-body " style="padding:0">
                   <div class="wrapper-xs">
@@ -55,7 +55,7 @@
                               <div class="form-group">
                                 <label class="col-sm-2 control-label">品牌</label>
                                 <div class="col-sm-10">
-                                  <select ui-jq="chosen" name="focus" placeholder="请品牌可多选"  multiple class="w-md">
+                                  <select ui-jq="chosen" name="focus" placeholder="请品牌可多选" multiple class="w-md">
  
                                 <option *ngFor="let b of brands" value="{{b}}">{{b}}</option>
                               </select>
@@ -68,11 +68,14 @@
                                   <input type="text" class="form-control" placeholder="请选择价格范围">
                                 </div>
                               </div>
-                              <div class="line line-dashed b-b line-lg pull-in"></div>
-                              <div class="col-lg-2 col-lg-offset-10">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-circle"></i><b>   查看 </b>  </button>
-                              </div>
                             </form>
+                          </div>
+                          <div class="panel-footer bg-light lter">
+                            <button class="btn btn-info pull-right btn-sm"><i class="fa fa-circle"></i> 查看</button>
+                            <ul class="nav nav-pills nav-sm">
+                              <!-- <li><a href><i class="fa fa-camera text-muted"></i></a></li>
+                      <li><a href><i class="fa fa-video-camera text-muted"></i></a></li> -->
+                            </ul>
                           </div>
                         </div>
                         <div class="tab-pane" id="findDelegate">
@@ -123,11 +126,14 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="line line-dashed b-b line-lg pull-in"></div>
-                              <div class="col-lg-2 col-lg-offset-10">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-circle"></i><b>   查看 </b>  </button>
-                              </div>
                             </form>
+                          </div>
+                          <div class="panel-footer bg-light lter">
+                            <button class="btn btn-info pull-right btn-sm"><i class="fa fa-circle"></i> 查看</button>
+                            <ul class="nav nav-pills nav-sm">
+                              <!-- <li><a href><i class="fa fa-camera text-muted"></i></a></li>
+                      <li><a href><i class="fa fa-video-camera text-muted"></i></a></li> -->
+                            </ul>
                           </div>
                         </div>
                       </div>
@@ -144,64 +150,111 @@
               <div class="app-content-body " style="padding:0">
                 <div class="wrapper-xs">
                   <div class="tab-container">
-                    <ul class="nav nav-tabs">
-                      <li class="active"><a href data-toggle="tab" data-target="#tab_1"> 资讯 <span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_2">键盘乐器<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_3">管式乐器<span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_4">拉弦乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_5">弹拨乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_6">打击乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_7">吹奏乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                    <ul class="nav nav-tabs" id="homeTab">
+                      <li class="active"><a (click)="changeTab(1)" data-toggle="tab" data-target="#tab_1" index="1"> 资讯 <span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+                      <li><a (click)="changeTab(2)" data-toggle="tab" data-target="#tab_2" index="2">键盘乐器<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a (click)="changeTab(3)" data-toggle="tab" data-target="#tab_3" index="3">管式乐器<span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+                      <li><a (click)="changeTab(4)" data-toggle="tab" data-target="#tab_4" index="4">拉弦乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a (click)="changeTab(5)" data-toggle="tab" data-target="#tab_5" index="5">弹拨乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a (click)="changeTab(6)" data-toggle="tab" data-target="#tab_6" index="6">打击乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a (click)="changeTab(7)" data-toggle="tab" data-target="#tab_7" index="7">吹奏乐器 <span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
                     </ul>
                     <div class="tab-content">
                       <div class="tab-pane active" id="tab_1">
-                        <div class="figure flex-block">
+                        <div class="figure flex-block" *ngFor="let new of newslist">
                           <div class="article flex-1">
-                            <h2 class="figcaption"><a href="//www.myzaker.com/article/59658de99490cb520c000038/" title="人民日报再评王者荣耀：别让网游成生活全部"> 人民日报再评王者荣耀：别让网游成生活全部别让网游成生活全部别让网游成生活全部</a></h2>
-                            <div class="subtitle"><span>人民网</span><span>1小时前</span><span>15 评论</span></div>
-                          </div>
-                          <a href="//www.myzaker.com/article/59658de99490cb520c000038/" title=" 人民日报再评王者荣耀：别让网游成生活全部" class="img" style="background-image:url(//zkres2.myzaker.com/201707/59656a301bc8e0626800010a_320.jpg);"></a>
-                        </div>
-
-                        <div class="figure flex-block">
-                          <div class="article flex-1">
-                            <h2 class="figcaption"><a href="//www.myzaker.com/article/596583be9490cb410c000035/" title=" 银行“被逼”减免手续费 老百姓能省多少？"> 银行“被逼”减免手续费 老百姓能省多少？</a></h2>
+                            <h2 class="figcaption"><a routerLink="/home/home/newcontent/{{new._id}}" title="{{new.title}}"> {{new.title}}</a></h2>
                             <br>
-                            <div class="subtitle"><span>融360</span><span>1小时前</span><span>4 评论</span></div>
+                            <div class="subtitle"><span>{{new.avator}}</span><span>{{new.fromTime}}</span><span> {{new.comment}}评论</span></div>
                           </div>
+                          <a routerLink="/home/home/newcontent/{{new._id}}" *ngIf="new.images.length>0" title=" {{new.title}}" class="img" [ngStyle]="{'background-image': 'url(' + new.images[0] + ')'}"></a>
                         </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('news')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
-                        </p> 
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('news')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                        </p>
                       </div>
                       <div class="tab-pane" id="tab_2">
+                        <div class="figure flex-block" *ngFor="let forumObj of forumlist">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                        </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('键盘乐器')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('A')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
                         </p>
                       </div>
                       <div class="tab-pane" id="tab_3">
+                        <div class="figure flex-block" *ngFor="let forumObj of forumlist">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                        </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('管式乐器')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('B')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
                         </p>
                       </div>
                       <div class="tab-pane" id="tab_4">
+                        <div class="figure flex-block" *ngFor="let forumObj of forumlist">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                        </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('拉弦乐器')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('C')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
                         </p>
                       </div>
                       <div class="tab-pane" id="tab_5">
+                        <div class="figure flex-block" *ngFor="let forumObj of forumlist">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                        </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('弹拨乐器')"><i class="fa fa-circle"></i>点击查看全部</button>
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('D')"><i class="fa fa-circle"></i>点击查看全部</button>
                         </p>
                       </div>
                       <div class="tab-pane" id="tab_6">
+                        <div class="figure flex-block" *ngFor="let forumObj of forumlist">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                        </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('打击乐器')"><i class="fa fa-circle"></i>点击查看全部</button>
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('E')"><i class="fa fa-circle"></i>点击查看全部</button>
                         </p>
                       </div>
                       <div class="tab-pane" id="tab_7">
+                        <div class="figure flex-block" *ngFor="let forumObj of forumlist">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                        </div>
                         <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('吹奏乐器')"><i class="fa fa-circle"></i>点击查看全部</button>
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('F')"><i class="fa fa-circle"></i>点击查看全部</button>
                         </p>
                       </div>
                     </div>
@@ -269,6 +322,27 @@
           </div>
         </div>
         <!--广告位信息  -->
+        <div class="col-lg-4 col-md-8 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading font-bold">最新帖子</div>
+            <div class="panel-body">
+              <div class="padder-md">
+                <!-- streamline -->
+
+                <div class="streamline b-l m-b">
+                  <div class="sl-item  b-l" [ngClass]="{'b-success':i<4,'b-primary':i>=4&&i<7,'b-warning':i>=7 }" *ngFor="let recentForum of forumrecent;let i = index">
+                    <div class="m-l">
+                      <div class="text-muted">{{recentForum.fromTime}}</div>
+                      <p><a routerLink="/home/home/profile/{{recentForum.author}}" class="text-info">{{recentForum.avator}}</a>                        </p>
+                      <h4><a routerLink="/home/home/content/{{recentForum._id}}">{{recentForum.title}}</a></h4>
+                    </div>
+                  </div>
+                </div>
+                <!-- / streamline -->
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

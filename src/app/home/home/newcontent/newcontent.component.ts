@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
-import { ForumInfo } from '../../../class/forum-info';
+import { News } from '../../../class/news';
 import { Comment } from '../../../class/comment';
-import { Location} from '@angular/common';
 import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
 declare var $: any;
-
 @Component({
-  selector: 'app-content',
-  templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css'],
+  selector: 'app-newcontent',
+  templateUrl: './newcontent.component.html',
+  styleUrls: ['./newcontent.component.css'],
   providers:[HttpService,LoadJQService]
 })
-export class ContentComponent implements OnInit {
-  forum:ForumInfo;
+export class NewcontentComponent implements OnInit {
+  news:News;
   id:string;
   commentAvatorName:string;
   commentrepid:string;
@@ -22,24 +20,24 @@ export class ContentComponent implements OnInit {
   commentList:Comment[] = [];
   commentContent:string;
   isSelfForum:boolean = false;
-  constructor(private _location: Location,
-    private route:ActivatedRoute,
+  constructor(private route:ActivatedRoute,
     private httpService:HttpService,
-    private loadJqService:LoadJQService) { 
-      this.forum = new ForumInfo();
+    private loadJqService:LoadJQService) {
+      this.news = new News();
       this.curComment  = new Comment();
       this.commentContent = "";
-    }
+     }
 
   ngOnInit() {
     this.route.params.subscribe(params=>{
         this.id = params["id"];
         if(this.id != undefined){
-          this.httpService.getForumsById(this.id).then(resp=>{
+          this.httpService.getNewsById(this.id).then(resp=>{
             if(resp){
-              this.forum = resp;
+              console.log(resp);
+              this.news = resp;
               // 判断是否是自己的帖子
-              if (this.forum.author == window.localStorage.getItem("username")){
+              if (this.news.author == window.localStorage.getItem("username")){
                   this.isSelfForum = true;
               }
               this.isSelfForum = false;
@@ -53,23 +51,8 @@ export class ContentComponent implements OnInit {
         }
     }) 
   }
-  goBack(){
-    this._location.back();
-  } 
-  support(){
-  this.httpService.supportForumById(this.id).then(resp=>{
-      $.notify("成功收到您的赞", {
-              type: 'success'
-            }, {
-                animate: {
-                  enter: 'animated lightSpeedIn',
-                  exit: 'animated lightSpeedOut'
-                }
-              });
-      return;
-  });
-}
- ngAfterViewInit() {
+
+ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     this.loadJqService.froalaEditorComment('forumComment');
@@ -106,6 +89,22 @@ export class ContentComponent implements OnInit {
   replyComment(id,name){
     this.commentrepid = id;
     this.commentAvatorName = name;
+  }
+  support()
+  {
+    this.httpService.supportNewsById(this.id).then(resp=>{
+      if(resp.success){
+        $.notify("成功收到您的赞", {
+              type: 'success'
+            }, {
+                animate: {
+                  enter: 'animated lightSpeedIn',
+                  exit: 'animated lightSpeedOut'
+                }
+              });
+      return;
+      }
+    });
   }
   supportComment(id){
     console.log(id);

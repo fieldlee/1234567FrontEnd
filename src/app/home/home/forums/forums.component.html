@@ -9,7 +9,7 @@
       <div class="row">
         <!--广告位信息  -->
         <div class="col-lg-12">
-          <div class="panel panel-info">
+          <div class="panel">
             <div class="panel-body">col-lg-12</div>
           </div>
         </div>
@@ -22,43 +22,32 @@
               <div class="app-content-body " style="padding:0">
                 <div class="wrapper-xs">
                   <div class="tab-container">
-                    <ul class="nav nav-tabs">
-                      <li class="active"><a href data-toggle="tab" data-target="#tab_1"> 全部 <span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_2">钢琴<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
-                      <li><a href data-toggle="tab" data-target="#tab_2">其他<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                    <ul class="nav nav-tabs" id="forumTab">
+                      <li [ngClass]="{active: i == 0}"  *ngFor="let subForum of instrumentSubForums;let i = index"><a href data-toggle="tab" data-target="#tab_{{i}}">{{subForum}} <span class="badge bg-danger badge-sm m-l-xs">6</span></a></li>
+                      <!-- <li><a href data-toggle="tab" data-target="#tab_2">钢琴<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
+                      <li><a href data-toggle="tab" data-target="#tab_3">其他<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li> -->
+                       <li style="float:right">
+                        <button class="btn btn-success btn-block" (click)="issue()" >+发布帖子</button>
+                       </li>
                     </ul>
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="tab_1">
-                        <div class="figure flex-block">
+                    <div class="tab-content" >
+                      <div [ngClass]="{active:(i==0)}"  class="tab-pane"  id="tab_{{i}}" *ngFor="let subForum of instrumentSubForums; let i = index">
+                          <div class="figure flex-block" *ngFor="let forumObj of forumlist">
                           <div class="article flex-1">
-                            <h2 class="figcaption"><a routerLink="../../content/00001" title="人民日报再评王者荣耀：别让网游成生活全部"> 人民日报再评王者荣耀：别让网游成生活全部别让网游成生活全部别让网游成生活全部</a></h2>
-                            <div class="subtitle"><span>人民网</span><span>1小时前</span><span>15 评论</span></div>
-                          </div>
-                          <a routerLink="content/00001" title=" 人民日报再评王者荣耀：别让网游成生活全部" class="img" style="background-image:url(//zkres2.myzaker.com/201707/59656a301bc8e0626800010a_320.jpg);"></a>
-                        </div>
-
-                        <div class="figure flex-block">
-                          <div class="article flex-1">
-                            <h2 class="figcaption"><a routerLink="../../content/00001" title=" 银行“被逼”减免手续费 老百姓能省多少？"> 银行“被逼”减免手续费 老百姓能省多少？</a></h2>
+                            <h2 class="figcaption"><a routerLink="../../content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
                             <br>
-                            <div class="subtitle"><span>融360</span><span>1小时前</span><span>4 评论</span></div>
+                            <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
-                        </div>
-                        <p>
-                        <button class="btn btn-primary btn-block" (click)="changetoNews('news')"><i class="fa fa-bars pull-left"></i>点击查看全部</button>
-                        </p> 
+                            <a routerLink="../../content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}"></a>
+                          </div>
+
+                          <div class="figure_loading" *ngIf="isloading">正在为你加载更多...</div>
+                          <!-- <div class="alert alert-success" *ngIf="isloading">
+                            <ul class="margin-bottom-none padding-left-lg">
+                              <li><b>{{loadingText}}</b></li>
+                            </ul>
+                          </div> -->
                       </div>
-                      <div class="tab-pane" id="tab_2">
-                        <p>
-                        <button class="btn btn-default btn-block" (click)="changetoNews('keys')"><i class="fa fa-bars pull-left"></i>点击查看全部</button>
-                        </p>
-                      </div>
-                      <div class="tab-pane" id="tab_3">
-                        <p>
-                        <button class="btn btn-default btn-block" (click)="changetoNews('pipe')"><i class="fa fa-bars pull-left"></i>点击查看全部</button>
-                        </p>
-                      </div>
-                      
                     </div>
                   </div>
                 </div>
@@ -68,7 +57,7 @@
         </div>
         <!--找琴的位子  -->
         <!--广告位信息  -->
-        <div class="col-lg-4 col-md-8 col-sm-12">
+        <div class="col-lg-4 col-md-8 col-sm-12">             
           <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -112,13 +101,13 @@
 
             <!-- Controls -->
             <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">上一页</span>
-  </a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">上一页</span>
+            </a>
             <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">下一页</span>
-  </a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">下一页</span>
+            </a>
           </div>
         </div>
         <!--广告位信息  -->

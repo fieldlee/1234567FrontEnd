@@ -1,0 +1,4 @@
+#imagegallery .modal-dialog  {width:95%;}
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}

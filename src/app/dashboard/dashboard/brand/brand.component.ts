@@ -15,6 +15,10 @@ declare var BootstrapDialog: any;
 export class BrandComponent implements OnInit {
   brand: Brand;
   brands: Brand[];
+  provinces:string[];
+  citys:string[];
+  districts:string[];
+
   constructor(private httpService: HttpService, private loadJqService: LoadJQService) {
     this.brand = new Brand();
     this.brand.recommend = "0";
@@ -22,12 +26,29 @@ export class BrandComponent implements OnInit {
 
   ngOnInit() {
     
+    this.httpService.getProvinces().then(resp=>{
+      this.provinces = new Array();
+      resp.results.forEach(element => {
+        this.provinces.push(element.name);
+      });
+    });
+
     this.httpService.getBrands().then(resp => {
       this.brands = resp;
       // 重构dataTable
       this.loadJqService.reloadJQ(null);
     });
+    
   }
+
+   ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    const self = this;
+    this.loadJqService.froalaEditor("brandContent", null,null,null,null);
+    
+  }
+
   //onChange file listener
   changeListener($event): void {
 
@@ -51,8 +72,28 @@ export class BrandComponent implements OnInit {
   }
 
 
+  provinceListener(): void {
+    const _this = this;
+    this.httpService.getCitys(this.brand.province).then(resp => {
+      _this.citys = new Array();
+      resp.results.forEach(element => {
+        _this.citys.push(element.city);
+      });
+    });
+  }
+
+  cityListener(): void {
+    const _this = this;
+    this.httpService.getDistricts(this.brand.province,this.brand.city).then(resp => {
+      _this.districts = new Array();
+      resp.results.forEach(element => {
+        _this.districts.push(element.district);
+      });
+    });
+  }
   cancle(): void {
     this.brand = new Brand();
+    $("#brandContent").froalaEditor('html.set', "");
   }
 
   update(brand: Brand) {
@@ -101,7 +142,7 @@ export class BrandComponent implements OnInit {
             alert("请输入品牌名称");
             return
           }
-
+          self.brand.content =  $("#brandContent").froalaEditor('html.get', true);
           self.httpService.createBrand(self.brand).then(resp => {
             self.httpService.getBrands().then(resp => {
               self.brands = resp;

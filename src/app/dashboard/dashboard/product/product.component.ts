@@ -20,6 +20,7 @@ export class ProductComponent implements OnInit {
   configlist: Array<string>;
   configvalues: Array<string>;
   uploadFileName: string;
+  uploadFileName2: string;
   constructor(private httpService: HttpService, private loadJq: LoadJQService) {
     this.product = new Product();
   }
@@ -102,24 +103,44 @@ export class ProductComponent implements OnInit {
         } else {
           respJson = response;
         }
-        self.product.images.push(respJson["path"]);
+        console.log(respJson);
+        self.product.appearimages.push(respJson["path"]);
         self.uploadFileName = "";
       }
     });
   }
 
+  changeListener2($event): void {
+    const self = this;
+    $('#uploadForm2').ajaxSubmit({
+      error: function (xhr) {
+        console.log(xhr)
+      },
+      success: function (response) {
+        console.log(response);
+        var respJson;
+        if (typeof respJson == "string") {
+          respJson = JSON.parse(response);
+        } else {
+          respJson = response;
+        }
+        self.product.detailimages.push(respJson["path"]);
+        self.uploadFileName2 = "";
+      }
+    });
+  }
   deleteImage(imagepath: string) {
     // var tempPath = imagepath.substring(imagepath.lastIndexOf("/") + 1);
     // alert(tempPath);
     var postImagePath = { "imagepath": imagepath };
     this.httpService.deleteImage(postImagePath).then(resp => {
-      console.log(resp);
       if (resp["success"]) {
-        this.product.images = this.product.images.filter(function (element) {
+        this.product.appearimages = this.product.appearimages.filter(function (element) {
           return element != imagepath
         });
-        console.log(this.product.images);
-
+        this.product.detailimages = this.product.detailimages.filter(function (element) {
+          return element != imagepath
+        });
       }
     });
     return false;

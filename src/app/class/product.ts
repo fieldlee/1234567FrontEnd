@@ -9,6 +9,8 @@ export class Product {
     content:String;
     status:String;
     images:String[];
+    appearimages:String[];
+    detailimages:String[];
     config:any;
     praise:any;
     constructor(){

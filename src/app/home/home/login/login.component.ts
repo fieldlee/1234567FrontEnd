@@ -41,8 +41,8 @@ export class LoginComponent implements OnInit {
         if (resp["token"]) {
           window.localStorage.setItem("x-access-token", resp["token"]);
         }
+        var i = 0;
         if (resp["data"]) {
-          console.log(resp["data"]);
           var userObj = resp["data"];
           window.localStorage.setItem("username", userObj["username"]);
           window.localStorage.setItem("avator", userObj["avator"]);
@@ -51,10 +51,73 @@ export class LoginComponent implements OnInit {
           }
           if(userObj["phone"]){
             window.localStorage.setItem("phone", userObj["phone"]);
+            i = i+1;
           }
           if(userObj["email"]){
             window.localStorage.setItem("email", userObj["email"]);
+            i = i+1;
           }
+          if(userObj["avatorPath"]){
+            window.localStorage.setItem("avatorPath", userObj["avatorPath"]);
+            i = i+1;
+          }
+          if(userObj["backgroundPath"]){
+            window.localStorage.setItem("backgroundPath", userObj["backgroundPath"]);
+            i = i+1;
+          }
+          if(userObj["birthday"]){
+            window.localStorage.setItem("birthday", userObj["birthday"]);
+            i = i+1;
+          }
+          if(userObj["province"]){
+            window.localStorage.setItem("province", userObj["province"]);
+            i = i+1;
+          }
+          if(userObj["city"]){
+            window.localStorage.setItem("city", userObj["city"]);
+            i = i+1;
+          }
+          if(userObj["district"]){
+            window.localStorage.setItem("district", userObj["district"]);
+            i = i+1;
+          }
+          if(userObj["address"]){
+            window.localStorage.setItem("address", userObj["address"]);
+            i = i+1;
+          }
+          if(userObj["sex"]){
+            window.localStorage.setItem("sex", userObj["sex"]);
+            i = i+1;
+          }
+          if(userObj["focus"]){
+            window.localStorage.setItem("focus", userObj["focus"]);
+            i = i+1;
+          }
+          if(userObj["skills"]){
+            window.localStorage.setItem("skills", userObj["skills"]);
+            i = i+1;
+          }
+          if(i>10){
+            window.localStorage.setItem("percent", "100%");
+          }else if (i>0){
+            window.localStorage.setItem("percent",  (i*10)+"%");
+          }else{
+            window.localStorage.setItem("percent",  "10%");
+          }
+    //       phone:String,
+    // email:String,
+    // registerTime:Date,
+    // avator:String,
+    // avatorPath:String,
+    // backgroundPath:String,
+    // birthday:Date,
+    // province:String,
+    // city:String,
+    // district:String,
+    // address:String,
+    // sex:String,
+    // focus:Array,
+    // skills:Array
 
         }
         this.router.navigate(['/home']);

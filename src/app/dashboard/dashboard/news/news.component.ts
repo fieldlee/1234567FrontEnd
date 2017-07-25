@@ -32,7 +32,7 @@ export class NewsComponent implements OnInit {
       })
     });
 
-    this.httpService.getNews().then(resp => {
+    this.httpService.getNews("1").then(resp => {
       this.newses = resp;
       // 重构dataTable
       this.loadJqService.reloadJQ(null);
@@ -64,7 +64,7 @@ export class NewsComponent implements OnInit {
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if (result) {
           self.httpService.deleteNews(n).then(resp=>{
-            self.httpService.getNews().then(resp => {
+            self.httpService.getNews("1").then(resp => {
               self.newses = resp;
             });
           })
@@ -97,10 +97,12 @@ export class NewsComponent implements OnInit {
             alert("请输入新闻发布标题");
             return;
           }
+          self.editNews.author = window.localStorage.getItem("username");
+          self.editNews.issueTime = new Date();
           self.httpService.createNews(self.editNews).then(resp => {
             console.log(resp);
             self.editNews = resp;
-            self.httpService.getNews().then(resp => {
+            self.httpService.getNews("1").then(resp => {
               self.newses = resp;
             });
           });

@@ -6,22 +6,35 @@ import { ProfileComponent } from './home/profile/profile.component';
 import { HelpComponent } from './home/help/help.component';
 import { NewsComponent } from './home/news/news.component';
 import { ForumsComponent } from './home/forums/forums.component';
+import { NewcontentComponent } from './home/newcontent/newcontent.component';
 import { ContentComponent } from './home/content/content.component';
 import { IssueComponent } from './home/issue/issue.component';
+import { FindComponent } from './home/find/find.component';
+import { BrandComponent } from './home/brand/brand.component';
+import { ProductComponent } from './home/product/product.component';
+import { PraiseComponent } from './home/praise/praise.component';
 const appRoutes: Routes = [
   { path: "", redirectTo: 'home', pathMatch: 'full' },
   { path: "home", component: HomeComponent , children:[
     { path: "", redirectTo: 'dashboard', pathMatch: 'full'},
     { path: "dashboard", component: HomedashboardComponent},
     { path: "profile", component: ProfileComponent},
+    { path: "profile/:username", component: ProfileComponent},
     { path: "news", component: NewsComponent},
     { path: "forum", component: ForumsComponent},
     { path: "forum/:key", component: ForumsComponent},
     { path: "content", component: ContentComponent},
     { path: "issue", component: IssueComponent},
-    { path: "issue/:type/:subtype", component: IssueComponent},
+    { path: "issue/:type", component: IssueComponent},
+    { path: "issue/:type/:subtype", component: IssueComponent},//productid
+    { path: "issue/:type/:subtype/:productid", component: IssueComponent},
+    { path: "newcontent/:id", component: NewcontentComponent},
     { path: "content/:id", component: ContentComponent},
-    { path: "help", component: HelpComponent}
+    { path: "product/:id", component: ProductComponent},
+    { path: "praise/:id", component: PraiseComponent},
+    { path: "brand/:id", component: BrandComponent},
+    { path: "help", component: HelpComponent},
+    { path: "find", component: FindComponent}
   ]},
   
 ];

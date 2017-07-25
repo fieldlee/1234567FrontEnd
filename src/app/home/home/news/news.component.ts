@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
+import { ContantService } from '../../../contant.service';
 import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 
@@ -12,7 +13,9 @@ declare var $: any;
 })
 export class NewsComponent implements OnInit {
 
-  constructor(private httpService: HttpService, private loadJqService: LoadJQService,
+  constructor(private httpService: HttpService,
+    private contantService:ContantService, 
+    private loadJqService: LoadJQService,
   private route: ActivatedRoute,
     private router: Router) { }
    
@@ -20,4 +23,9 @@ export class NewsComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    
+  }
 }

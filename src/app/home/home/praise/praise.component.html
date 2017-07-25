@@ -1,0 +1,110 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <ol class="breadcrumb">
+      <li><a href="/home">首页</a></li>
+      <li><a href="/home/home/find">发现</a></li>
+      <li><a href="/home/home/product/{{productid}}">产品</a></li>
+      <li class="active">口碑</li>
+    </ol>
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+      <!-- <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a> -->
+      <h1 class="m-n font-thin h3">对{{productInfo["name"]}}口碑</h1>
+    </div>
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+        <!--产品信息描述和产品配置请说明  -->
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+          <div class="panel panel-default ">
+            <div class="panel-heading font-bold">口碑信息</div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">购买该产品地址</label>
+                <div class="col-sm-3">
+                  <select name="province" class="form-control m-b" [(ngModel)]="praise.province" (change)="provinceListener()">
+                <option></option>
+                <option *ngFor="let pro of provinces">{{pro}}</option>
+                </select>
+                </div>
+                <div class="col-sm-3">
+                  <select name="city" class="form-control m-b" [(ngModel)]="praise.city" (change)="cityListener()">
+                <option></option>
+                <option *ngFor="let cityName of citys">{{cityName}}</option>
+                </select>
+                </div>
+                <div class="col-sm-3">
+                  <select name="district" class="form-control m-b" [(ngModel)]="praise.district">
+                <option></option>
+                <option *ngFor="let district of districts">{{district}}</option>
+                </select>
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">代理商</label>
+                <div class="col-sm-10">
+                  <input type="text" name="delegate" [(ngModel)]="praise.delegate" id="praisedelegate" class="form-control">
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group" >
+                <label class="col-sm-2 control-label">您的联系方式</label>
+                <div class="col-sm-4">
+                  <input type="text" name="tele" [(ngModel)]="praise.telephone" id="praisetelephone" class="form-control" ng-required="true">
+                </div>
+                <label class="col-sm-2 control-label">称呼</label>
+                <div class="col-sm-4">
+                  <input type="text" name="chenghu" [(ngModel)]="praise.chenghu" id="praisechenghu" class="form-control" ng-required="true">
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">最满意的一点</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control " rows="3" [(ngModel)]="praise.best" id="praisebest" placeholder="您最满意的一点..."></textarea>
+                  <!-- <input type="text" name="best" [(ngModel)]="praise.best" id="praisebest" class="form-control"> -->
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span class="red">最不满意的一点</span></label>
+                <div class="col-sm-10 has-error">
+                  <textarea class="form-control " rows="3" [(ngModel)]="praise.bad" id="praisebad" placeholder="您最不满意的一点..."></textarea>
+                </div>
+              </div>
+              <div *ngFor="let praisetitle of praise.praisetitles;let i = index">
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{praisetitle}}</label>
+                <div class="col-sm-10">
+                  <input id="slider{{i}}" ui-jq="slider" ui-options="{
+              min: 0,
+              max: 5,
+              step: 1,
+              value: 4
+            }" class="slider slider-horizontal form-control" type="text">{{praise.praisestars[i]}}
+                </div>
+                <div class="col-sm-10">
+                  <textarea class="form-control " rows="2" [(ngModel)]="praise.praisevalues[i]" id="praisevalue{{i}}" placeholder="请输入您对{{praisetitle}}的感受..."></textarea>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="panel-footer bg-light lter">
+              <button (click)="submitPraise()" class="btn btn-info pull-right btn-sm">提交您的口碑</button>
+              <ul class="nav nav-pills nav-sm">
+                <!-- <li><a href><i class="fa fa-camera text-muted"></i></a></li>
+                      <li><a href><i class="fa fa-video-camera text-muted"></i></a></li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

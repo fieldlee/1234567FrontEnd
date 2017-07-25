@@ -1,0 +1,36 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+    <ol class="breadcrumb">
+    <li><a routerLink="/home">首页</a></li>
+    <li class="active">品牌</li>
+  </ol>
+  <div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+      <!-- <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a> -->
+      <h1 class="m-n font-thin h3">{{brand.name}}</h1>
+    </div>
+    <div class="wrapper-md">
+      <div>
+        <i class="fa fa-apple fa fa-3x"></i>
+        <div class="row">
+          <div class="col-xs-6">
+            <h4>{{brand.company}}</h4>
+            <p><a href="{{brand.url}}" target="_blank">{{brand.url}}</a></p>
+            <p>{{brand.province}},{{brand.city}}, {{brand.district}},{{brand.address}}</p>
+            <p>
+              电话: {{brand.tel}}<br> 传真: {{brand.fax}}
+            </p>
+          </div>
+
+        </div>
+        <div class="well m-t bg-light lt">
+          <div class="row">
+            <div [innerHTML]="brand.content"></div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /content -->

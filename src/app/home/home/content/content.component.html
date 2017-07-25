@@ -1,45 +1,128 @@
 <!-- content -->
 <div id="content" class="app-content" role="main">
   <ol class="breadcrumb">
-      <li><a routerLink="/home">首页</a></li>
-      <li class="active">论坛</li>
-    </ol> 
+    <li><a routerLink="/home">首页</a></li>
+    <li><a (click)="goBack()">论坛</a></li>
+    <li class="active">帖子</li>
+  </ol>
   <div class="app-content-body ">
-    
     <div class="wrapper-sm">
       <div class="row">
         <!--广告位信息  -->
         <div class="col-lg-12">
-          <div class="panel panel-info">
+          <div class="panel ">
             <div class="panel-body">col-lg-12</div>
           </div>
         </div>
         <!--广告位信息  -->
         <!--论坛内容的位子  -->
-        <div class="col-lg-12 col-md-12 col-sm-12">
-
-        </div>
-        <!--论坛内容的位子  -->
-        <!--论坛回复的位子  -->
-        <div class="col-lg-8 col-md-8 col-sm-12">
-          <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="col-sm-12">
-                <div ui-jq="froalaEditor"  name="forumComment" id="forumComment" ></div>
-            </div>
-          <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="form-group">
-              <div class="col-sm-4 col-sm-offset-8">
-                <button type="submit" class="btn btn-info">发表评论</button>
+        <div class="col-lg-8 col-md-12 col-sm-12" style="margin-left:20px">
+          <h2>{{forum.title}}</h2>
+          <div style="padding:5px">
+            <a routerLink="/home/home/profile/{{forum.author}}" class=" pull-left thumb-sm avatar m-l-n-md">
+              <img src="{{forum.avatorPath}}" class="img-circle" alt="...">
+              </a>
+            <div class="col-lg-8 m-l-lg">
+              <div class="m-b-xs">
+                <a href class="h4">{{forum.avator}}</a> {{forum.fromTime}}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a (click)="share()" class="text-muted m-xs"><i class="icon-share " style="font-size:20px"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a (click)="support()" class="text-muted m-xs"><i class="glyphicon glyphicon-thumbs-up icon" style="font-size:20px">{{forum.support}}</i></a>
+                <a  class="text-muted m-xs"><i class="icon-eye " style="font-size:20px">{{forum.read}}</i> </a>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+                <button *ngIf="!isSelfForum" (click)="addAttention(forum.author)" class="btn btn-info">+关注</button>
               </div>
-            </div>     
+            </div>
+          </div>
         </div>
-        <!--论坛回复的位子  -->
-        <!--论坛下方广告的位子  -->
-        <div class="col-lg-4 col-md-4 col-sm-12">
-
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="col-lg-8 col-md-12 col-sm-12" style="margin-left:20px">
+            <div [innerHTML]="forum.content">
+            </div>
         </div>
-        <!--论坛下方广告的位子  -->
+          <!--论坛内容的位子  -->
+          <!--论坛回复的位子  -->
+        <div class="col-lg-8 col-md-8 col-sm-12">
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="col-sm-12">
+              <div ui-jq="froalaEditor"  name="forumComment" id="forumComment" [(ngModel)]="commentContent" ngDefaultControl></div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <div class="col-sm-2 col-sm-offset-10">
+                <button type="submit" (click)="submitComment()" class="btn btn-info">发表评论</button>
+              </div>
+            </div>
+        </div>  
+          <!--论坛回复的位子  -->
+          <!--论坛下方广告的位子  -->
+      <div class="col-lg-8 col-md-8 col-sm-12 wrapper bg-white b-b" style="padding:10px" *ngIf="commentList.length > 0">
+      <span>用户热评</span>
+      </div>
+        <div class="col-lg-8 col-md-8 col-sm-12 padder" *ngIf="commentList.length > 0">      
+          <div class="streamline b-l b-info m-l-lg m-b padder-v">
+            <div *ngFor="let rep of commentList">
+              <a routerLink="/home/home/profile/{{rep.author}}" class="pull-left thumb-sm avatar m-l-n-md">
+                <img src="{{rep.avatorPath}}" class="img-circle" alt="...">
+              </a>
+              <div class="m-l-lg">
+                <div class="m-b-xs">
+                  <a href class="h4">{{rep.avator}}</a>
+                  <span class="text-muted m-l-sm pull-right">
+                    {{rep.fromTime}}
+                  </span>
+                </div>
+                <div class="m-b">
+                  <div [innerHTML]="rep.content"></div>
+                  <div class="m-t-sm">
+                    <a (click)="replyComment(rep._id,rep.avator)" class="text-muted m-xs" data-toggle="modal" data-target="#commentbymodal"><i class="icon-action-redo"></i></a>
+                    <a (click)="supportComment(rep._id)" class="text-muted m-xs"><i class="glyphicon glyphicon-thumbs-up">{{rep.support}}</i></a>
+                  </div>
+                </div>
+              </div>
+               <!-- .comment-reply -->
+              <div class="m-l-lg" *ngFor="let subCom of rep.subComments">
+                <a routerLink="/home/home/profile/{{subCom.author}}" class="pull-left thumb-sm avatar">
+                  <img src="{{subCom.avatorPath}}" alt="...">
+                </a>          
+                <div class="m-l-xxl panel b-a">
+                  <div class="panel-heading pos-rlt">
+                    <span class="arrow left pull-up"></span>
+                    <span class="text-muted m-l-sm pull-right">
+                      {{subCom.fromTime}}
+                    </span>
+                    <a routerLink="/home/home/profile/{{subCom.author}}">{{subCom.avator}}</a>
+                    <div  [innerHTML]="subCom.content"></div>                       
+                  </div>
+                </div>
+              </div>
+        <!-- / .comment-reply -->
+            </div> 
+          </div>
+        </div>
+          <!--广告位信息  -->
+          <!--论坛下方广告的位子  -->
+        <!--回复comment  -->
+       <div class="modal fade" id="commentbymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">@{{commentAvatorName}}</h4>
+              </div>
+              <div class="modal-body">
+                <div class="col-sm-12">
+                  <div ui-jq="froalaEditor"  name="Commentconent" id="Commentconent"  ngDefaultControl></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" (click)="repSubmit()" class="btn btn-info">回复评论</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>

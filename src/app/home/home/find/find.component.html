@@ -1,0 +1,144 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <ol class="breadcrumb">
+      <li><a href="/home">首页</a></li>
+      <li class="active">发现</li>
+    </ol>
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="panel">
+            <div class="panel-body">
+              <div class="wrapper-xs">
+                <div class="tab-container">
+                  <ul class="nav nav-tabs">
+                    <li class="active"><a href="#orderBrand" data-toggle="tab">按品牌</a></li>
+                    <li><a href="#orderFocus" data-toggle="tab">按关注度</a></li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="orderBrand">
+                      <div class="panel-body">
+
+                        <span class="fn-left">按品牌<span class="red">拼音</span>首字母查找：</span>
+                        <ul id="list-firstletter" class="find-letter-list" style="list-style:none">
+                          <li><a data-meto="A" href="javascript:void(0);" target="_self">A</a></li>
+
+
+                          <li><a data-meto="B" href="javascript:void(0);" target="_self">B</a></li>
+
+
+                          <li><a data-meto="C" href="javascript:void(0);" target="_self">C</a></li>
+
+
+                          <li><a data-meto="D" href="javascript:void(0);" target="_self">D</a></li>
+
+
+                          <li><a data-meto="F" href="javascript:void(0);" target="_self">F</a></li>
+
+
+                          <li><a data-meto="G" href="javascript:void(0);" target="_self">G</a></li>
+
+
+                          <li><a data-meto="H" href="javascript:void(0);" target="_self">H</a></li>
+
+
+                          <li><a data-meto="J" href="javascript:void(0);" target="_self">J</a></li>
+
+
+                          <li><a data-meto="K" href="javascript:void(0);" target="_self">K</a></li>
+
+
+                          <li><a data-meto="L" href="javascript:void(0);" target="_self">L</a></li>
+
+
+                          <li><a data-meto="M" href="javascript:void(0);" target="_self">M</a></li>
+
+
+                          <li><a data-meto="N" href="javascript:void(0);" target="_self">N</a></li>
+
+
+                          <li><a data-meto="O" href="javascript:void(0);" target="_self">O</a></li>
+
+
+                          <li><a data-meto="Q" href="javascript:void(0);" target="_self">Q</a></li>
+
+
+                          <li><a data-meto="R" href="javascript:void(0);" target="_self">R</a></li>
+
+
+                          <li><a data-meto="S" href="javascript:void(0);" target="_self">S</a></li>
+
+
+                          <li><a data-meto="T" href="javascript:void(0);" target="_self">T</a></li>
+
+
+                          <li><a data-meto="W" href="javascript:void(0);" target="_self">W</a></li>
+
+
+                          <li><a data-meto="X" href="javascript:void(0);" target="_self">X</a></li>
+
+
+                          <li><a data-meto="Y" href="javascript:void(0);" target="_self">Y</a></li>
+
+
+                          <li><a data-meto="Z" href="javascript:void(0);" target="_self">Z</a></li>
+
+
+                        </ul>
+
+                      </div>
+                    </div>
+                    <div class="tab-pane" id="orderFocus">
+                      <div class="panel-body">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="panel">
+            <div class="uibox" *ngFor="let c of chars">
+              <div class="uibox-title uibox-title-border"><span class="font-letter">{{c}}</span></div>
+              <div class="uibox-con rank-list rank-list-pic">
+                <dl class="col-lg-12 col-md-12 col-sm-12" *ngFor="let brand of brands[c]">
+                  <dt class="col-lg-1 col-md-2 col-sm-2">
+                    <a herf="#" routerLink="/home/home/brand/{{brand['_id']}}">
+                    <img width="50" height="50" src="http://localhost:3000{{brand['icon']}}"></a>
+                    <div><a herf="#" routerLink="/home/home/brand/{{brand['_id']}}">{{brand['name']}}</a></div>
+                  </dt>
+                  <dd class="col-lg-11 col-md-10 col-sm-10" *ngFor="let key of brand['productkeys'];let i = index">
+                    <div class="h3-tit col-lg-12 col-md-12 col-sm-12" >{{key}}</div>
+                    <ul class="rank-list-ul" >
+                      <li  class="col-lg-2 col-md-2 col-sm-2" *ngFor="let pros of brand['products'][i];">
+                        <h4><a routerLink="/home/home/product/{{pros['_id']}}">{{pros["name"]}}</a></h4>
+                        <div>指导价：<a class="red" routerLink="/home/home/product/{{pros['_id']}}">{{pros["recommentPrice"]}}</a></div>
+                        <div><a routerLink="/home/home/product/{{pros['_id']}}">图库</a>  <a routerLink="/home/home/product/{{pros['_id']}}">论坛</a> <a routerLink="/home/home/product/{{pros['_id']}}">口碑</a></div>
+                      </li>
+                    </ul>
+
+                    <div class="divline col-lg-12 col-md-12 col-sm-12"></div>
+
+                  
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

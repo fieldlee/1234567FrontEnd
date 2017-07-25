@@ -13,12 +13,18 @@ import { ForumsComponent } from './home/forums/forums.component';
 import { ContentComponent } from './home/content/content.component';
 import { PlayerComponent } from './home/player/player.component';
 import { IssueComponent } from './home/issue/issue.component';
-
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
+import { FindComponent } from './home/find/find.component';
+import { NewcontentComponent } from './home/newcontent/newcontent.component';
+import { BrandComponent } from './home/brand/brand.component';
+import { ProductComponent } from './home/product/product.component';
+import { PraiseComponent } from './home/praise/praise.component';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HomeRoutingModule,
+    InfiniteScrollModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot()
   ],
@@ -31,7 +37,12 @@ import { IssueComponent } from './home/issue/issue.component';
   ForumsComponent,
   ContentComponent,
   PlayerComponent,
-  IssueComponent
+  IssueComponent,
+  FindComponent,
+  NewcontentComponent,
+  BrandComponent,
+  ProductComponent,
+  PraiseComponent
   ]
 })
 export class HomeModule { }

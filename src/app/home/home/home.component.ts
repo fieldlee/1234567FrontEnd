@@ -1,24 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ChangeDetectorRef} from '@angular/core';
+import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
+import {ForumsComponent} from './forums/forums.component';
+import {ContantService} from '../../contant.service';
 declare var BootstrapDialog: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers:[ContantService]
 })
 export class HomeComponent implements OnInit {
   avatorName: string;
   isAnymouse: boolean;
-  constructor() {
+  menuKey : string="";
+  avatorPath:string = "";
+  percent : string = "";
+  username :string="";
+  constructor(
+    private ref: ChangeDetectorRef,
+    private route :ActivatedRoute,
+    private contantService:ContantService
+  ) {
     this.avatorName = window.localStorage.getItem("avator");
+
     this.isAnymouse = false;
     if (window.localStorage.getItem("x-access-token")) {
       this.isAnymouse = true;
     }
+
   }
 
   ngOnInit() {
+    this.contantService.homeComponent = this;
+    if(window.localStorage.getItem("avatorPath")){
+      this.avatorPath = window.localStorage.getItem("avatorPath");
+    }
+    this.percent = window.localStorage.getItem("percent");
+    this.username = window.localStorage.getItem("username");
   }
-
   logout() {
     const self = this;
     BootstrapDialog.confirm({
