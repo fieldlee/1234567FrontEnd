@@ -115,15 +115,18 @@
               <div class="uibox-con rank-list rank-list-pic">
                 <dl class="col-lg-12 col-md-12 col-sm-12" *ngFor="let brand of brands[c]">
                   <dt class="col-lg-1 col-md-2 col-sm-2">
-                    <a herf="#" routerLink="/home/home/brand/{{brand['_id']}}">
-                    <img width="50" height="50" src="http://localhost:3000{{brand['icon']}}"></a>
-                    <div><a herf="#" routerLink="/home/home/brand/{{brand['_id']}}">{{brand['name']}}</a></div>
+                    <div>
+                      <a herf="#" routerLink="/home/home/brand/{{brand['_id']}}">
+                      <img width="50" height="50" src="http://localhost:3000{{brand['icon']}}"></a>
+                      <div><a herf="#" routerLink="/home/home/brand/{{brand['_id']}}">{{brand['name']}}</a></div>
+                    </div>
                   </dt>
-                  <dd class="col-lg-11 col-md-10 col-sm-10" *ngFor="let key of brand['productkeys'];let i = index">
+                  <dd class="col-lg-12 col-md-12 col-sm-12" *ngFor="let key of brand['productkeys'];let i = index">
                     <div class="h3-tit col-lg-12 col-md-12 col-sm-12" >{{key}}</div>
                     <ul class="rank-list-ul" >
                       <li  class="col-lg-2 col-md-2 col-sm-2" *ngFor="let pros of brand['products'][i];">
                         <h4><a routerLink="/home/home/product/{{pros['_id']}}">{{pros["name"]}}</a></h4>
+                         <a routerLink="/home/home/product/{{pros['_id']}}"><img style="width:100%" alt="" src="http://localhost:3000{{pros['appearimages'][0]}}"></a>
                         <div>指导价：<a class="red" routerLink="/home/home/product/{{pros['_id']}}">{{pros["recommentPrice"]}}</a></div>
                         <div><a routerLink="/home/home/product/{{pros['_id']}}">图库</a>  <a routerLink="/home/home/product/{{pros['_id']}}">论坛</a> <a routerLink="/home/home/product/{{pros['_id']}}">口碑</a></div>
                       </li>

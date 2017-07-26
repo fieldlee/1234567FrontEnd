@@ -113,7 +113,11 @@ export class HttpService {
         if (response.json()) {
           if (response.json().success == false) {
             $.notify(response.json().message, {
-              type: 'warning'
+              type: 'warning',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -138,7 +142,11 @@ export class HttpService {
         if (response.json()) {
           if (response.json().success == false) {
             $.notify(response.json().message, {
-              type: 'warning'
+              type: 'warning',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -162,7 +170,11 @@ export class HttpService {
         if (response.json()) {
           if (response.json().success == false) {
             $.notify(response.json().message, {
-              type: 'warning'
+              type: 'warning',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -178,6 +190,15 @@ export class HttpService {
       .catch(this.handleError);
   }
 
+//  查询
+
+  search(body:any):Promise<any>{
+    const url = `${this.rootUrl}/web/search`;
+    return this.http.post(url, JSON.stringify(body), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   // 论坛活动
   
   getActions(): Promise<ForumAction[]> {
@@ -554,7 +575,13 @@ export class HttpService {
       .then(resp => resp.json())
       .catch(this.handleError);
   }
-
+  // 省市区get json
+  getRegion(){
+    return this.http.get("https://raw.githubusercontent.com/louisgeek/LouisAreaSelectDemo/master/DropDownViewLib/src/main/res/raw/ssq.json")
+      .toPromise()
+      .then(resp => resp.json())
+      .catch(this.handleError);
+  }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

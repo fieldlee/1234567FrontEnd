@@ -10,6 +10,7 @@ declare var BootstrapDialog: any;
   providers:[ContantService]
 })
 export class HomeComponent implements OnInit {
+  key:string;
   avatorName: string;
   isAnymouse: boolean;
   menuKey : string="";
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private ref: ChangeDetectorRef,
     private route :ActivatedRoute,
+    private router:Router,
     private contantService:ContantService
   ) {
     this.avatorName = window.localStorage.getItem("avator");
@@ -38,6 +40,17 @@ export class HomeComponent implements OnInit {
     this.percent = window.localStorage.getItem("percent");
     this.username = window.localStorage.getItem("username");
   }
+
+  keypress(event){
+    if(event.keyCode == "13"){
+     this.search();         
+    }
+  }
+
+  search(){
+    this.router.navigate(['/home/home/search/'+this.key]);
+  }
+
   logout() {
     const self = this;
     BootstrapDialog.confirm({

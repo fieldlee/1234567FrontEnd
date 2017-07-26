@@ -33,6 +33,29 @@ export class BasicCityComponent implements OnInit {
     this.httpService.createCity(this.province,cityJson)
   }
 
+  setRegion(){
+
+    this.httpService.getRegion().then(resp=>{
+      
+      var provinces = resp.provinces.province;
+      for(var i=0;i<provinces.length;i++){
+        var provinceName = provinces[i].ssqname;
+        var citys = provinces[i].cities.city;
+        var citysName = new Array();
+        for(var j=0;j<citys.length;j++){
+          var cityName = citys[j].ssqname;
+          if(cityName=="市辖区"){
+            cityName = provinceName+"市";
+          }
+          citysName.push(cityName);
+        }
+        const cityJson = {"citys":citysName};
+        console.log(citysName);
+        this.httpService.createCity(provinceName,cityJson)
+      }
+    });  
+  }
+
   changeListener($event): void {
     this.citys[Number($event.target.name)] =  $event.target.value;
   }

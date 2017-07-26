@@ -1,0 +1,128 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <ol class="breadcrumb">
+      <li><a routerLink="/home">首页</a></li>
+      <li class="active">查询</li>
+    </ol>
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+        <!--广告位信息  -->
+        <!--找琴的位子  -->
+        <div class="col-lg-8 col-md-12 col-sm-12">
+          <!--新闻资讯  论坛分类-->
+          <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
+            <div class="panel panel-default">
+              <div class="clearfix panel-footer">
+                <div class="input-group">
+                  <input type="text" id="searchInput" (keyup.enter)="keypress($event)" name="search" [(ngModel)]="key" class="form-control input-sm btn-rounded" placeholder="查找">
+                  <span class="input-group-btn">
+                    <button type="submit" (click)="search()"  class="btn btn-default btn-sm btn-rounded"><i class="fa fa-search"></i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="app-content-body " style="padding:0">
+                <div class="wrapper-xs">
+                  <div class="tab-container">
+                    <ul class="nav nav-tabs" id="homeTab">
+                      <li class="active"><a data-toggle="tab" data-target="#tab_1" index="1">论坛 <span class="badge bg-danger badge-sm m-l-xs" *ngIf="countForum>0">{{countForum}}</span></a></li>
+                      <li><a data-toggle="tab" data-target="#tab_2" index="2">产品<span class="badge bg-primary badge-sm m-l-xs" *ngIf="countProduct>0">{{countProduct}}</span></a></li>
+
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
+                        <div class="figure flex-block" *ngFor="let forum of formus">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/content/{{forum._id}}" title="{{forum.title}}"> {{forum.title}}</a></h2>
+                            <br>
+                            <div class="subtitle"><span>{{forum.avator}}</span><span>{{forum.fromTime}}</span><span> {{forum.comment}}评论</span></div>
+                          </div>
+                          <a routerLink="/home/home/content/{{forum._id}}" *ngIf="forum.images.length>0" title=" {{forum.title}}" class="img" [ngStyle]="{'background-image': 'url(' + forum.images[0] + ')'}"></a>
+                        </div>
+                      </div>
+                      <div class="tab-pane" id="tab_2">
+                        <div class="figure flex-block" *ngFor="let product of products">
+                          <div class="article flex-1">
+                            <h2 class="figcaption"><a routerLink="/home/home/product/{{product._id}}" title="{{product.name}}"> {{product.name}}</a></h2>
+                            <br>
+                             <div class="subtitle"><span>{{product.brand}}</span><span>{{product.type}}</span><span> {{product.subType}}</span></div> 
+                          </div>
+                          <a routerLink="/home/home/product/{{product._id}}" *ngIf="product.appearimages.length>0" title=" {{product.title}}" class="img"
+                            [ngStyle]="{'background-image': 'url(http://localhost:3000' + product.appearimages[0] + ')'}"></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <!--找琴的位子  -->
+        <!--广告位信息  -->
+        <div class="col-lg-4 col-md-8 col-sm-12">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <img src="./public/img/1.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test1</h3>
+                  <p>subtitle1</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/2.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test2</h3>
+                  <p>subtitle2</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/3.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test3</h3>
+                  <p>subtitle3</p>
+                </div>
+              </div>
+              <div class="item">
+                <img src="./public/img/4.jpg" alt="...">
+                <div class="carousel-caption">
+                  <h3>test4</h3>
+                  <p>subtitle4</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">上一页</span>
+  </a>
+            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">下一页</span>
+  </a>
+          </div>
+        </div>
+        <!--广告位信息  -->
+      </div>
+    </div>
+  </div>
+</div>

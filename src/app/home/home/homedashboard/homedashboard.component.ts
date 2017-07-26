@@ -135,6 +135,16 @@ export class HomedashboardComponent implements OnInit {
     });
   }
 
+  cityListener(){
+    this.httpService.getDistricts(this.province, this.city).then(resp => {
+      console.log(resp);
+      this.districts = new Array();
+      resp.results.forEach(element => {
+        this.districts.push(element.district);
+      });
+    });
+  }
+
   changetoNews(key:string){
     switch (key) {
     case "news":

@@ -50,7 +50,19 @@ export class ProductComponent implements OnInit {
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-
+    const self = this;
+    this.loadJq.froalaEditor("productContent", function (imageurl: string) {
+      if (self.product.images == undefined) {
+        self.product.images = new Array<string>();
+      }
+      self.product.images.push(imageurl);
+    }, function (imageurl: string) {
+      if (self.product.images != undefined) {
+        self.product.images = self.product.images.filter(function (item) {
+          return item != imageurl
+        })
+      }
+    }, null,null);
   }
 
   brandListener() {
@@ -148,13 +160,14 @@ export class ProductComponent implements OnInit {
 
   cancle(): void {
     this.product = new Product();
+     $("#productContent").froalaEditor('html.set',"");
     this.configlist = new Array();
     this.configvalues = new Array();
   }
 
   update(brand: Product) {
     this.product = brand;
-    console.log(this.product.subType);
+    $("#productContent").froalaEditor('html.set',this.product.content);
     // 获得子分类信息
     this.httpService.getSubType(this.product.type).then(
       resp => {
@@ -224,6 +237,8 @@ export class ProductComponent implements OnInit {
             alert("请输入产品名称");
             return
           }
+
+          self.product.content = $("#productContent").froalaEditor('html.get',true);
           // config 设置
           self.httpService.createProduct(self.product).then(resp => {
             console.log(resp);
@@ -232,6 +247,7 @@ export class ProductComponent implements OnInit {
             self.httpService.getProducts().then(resp => {
               console.log(resp);
               self.products = resp;
+              $("#productContent").froalaEditor('html.set',"");
             });
           });
         }

@@ -137,7 +137,11 @@ export class IssueComponent implements OnInit {
     this.httpService.createForum(this.forum).then(resp=>{
       this.forum._id = resp._id;
       $.notify("帖子已经发布！", {
-              type: 'success'
+              type: 'success',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',

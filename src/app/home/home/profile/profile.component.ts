@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
+import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../../http.service';
 import { ContantService } from '../../../contant.service';
 import { LoadJQService } from '../../../load-jq.service';
@@ -12,16 +12,16 @@ declare var $: any;
   providers: [HttpService, LoadJQService]
 })
 export class ProfileComponent implements OnInit {
-  curUsername:string;
-  oldpassword:string="";
-  newpassword:string="";
-  newpassword2:string="";
-  messages:string[] = [];
-  successmessages:string[]=[];
+  curUsername: string;
+  oldpassword: string = "";
+  newpassword: string = "";
+  newpassword2: string = "";
+  messages: string[] = [];
+  successmessages: string[] = [];
 
-  follows:any[]=[];
-  followMy:any[] = [];
-  issueForums:any[] = [];
+  follows: any[] = [];
+  followMy: any[] = [];
+  issueForums: any[] = [];
 
 
   headerBackgroudPath: string;
@@ -53,9 +53,9 @@ export class ProfileComponent implements OnInit {
   allSubTypes: string[];
 
   urlbackground: string;
-  constructor(private httpService: HttpService, 
-    private route :ActivatedRoute,
-    private contantService:ContantService,
+  constructor(private httpService: HttpService,
+    private route: ActivatedRoute,
+    private contantService: ContantService,
     private loadJqService: LoadJQService) {
     this.havLoaction = false;
     this.isSelf = false;
@@ -64,28 +64,28 @@ export class ProfileComponent implements OnInit {
     this.backgroundPath = "./public/img/background1.png";
     this.urlbackground = "url(" + this.backgroundPath + ") center center";
   }
-  yyyymmdd(t:Date) {
-    if (typeof t == "string"){
+  yyyymmdd(t: Date) {
+    if (typeof t == "string") {
       t = new Date(t);
     }
     var mm = t.getMonth() + 1; // getMonth() is zero-based
     var dd = t.getDate();
 
     return [t.getFullYear(),
-        (mm>9 ? '' : '0') + mm,
-        (dd>9 ? '' : '0') + dd
+    (mm > 9 ? '' : '0') + mm,
+    (dd > 9 ? '' : '0') + dd
     ].join('-');
   }
   ngOnInit() {
-    
 
-    this.route.params.subscribe(params=>{
+
+    this.route.params.subscribe(params => {
       this.curUsername = params["username"];
-      if (this.curUsername == undefined){
-        if(window.localStorage.getItem("username")){
+      if (this.curUsername == undefined) {
+        if (window.localStorage.getItem("username")) {
           this.curUsername = window.localStorage.getItem("username");
         }
-        else{
+        else {
           return;
         }
       }
@@ -129,18 +129,18 @@ export class ProfileComponent implements OnInit {
       });
       // 获得follow info
 
-      this.httpService.getFollow().then(resp=>{
-        if(resp.success){
+      this.httpService.getFollow().then(resp => {
+        if (resp.success) {
           this.follows = resp.myfollows;
           this.followMy = resp.followmys;
         }
       });
 
-      this.httpService.getForumsByUsername(this.curUsername).then(resp=>{
+      this.httpService.getForumsByUsername(this.curUsername).then(resp => {
         console.log(resp);
-          if(resp.success){
-            this.issueForums = resp.results;
-          }
+        if (resp.success) {
+          this.issueForums = resp.results;
+        }
       });
 
     }); // 读取个人信息和follow信 结束
@@ -153,7 +153,7 @@ export class ProfileComponent implements OnInit {
       });
     });
 
-    
+
     // focus:Array,
     // skills:Array
     this.httpService.getAllSubType().then(resp => {
@@ -214,9 +214,10 @@ export class ProfileComponent implements OnInit {
   }
   cityListener(): void {
     this.httpService.getDistricts(this.province, this.city).then(resp => {
+      console.log(resp);
       this.districts = new Array();
       resp.results.forEach(element => {
-        this.districts.push(element.city);
+        this.districts.push(element.district);
       });
     });
   }
@@ -227,34 +228,38 @@ export class ProfileComponent implements OnInit {
     this.loadJqService.reloadJQ(function (start, end) {
       self.birthday = start;
     });
-    
+
   }
 
-  addAttention(){
-    const flowData = {"username":window.localStorage.getItem("username"),"followusername":this.user.username};
-    this.httpService.createFollow(flowData).then(resp=>{
+  addAttention() {
+    const flowData = { "username": window.localStorage.getItem("username"), "followusername": this.user.username };
+    this.httpService.createFollow(flowData).then(resp => {
       var type = "success";
-        if(resp.success){
-           type = "success";
-        }else{
-           type = "warning";
+      if (resp.success) {
+        type = "success";
+      } else {
+        type = "warning";
+      }
+      $.notify(resp.message, {
+        type: type,
+        placement: {
+          from: 'bottom',
+          align: 'center'
         }
-        $.notify(resp.message, {
-              type: type
-            }, {
-                animate: {
-                  enter: 'animated lightSpeedIn',
-                  exit: 'animated lightSpeedOut'
-                }
+      }, {
+          animate: {
+            enter: 'animated lightSpeedIn',
+            exit: 'animated lightSpeedOut'
+          }
         });
-        return;
+      return;
     });
   }
 
   changeTab(item: any) {
     this.currentTab = item;
-    this.messages=[];
-    this.successmessages=[];
+    this.messages = [];
+    this.successmessages = [];
 
     if (item == 2) {
       setTimeout(this.loadJqService.reloadJQ(null), 2000);
@@ -286,32 +291,44 @@ export class ProfileComponent implements OnInit {
       self.user.focus.push($(el).text())
     });
     this.httpService.updateUser(this.user).then(response => {
+      $.notify("您的个人信息已经更新", {
+        type: 'success',
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        }
+      }, {
 
+          animate: {
+            enter: 'animated lightSpeedIn',
+            exit: 'animated lightSpeedOut'
+          }
+        });
     });
   }
 
-  submitpassword(){
-    this.messages=[];
-    this.successmessages=[];
-    if(this.newpassword == this.newpassword2){
-      const changedata = {"username":window.localStorage.getItem("username"),"oldpassword":md5(this.oldpassword),"newpassword":md5(this.newpassword)};
-      this.httpService.changepassword(changedata).then(resp=>{
-        if (resp.success){
+  submitpassword() {
+    this.messages = [];
+    this.successmessages = [];
+    if (this.newpassword == this.newpassword2) {
+      const changedata = { "username": window.localStorage.getItem("username"), "oldpassword": md5(this.oldpassword), "newpassword": md5(this.newpassword) };
+      this.httpService.changepassword(changedata).then(resp => {
+        if (resp.success) {
           this.successmessages.push(resp.message);
           this.oldpassword = "";
           this.newpassword = "";
-          this.newpassword2 ="";
-        }else{
+          this.newpassword2 = "";
+        } else {
           this.messages.push(resp.message);
           this.oldpassword = "";
           this.newpassword = "";
-          this.newpassword2 ="";
+          this.newpassword2 = "";
         }
       });
-    }else{
+    } else {
       this.messages.push("两次输入的密码不符，请重新输入");
       this.newpassword = "";
-      this.newpassword2 ="";
+      this.newpassword2 = "";
     }
   }
 }

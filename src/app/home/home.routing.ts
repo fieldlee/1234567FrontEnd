@@ -13,6 +13,7 @@ import { FindComponent } from './home/find/find.component';
 import { BrandComponent } from './home/brand/brand.component';
 import { ProductComponent } from './home/product/product.component';
 import { PraiseComponent } from './home/praise/praise.component';
+import { SearchComponent } from './home/search/search.component';
 const appRoutes: Routes = [
   { path: "", redirectTo: 'home', pathMatch: 'full' },
   { path: "home", component: HomeComponent , children:[
@@ -34,7 +35,9 @@ const appRoutes: Routes = [
     { path: "praise/:id", component: PraiseComponent},
     { path: "brand/:id", component: BrandComponent},
     { path: "help", component: HelpComponent},
-    { path: "find", component: FindComponent}
+    { path: "find", component: FindComponent},
+    { path: "search", component: SearchComponent},
+    { path: "search/:key", component: SearchComponent}
   ]},
   
 ];

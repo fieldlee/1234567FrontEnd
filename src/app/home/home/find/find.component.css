@@ -1842,7 +1842,8 @@ a.orglink:hover {
 }
 
 .rank-list-pic .rank-list-ul li {
-	width: 175px
+	width: 175px;
+	padding: 5px
 }
 
 .rank-list dd .divline,.rank-list-pic .rank-list-ul li.dashline {

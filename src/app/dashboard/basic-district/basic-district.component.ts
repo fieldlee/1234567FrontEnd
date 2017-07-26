@@ -69,4 +69,31 @@ city:String;
       });
     });
   }
+
+  setRegion(){
+    this.httpService.getRegion().then(resp=>{
+      
+      var provinces = resp.provinces.province;
+      for(var i=0;i<provinces.length;i++){
+        var provinceName = provinces[i].ssqname;
+        var citys = provinces[i].cities.city;
+        for(var j=0;j<citys.length;j++){
+          var cityName = citys[j].ssqname;
+          if(cityName=="市辖区"){
+            cityName = provinceName+"市";
+          }
+          var areas = citys[j].areas.area;
+          var tdistricts = new Array();
+          for(var k=0;k<areas.length;k++){
+            var areaName = areas[k].ssqname;
+            tdistricts.push(areaName);
+            console.log(provinceName+","+cityName+","+areaName);
+            
+          }
+          const districtJson = {"districts":tdistricts};
+          this.httpService.createDistrict(provinceName,cityName,districtJson);
+        }
+      }
+    })
+  }
 }

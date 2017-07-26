@@ -113,7 +113,7 @@
                                   </div>
                                   <div class="col-sm-4 ">
 
-                                    <select name="city" [(ngModel)]="city" class="form-control m-b">
+                                    <select name="city" [(ngModel)]="city" class="form-control m-b" (change)="cityListener()">
                                 <option value="">请选择市</option>
                                 <option *ngFor="let c of citys" value="{{c}}">{{c}}</option>
                               </select>

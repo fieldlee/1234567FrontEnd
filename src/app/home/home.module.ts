@@ -19,6 +19,7 @@ import { NewcontentComponent } from './home/newcontent/newcontent.component';
 import { BrandComponent } from './home/brand/brand.component';
 import { ProductComponent } from './home/product/product.component';
 import { PraiseComponent } from './home/praise/praise.component';
+import { SearchComponent } from './home/search/search.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -42,7 +43,8 @@ import { PraiseComponent } from './home/praise/praise.component';
   NewcontentComponent,
   BrandComponent,
   ProductComponent,
-  PraiseComponent
+  PraiseComponent,
+  SearchComponent
   ]
 })
 export class HomeModule { }

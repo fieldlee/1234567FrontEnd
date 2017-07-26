@@ -3,7 +3,7 @@ import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
 import { HttpService } from '../../../http.service';
 import { ContantService } from '../../../contant.service';
 import { ForumInfo } from '../../../class/forum-info';
-import { InfiniteScroll } from 'angular2-infinite-scroll';
+
 declare var $ :any;
 @Component({
   selector: 'app-forums',

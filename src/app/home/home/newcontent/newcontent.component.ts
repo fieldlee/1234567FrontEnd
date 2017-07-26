@@ -65,7 +65,11 @@ ngAfterViewInit() {
     this.httpService.createFollow(folwjson).then(resp=>{
       if(resp.success){
         $.notify(resp.message, {
-              type: 'success'
+              type: 'success',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -75,7 +79,11 @@ ngAfterViewInit() {
       return;
       }else{
         $.notify(resp.message, {
-              type: 'warning'
+              type: 'warning',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -95,7 +103,11 @@ ngAfterViewInit() {
     this.httpService.supportNewsById(this.id).then(resp=>{
       if(resp.success){
         $.notify("成功收到您的赞", {
-              type: 'success'
+              type: 'success',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -111,7 +123,11 @@ ngAfterViewInit() {
     this.httpService.supportCommentById(id).then(resp=>{
       if(resp.success){
         $.notify("成功收到您的赞", {
-              type: 'success'
+              type: 'success',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -127,7 +143,11 @@ repSubmit(){
   // this.commentContent = $("#Commentconent").froalaEditor('html.get', true);
     if($("#Commentconent").froalaEditor('html.get', true)==undefined || $("#Commentconent").froalaEditor('html.get', true) == ""){
       $.notify("请输入评论内容", {
-              type: 'warning'
+              type: 'warning',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',
@@ -157,7 +177,11 @@ repSubmit(){
     this.commentContent = $("#forumComment").froalaEditor('html.get', true);
     if(this.commentContent==undefined || this.commentContent == ""){
       $.notify("请输入评论内容", {
-              type: 'warning'
+              type: 'warning',
+              placement: {
+          from: 'bottom',
+          align: 'center'
+        }
             }, {
                 animate: {
                   enter: 'animated lightSpeedIn',

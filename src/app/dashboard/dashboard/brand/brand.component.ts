@@ -146,6 +146,7 @@ export class BrandComponent implements OnInit {
           self.httpService.createBrand(self.brand).then(resp => {
             self.httpService.getBrands().then(resp => {
               self.brands = resp;
+              $("#brandContent").froalaEditor('html.set', "");
             });
           });
         }

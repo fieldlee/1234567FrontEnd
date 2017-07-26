@@ -133,7 +133,11 @@ export class PraiseComponent implements OnInit {
     }
     if(message != ""){
       $.notify(message, {
-        type: 'warning'
+        type: 'warning',
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        }
       }, {
           placement: {
             from: "bottom",
