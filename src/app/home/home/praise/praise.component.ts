@@ -21,18 +21,15 @@ export class PraiseComponent implements OnInit {
     private route: ActivatedRoute,
     private loadJQService: LoadJQService) {
     this.praise = new Praise();
-    this.praise.praisetitles = ["音质", "外观", "质量"];
-    var stars = new Array();
-    var values = new Array();
-    for (var i = 0; i < this.praise.praisetitles.length; i++) {
-      stars.push("4");
-      values.push("");
-    }
-
-    this.praise.praisestars = stars;
-    this.praise.praisevalues = values;
+    this.praise.praisetitles = ["","","","","","","","","","","",""];
+    
   }
   ngAfterViewInit() {
+    
+  }
+  ngAfterViewChecked() {
+    //Called after every check of the component's view. Applies to components only.
+    //Add 'implements AfterViewChecked' to the class.
     this.loadJQService.reloadJQ(null);
   }
   ngOnInit() {
@@ -43,6 +40,22 @@ export class PraiseComponent implements OnInit {
         console.log(resp);
         if (resp.success) {
           this.productInfo = resp.data;
+//        获取口碑配置信息 this.productInfo.type
+          this.httpService.getPraiseConfig(this.productInfo.type).then(resp=>{
+                if(resp.success){
+                  this.praise.praisetitles = resp.data.tags;
+                  var stars = new Array();
+                  var values = new Array();
+                  for (var i = 0; i < this.praise.praisetitles.length; i++) {
+                        stars.push("4");
+                        values.push("");
+                  }
+                  this.praise.praisestars = stars;
+                  this.praise.praisevalues = values;
+
+                }
+                
+          });
         }
       });
     });
@@ -105,7 +118,6 @@ export class PraiseComponent implements OnInit {
       } else {
         this.praise.praisestars[i] = $("#slider" + i).val();
       }
-
     }
     this.praise.product = this.productid;
     this.praise.author = window.localStorage.getItem("username");

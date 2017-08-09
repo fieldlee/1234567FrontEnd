@@ -1,9 +1,9 @@
 <!-- content -->
 <div id="content" class="app-content" role="main">
-    <ol class="breadcrumb">
-      <li><a routerLink="/home">首页</a></li>
-      <li class="active">资讯</li>
-    </ol> 
+  <ol class="breadcrumb">
+    <li><a routerLink="/home">首页</a></li>
+    <li class="active">资讯</li>
+  </ol>
   <div class="app-content-body ">
 
     <div class="wrapper-sm">
@@ -16,77 +16,52 @@
         </div>
         <!--广告位信息  -->
         <!--全部新闻资讯位子  -->
-        <div class="col-lg-8 col-md-8 col-sm-12">
-            <!-- list -->
-	      <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
-
-	        <li class="list-group-item clearfix b-l-3x b-l-info">
-	          <a class=" col-lg-3  pull-left m-r"  href="#/app/page/profile">
-	            <img style="width:100%;height:90px" src="./public/img/a10.jpg">
-	          </a>
-<!-- <span class="label bg-light m-l-sm "><b>>angular2 延迟加载或分页上滚动 - 广瓜网</b></span> -->
-	          <div class="col-lg-8 clear">
-	            <div><a  class="text-md " href="#/app/mail/10"><b>angular2 延迟加载或分页上滚动 - 广瓜网</b></a></div>
-	            <div class="text-ellipsis m-t-xs ">Titudin venenatis ipsum ac feugiat. Vestibulum ullamcorper Neque quam. Aliquam sollicitudin venenati</div>
-	          </div>      
-	        </li>
-	        
-	      </ul>
-	      <!-- / list -->
+        <div class="col-lg-8 col-md-8 col-sm-12"  id="newsPanel">
+          <div class="panel panel-default">
+            <div class="panel-heading font-bold">
+              <i><img style="width:20px" src="./public/img/News.png"></i> 资讯
+            </div>
+            <div class="panel-body">
+              <div class="figure flex-block" *ngFor="let new of newslist">
+                <div class="article flex-1">
+                  <h2 class="figcaption"><a routerLink="/home/home/newcontent/{{new._id}}" title="{{new.title}}"> {{new.title}}</a></h2>
+                  <br>
+                  <div class="subtitle"><span>{{new.avator}}</span><span>{{new.fromTime}}</span><span> {{new.comment}}评论</span></div>
+                </div>
+                <a routerLink="/home/home/newcontent/{{new._id}}" *ngIf="new.images.length>0" title=" {{new.title}}" class="img" [ngStyle]="{'background-image': 'url(' + new.images[0] + ')'}"></a>
+              </div>
+              <div class="figure_loading" *ngIf="isloading">正在为你加载更多...</div>
+            </div>
+          </div>
         </div>
         <!--全部新闻资讯位子  -->
         <!--广告位信息  -->
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <div class="col-lg-4 col-md-8 col-sm-12" *ngIf="adslist.length>0">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" >
             <!-- Indicators -->
-            <ol class="carousel-indicators">
-              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-              <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <ol class="carousel-indicators" >
+              <li data-target="#carousel-example-generic"  [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index"></li>
             </ol>
-
             <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-              <div class="item active">
-                <img src="./public/img/1.jpg" alt="...">
+            <div class="carousel-inner" role="listbox" >
+              <div class="item " [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index">
+                <a (click)="adsClick(ads)"><img src="http://localhost:3000{{ads.path}}"  alt="{{ads.subtitle}}"></a>
                 <div class="carousel-caption">
-                  <h3>test1</h3>
-                  <p>subtitle1</p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="./public/img/2.jpg" alt="...">
-                <div class="carousel-caption">
-                  <h3>test2</h3>
-                  <p>subtitle2</p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="./public/img/3.jpg" alt="...">
-                <div class="carousel-caption">
-                  <h3>test3</h3>
-                  <p>subtitle3</p>
-                </div>
-              </div>
-              <div class="item">
-                <img src="./public/img/4.jpg" alt="...">
-                <div class="carousel-caption">
-                  <h3>test4</h3>
-                  <p>subtitle4</p>
+                  <h3>{{ads.title}}</h3>
+                  <p>{{ads.subtitle}}</p>
                 </div>
               </div>
             </div>
 
             <!-- Controls -->
             <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">上一页</span>
-  </a>
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">上一页</span>
+            </a>
             <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">下一页</span>
-  </a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">下一页</span>
+            </a>
           </div>
         </div>
         <!--广告位信息  -->

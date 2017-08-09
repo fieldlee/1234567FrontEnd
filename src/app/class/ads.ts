@@ -1,10 +1,11 @@
 export class Ads {
     _id: string;
-    title: String;
-    type: String;
-    value:String;
-    path:String;
-    imagename:String;
+    title: string;
+    subtitle: string;
+    type: string;
+    value:string;
+    path:string;
+    imagename:string;
     startTime:Date;
     endTime:Date;
     constructor(){

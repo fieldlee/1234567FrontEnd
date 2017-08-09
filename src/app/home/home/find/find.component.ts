@@ -4,6 +4,7 @@ import { LoadJQService } from '../../../load-jq.service';
 import { ContantService } from '../../../contant.service';
 import { Brand } from '../../../class/brand';
 import { Product } from '../../../class/product';
+declare var $ : any;
 @Component({
   selector: 'app-find',
   templateUrl: './find.component.html',
@@ -66,5 +67,13 @@ export class FindComponent implements OnInit {
     //Called after every check of the component's view. Applies to components only.
     //Add 'implements AfterViewChecked' to the class.
     
+  }
+
+  jump(id:Number){
+     console.log($('#Section'+id));
+     var jump_position = $('#Section'+id).offset();
+     console.log(jump_position);
+     window.scrollTo(jump_position.left,jump_position.top-50);
+     return false;
   }
 }

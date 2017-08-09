@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { ContantService } from '../../../contant.service';
 import { LoadJQService } from '../../../load-jq.service';
@@ -14,6 +14,7 @@ declare var $ :any;
 })
 export class IssueComponent implements OnInit {
   productid:string;
+  id:string;
   type: string;
   subType: string;
   types: string[];
@@ -22,7 +23,7 @@ export class IssueComponent implements OnInit {
   showSubType: boolean;
   forum: ForumInfo;
   titleErr:boolean = false;
-  constructor(private httpService: HttpService, 
+  constructor(private httpService: HttpService,
     private router:Router,
     private _location:Location,
     private contantService:ContantService,
@@ -44,9 +45,39 @@ export class IssueComponent implements OnInit {
   }
   ngOnInit() {
     this.route.params.subscribe(params => {
+      this.id = params["id"];
       this.type = params["type"];
       this.subType = params["subtype"];
       this.productid = params["productid"];
+      console.log(this.productid);
+      if(this.productid){
+        this.httpService.getProductById(this.productid).then(resp=>{
+            if(resp.success==false){ //如果产品没有的话
+              // this.router.navigate
+              this._location.back();
+            }
+        });
+      }
+
+      // 如果有id，读取forum
+      if(this.id){
+        this.httpService.getForumsById(this.id).then(resp=>{
+            this.forum = resp;
+            $("#forumContent").froalaEditor('html.set', this.forum.content);
+
+            if (this.forum.type != undefined) {
+              this.httpService.getSubType(this.forum.type).then(
+                resp => {
+                  this.subTypes = new Array();
+                  resp.results.forEach(element => {
+                    this.subTypes.push(element.subType);
+                  });
+                  this.subType = this.forum.subType;
+                })
+            }
+        });
+        
+      }
       //  读取分类
       this.httpService.getType().then(response => {
         console.log(response.results);
@@ -93,12 +124,15 @@ export class IssueComponent implements OnInit {
         })
       }
     }, function (videoUrl: string) {
-      if (self.forum.videos == undefined) {
-        self.forum.videos = new Array<string>();
+      console.log(videoUrl);
+      var videoArr = new Array<string>();
+      for (var tvideourl in self.forum.videos) {
+        videoArr.push(tvideourl);
       }
-      this.forum.videos.push(videoUrl);
+      videoArr.push(videoUrl);
+      self.forum.videos = videoArr;
     }, function (videoUrl: string) {
-      this.forum.videos = this.forum.videos.filter(function (item) {
+      self.forum.videos = self.forum.videos.filter(function (item) {
         return item != videoUrl
       })
     });
@@ -134,6 +168,7 @@ export class IssueComponent implements OnInit {
     }
     this.forum.tags = $("input[name=tags]").tagsinput('items');
     this.forum.content = $("#forumContent").froalaEditor('html.get', true);
+    console.log(this.forum);
     this.httpService.createForum(this.forum).then(resp=>{
       this.forum._id = resp._id;
       $.notify("帖子已经发布！", {

@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   follows: any[] = [];
   followMy: any[] = [];
   issueForums: any[] = [];
-
+  collections:any[] = [];
 
   headerBackgroudPath: string;
   havLoaction: boolean;
@@ -142,6 +142,13 @@ export class ProfileComponent implements OnInit {
           this.issueForums = resp.results;
         }
       });
+      // 获得收藏
+      this.httpService.getCollections(this.curUsername).then(resp=>{
+        if (resp.success) {
+          this.collections = resp.results;
+        }
+      });
+
 
     }); // 读取个人信息和follow信 结束
 

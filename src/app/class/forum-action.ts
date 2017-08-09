@@ -1,10 +1,10 @@
 export class ForumAction {
     _id: string;
-    title: String;
-    type: String;
-    value:String;
-    path:String;
-    imagename:String;
+    title: string;
+    type: string;
+    value:string;
+    path:string;
+    imagename:string;
     startTime:Date;
     endTime:Date;
     constructor(){

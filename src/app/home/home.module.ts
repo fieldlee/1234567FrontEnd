@@ -20,6 +20,9 @@ import { BrandComponent } from './home/brand/brand.component';
 import { ProductComponent } from './home/product/product.component';
 import { PraiseComponent } from './home/praise/praise.component';
 import { SearchComponent } from './home/search/search.component';
+import { FindQpComponent } from './home/find-qp/find-qp.component';
+import { NotificationComponent } from './home/notification/notification.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -44,7 +47,9 @@ import { SearchComponent } from './home/search/search.component';
   BrandComponent,
   ProductComponent,
   PraiseComponent,
-  SearchComponent
+  SearchComponent,
+  FindQpComponent,
+  NotificationComponent
   ]
 })
 export class HomeModule { }

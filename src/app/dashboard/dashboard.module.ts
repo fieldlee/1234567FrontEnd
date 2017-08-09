@@ -19,6 +19,7 @@ import { BasicTypeComponent } from './basic-type/basic-type.component';
 import { BasicSubtypeComponent } from './basic-subtype/basic-subtype.component';
 import { BasicConfigComponent } from './basic-config/basic-config.component';
 import { BasicTagsComponent } from './basic-tags/basic-tags.component';
+import { DelegateComponent } from './dashboard/delegate/delegate.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,7 +42,7 @@ import { BasicTagsComponent } from './basic-tags/basic-tags.component';
    BasicTypeComponent, 
    BasicSubtypeComponent, 
    BasicConfigComponent, 
-   BasicTagsComponent
+   BasicTagsComponent, DelegateComponent
    ]
 })
 export class DashboardModule { 

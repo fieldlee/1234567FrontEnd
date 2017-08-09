@@ -1,24 +1,24 @@
- <div class="app app-header-fixed app-aside-fixed app-aside-folded"> 
+<div class="app app-header-fixed app-aside-fixed app-aside-folded">
 
   <!-- header -->
   <header id="header" class="app-header navbar" role="menu">
     <!-- navbar header -->
-      <div class="navbar-header bg-dark">
-        <button class="pull-right visible-xs dk" ui-toggle-class="show" target=".navbar-collapse">
+    <div class="navbar-header bg-dark">
+      <button class="pull-right visible-xs dk" ui-toggle-class="show" target=".navbar-collapse">
           <i class="glyphicon glyphicon-cog"></i>
         </button>
-        <button class="pull-right visible-xs" ui-toggle-class="off-screen" target=".app-aside" ui-scroll="app">
+      <button class="pull-right visible-xs" ui-toggle-class="off-screen" target=".app-aside" ui-scroll="app">
           <i class="glyphicon glyphicon-align-justify"></i>
         </button>
-        <!-- brand -->
-        <a routerLink="/home" class="navbar-brand text-lt">
+      <!-- brand -->
+      <a routerLink="/home" class="navbar-brand text-lt">
           <i class="fa fa-btc"></i>
           <img src="./public/img/logo.png" alt="." class="hide">
-          <span class="hidden-folded m-l-xs">乐器有家</span>
+          <span class="hidden-folded m-l-xs">乐器之家</span>
         </a>
-        <!-- / brand -->
-      </div>
-      <!-- / navbar header -->
+      <!-- / brand -->
+    </div>
+    <!-- / navbar header -->
 
     <!-- navbar collapse app-aside-folded  navbar-collapse-->
     <div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
@@ -167,12 +167,12 @@
 
       <!-- search form -->
 
-      <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" data-target=".navbar-collapse"
-        role="search" #f="ngForm" (ngSubmit)="search()">
+      <form class="navbar-form navbar-form-sm navbar-left shift" ui-shift="prependTo" data-target=".navbar-collapse" role="search"
+        #f="ngForm" (ngSubmit)="search()">
         <div class="  form-group">
           <div class="input-group">
-            <input type="text" style="width:300px" (keyup.enter)="keypress($event)"  name="homesearch" [(ngModel)]="key"  typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder"
-              placeholder="查询...">
+            <input type="text" style="width:300px" (keyup.enter)="keypress($event)" name="homesearch" [(ngModel)]="key" typeahead="state for state in states | filter:$viewValue | limitTo:8"
+              class="form-control input-sm bg-light no-border rounded padder" placeholder="查询...">
             <span class="input-group-btn">
                 <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
             </span>
@@ -180,7 +180,7 @@
         </div>
       </form>
       <!-- / search form -->
-      
+
       <!-- nabar right -->
       <ul class="nav navbar-nav navbar-right">
 
@@ -214,8 +214,7 @@
                   </a>
               </div>
               <div class="panel-footer text-sm">
-                <a href class="pull-right"><i class="fa fa-cog"></i></a>
-                <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a>
+                <a routerLink="/home/home/notification" data-toggle="class:show animated fadeInRight">查看全部通知</a>
               </div>
             </div>
           </div>
@@ -244,31 +243,31 @@
           <ul class="dropdown-menu animated fadeInRight w">
             <li class="wrapper b-b m-b-sm bg-light m-t-n-xs">
               <div>
-                <p>300mb of 500mb used</p>
+                <p>{{curlvl}} 到 {{tolvl}}的路程</p>
               </div>
+              <!--  -->
               <div class="progress progress-xs m-b-none dker">
-                <div class="progress-bar progress-bar-info" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
+                <div class="progress-bar progress-bar-info" data-toggle="tooltip" data-original-title="50%" [ngStyle]="{'width': lvlpercent+'%'}"></div>
               </div>
             </li>
             <li>
-              <a routerLink="profile" >
-                  <span class="badge bg-danger pull-right">{{percent}}</span>
-                  <span>设置</span>
+              <a routerLink="profile">
+                  <span class="badge bg-info pull-right">{{percent}}</span>
+                  <span>个人信息</span>
                 </a>
             </li>
             <!-- <li>
               <a ui-sref="app.page.profile">Profile</a>
             </li> -->
             <li>
-              <a routerLink="help">
-                  <span class="label bg-info pull-right">new</span>
-                  帮助
-                </a>
+              <a routerLink="/home/home/help" class="auto">
+                 <span>帮助</span>
+              </a>
             </li>
             <li class="divider"></li>
             <li>
-             <!-- <button type="button" class="btn btn-link" (click)="logout()">退出</button> -->
-             <a (click)="logout()">
+              <!-- <button type="button" class="btn btn-link" (click)="logout()">退出</button> -->
+              <a (click)="logout()">
                   退出
              </a>
             </li>
@@ -277,7 +276,7 @@
         </li>
 
       </ul>
-      
+
       <!-- / navbar right -->
 
     </div>
@@ -285,20 +284,20 @@
   </header>
   <!-- / header -->
 
-    <!-- aside -->
+  <!-- aside -->
 
   <aside id="aside" class="app-aside hidden-xs bg-dark">
-      <div class="aside-wrap">
-        <div class="navi-wrap">
-          <!-- user -->
-          <div class="clearfix hidden-xs text-center hide" id="aside-user">
-            <div class="dropdown wrapper">
-              <a routerLink="/home/home/profile/{{username}}">
+    <div class="aside-wrap">
+      <div class="navi-wrap">
+        <!-- user -->
+        <div class="clearfix hidden-xs text-center hide" id="aside-user">
+          <div class="dropdown wrapper">
+            <a routerLink="/home/home/profile/{{username}}">
                 <span class="thumb-lg w-auto-folded avatar m-t-sm">
                   <img src="{{avatorPath}}" class="img-full" alt="...">
                 </span>
               </a>
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle hidden-folded">
                 <span class="clear">
                   <span class="block m-t-sm">
                     <strong class="font-bold text-lt">{{avatorName}}</strong> 
@@ -306,55 +305,61 @@
                   </span>
                 </span>
               </a>
-              <!-- dropdown -->
-              <ul class="dropdown-menu animated fadeInRight w hidden-folded">
-                <li class="wrapper b-b m-b-sm bg-info m-t-n-xs">
-                  <span class="arrow top hidden-folded arrow-info"></span>
-                  <div>
-                    <p>300mb of 500mb used</p>
-                  </div>
-                  <div class="progress progress-xs m-b-none dker">
-                    <div class="progress-bar bg-white" data-toggle="tooltip" data-original-title="50%" style="width: 50%"></div>
-                  </div>
-                </li>
-                <li>
-                  <a href>Settings</a>
-                </li>
-                <li>
-                  <a routerLink="/home/home/profile">个人信息</a>
-                </li>
-                <li>
-                  <a href>
-                    <span class="badge bg-danger pull-right">3</span>
-                    Notifications
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a (click)="logout()">退出</a>
-                </li>
-              </ul>
-              <!-- / dropdown -->
-            </div>
-            <div class="line dk hidden-folded"></div>
-          </div>
-          <!-- / user -->
-         <!-- nav -->
-          <nav ui-nav class="navi clearfix">
-            <ul class="nav">
-               <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
-                <span><b>乐器有家</b></span>
+            <!-- dropdown -->
+            <ul class="dropdown-menu animated fadeInRight w hidden-folded" *ngIf="isAnymouse">
+              <li class="wrapper b-b m-b-sm bg-info m-t-n-xs">
+                <span class="arrow top hidden-folded arrow-info"></span>
+                <div>
+                  <p>{{curlvl}} 到 {{tolvl}}的路程</p>
+                </div>
+                <div class="progress progress-xs m-b-none dker">
+                  <div class="progress-bar bg-white" data-toggle="tooltip" data-original-title="50%" [ngStyle]="{'width': lvlpercent+'%'}"></div>
+                </div>
               </li>
               <li>
-                <a routerLink="/home" class="auto" >      
-                  <!-- <span class="pull-right text-muted">
+                <a routerLink="profile">
+                  <span class="badge bg-info pull-right">{{percent}}</span>
+                  <span>个人信息</span>
+                </a>
+              </li>
+              <!-- <li>
+              <a ui-sref="app.page.profile">Profile</a>
+            </li> -->
+              <li>
+                <a routerLink="/home/home/help" class="auto">
+                  <span>帮助</span>
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <!-- <button type="button" class="btn btn-link" (click)="logout()">退出</button> -->
+                <a (click)="logout()">
+                  退出
+             </a>
+              </li>
+            </ul>
+            <!-- / dropdown -->
+          </div>
+          <div class="line dk hidden-folded"></div>
+        </div>
+        <!-- / user -->
+        <!-- nav -->
+        <nav ui-nav class="navi clearfix">
+          <ul class="nav">
+            <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
+              <span><b>乐器之家</b></span>
+            </li>
+            <li>
+              <a routerLink="/home" class="auto">
+                <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
                   </span> -->
-                  <i class="glyphicon glyphicon-home icon text-primary-dker" style="font-size: 25px"></i>
-                  <span class="font-bold">首页</span>
-                </a>
-                <!-- <ul class="nav nav-sub dk">
+                <i><img style="width:25px" src="./public/img/Home.png"></i>
+                <!-- <i class="glyphicon glyphicon-home icon text-primary-dker" style="font-size: 25px"></i> -->
+                <span class="font-bold">首页</span>
+              </a>
+              <!-- <ul class="nav nav-sub dk">
                   <li class="nav-sub-header">
                     <a href>
                       <span>Dashboard</span>
@@ -372,126 +377,151 @@
                     </a>
                   </li>
                 </ul> -->
-              </li>
-              <li>
-                <a routerLink="/home/home/find" [ngClass]="{auto:true}">
+            </li>
+            <li>
+              <a routerLink="/home/home/find" [ngClass]="{auto:true}">
                  <b class="badge bg-info pull-right">9</b>
-                  <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i> 
+                 <i><img style="width:25px" src="./public/img/Find.png"></i>
+                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
                   <span class="font-bold">发现</span>
                 </a>
-              </li>
-              <li class="line dk"></li>
+            </li>
+              <li>
+              <a routerLink="/home/home/news" [ngClass]="{auto:true}">
+                 <b class="badge bg-info pull-right" >{{newsNumber}}</b>
+                 <i><img style="width:25px" src="./public/img/News.png"></i>
+                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
+                  <span class="font-bold">资讯</span>
+                </a>
+            </li>
+              <li>
+              <a routerLink="/home/home/live" [ngClass]="{auto:true}">
+                 <b class="badge bg-info pull-right" >2</b>
+                 <i><img style="width:25px" src="./public/img/Camera.png"></i>
+                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
+                  <span class="font-bold">直播</span>
+                </a>
+            </li>
+            <li class="line dk"></li>
 
-              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
-                <span><b>乐器论坛</b></span>
-              </li>
-              <li>
-                <a routerLink="/home/home/forum/A" class="auto" >      
-                  <!-- <span class="pull-right text-muted">
+            <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
+              <span><b>乐器论坛</b></span>
+            </li>
+            <li>
+              <a routerLink="/home/home/forum/A" class="auto">
+                <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
                   </span> -->
-                  <!-- <b class="badge bg-info pull-right">3</b> -->
-                  <i class="glyphicon glyphicon-th text-info-lter" style="font-size: 25px"></i>
-                  <span>键盘乐器</span>
-                </a>
+                <!-- <b class="badge bg-info pull-right">3</b> -->
+                <i><img style="width:25px" src="./public/img/Piano.png"></i>
+                <!-- <i class="glyphicon glyphicon-th text-info-lter" style="font-size: 25px"></i>  -->
+                <span>键盘乐器</span>
+              </a>
 
-              </li>
-              <li>
-                <a routerLink="/home/home/forum/B" class="auto" >
-                  <!-- <span class="pull-right text-muted">
+            </li>
+            <li>
+              <a routerLink="/home/home/forum/B" class="auto">
+                <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
                   </span> -->
-                  <i class="glyphicon glyphicon-briefcase icon" style="font-size: 25px"></i>
-                  <span>管式乐器</span>
-                </a>
-              </li>
-              <li>
-                <a routerLink="/home/home/forum/C" class="auto" >
-                  <!-- <span class="pull-right text-muted">
+                <i><img style="width:25px" src="./public/img/Sax.png"></i>
+                <!-- <i class="glyphicon glyphicon-briefcase icon" style="font-size: 25px"></i>  -->
+                <span>管式乐器</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/home/home/forum/C" class="auto">
+                <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
                   </span> -->
-                  <!-- <b class="label bg-primary pull-right">2</b> -->
-                  <i class="glyphicon glyphicon-list" style="font-size: 25px"></i>
-                  <span>拉弦乐器</span>
-                </a>
-                
-              </li>
-              <li>
-                <a routerLink="/home/home/forum/D" class="auto" >
-                  <!-- <span class="pull-right text-muted">
-                    <i class="fa fa-fw fa-angle-right text"></i>
-                    <i class="fa fa-fw fa-angle-down text-active"></i>
-                  </span> -->
-                  <i class="glyphicon glyphicon-edit" style="font-size: 25px"></i>
-                  <span>弹拨乐器</span>
-                </a>
+                <!-- <b class="label bg-primary pull-right">2</b> -->
+                <i><img style="width:25px" src="./public/img/Pull.png"></i>
+                <!-- <i class="glyphicon glyphicon-list" style="font-size: 25px"></i>  -->
+                <span>拉弦乐器</span>
+              </a>
 
-              </li>
-              <li>
-                <a routerLink="/home/home/forum/E" class="auto" >
-                  <i class="glyphicon glyphicon-signal" style="font-size:25px"></i>
+            </li>
+            <li>
+              <a routerLink="/home/home/forum/D" class="auto">
+                <!-- <span class="pull-right text-muted">
+                    <i class="fa fa-fw fa-angle-right text"></i>
+                    <i class="fa fa-fw fa-angle-down text-active"></i>
+                  </span> -->
+                <i><img style="width:25px" src="./public/img/Ball.png"></i>
+                <!-- <i class="glyphicon glyphicon-edit" style="font-size: 25px"></i>  -->
+                <span>弹拨乐器</span>
+              </a>
+
+            </li>
+            <li>
+              <a routerLink="/home/home/forum/E" class="auto">
+                  <i><img style="width:25px" src="./public/img/Hit.png"></i>
+                  <!-- <i   style="font-size:25px;background:url(./public/img/Drump.png)"></i>  -->
                   <span>打击乐器</span>
                 </a>
-              </li>
-              <li>
-                <a routerLink="/home/home/forum/F" class="auto" >
-                  <!-- <span class="pull-right text-muted">
+            </li>
+            <li>
+              <a routerLink="/home/home/forum/F" class="auto">
+                <!-- <span class="pull-right text-muted">
                     <i class="fa fa-fw fa-angle-right text"></i>
                     <i class="fa fa-fw fa-angle-down text-active"></i>
                   </span> -->
-                  <i class="glyphicon glyphicon-file icon" style="font-size:25px"></i>
-                  <span>吹奏乐器</span>
-                </a>
-              </li>
+                <i><img style="width:25px" src="./public/img/Blow.png"></i>
+                <!-- <i class="glyphicon glyphicon-file icon" style="font-size:25px"></i>  -->
+                <span>吹奏乐器</span>
+              </a>
+            </li>
 
-              <li class="line dk"></li>
-              <li class="hidden-folded padder m-t m-b-sm text-muted text-xs"  style="font-size:15px">
-                <span><b>设置</b></span>
-              </li>
-              <li>
-                <a routerLink="/home/home/profile" class="auto" >
-                  <i class="icon-user icon text-success-lter" style="font-size:25px"></i><span>个人信息</span>
+            <li class="line dk"></li>
+            <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
+              <span><b>设置</b></span>
+            </li>
+            <li>
+              <a routerLink="/home/home/profile" class="auto">
+                  <i><img style="width:25px" src="./public/img/Person.png"></i>
+                  <!-- <i class="icon-user icon text-success-lter" style="font-size:25px"></i> -->
+                  <span>个人信息</span>
                   <b class="badge bg-success pull-right">{{percent}}</b>
                 </a>
-              </li>
-              <li>
-                <a routerLink="/home/home/help" class="auto" >
+            </li>
+            <li>
+              <a routerLink="/home/home/help" class="auto">
                   <i class="icon-question icon" style="font-size:25px"></i><span>帮助</span>
                 </a>
-              </li>
-            </ul>
-          </nav>
-          <!-- nav -->
+            </li>
+          </ul>
+        </nav>
+        <!-- nav -->
 
-          <!-- aside footer -->
-          <div class="wrapper m-t">
-            <div class="text-center-folded">
-              <span class="pull-right pull-none-folded">60%</span>
-              <span class="hidden-folded">Milestone</span>
-            </div>
-            <div class="progress progress-xxs m-t-sm dk">
-              <div class="progress-bar progress-bar-info" style="width: 60%;">
-              </div>
-            </div>
-            <div class="text-center-folded">
-              <span class="pull-right pull-none-folded">35%</span>
-              <span class="hidden-folded">Release</span>
-            </div>
-            <div class="progress progress-xxs m-t-sm dk">
-              <div class="progress-bar progress-bar-primary" style="width: 35%;">
-              </div>
+        <!-- aside footer -->
+        <div class="wrapper m-t">
+          <div class="text-center-folded">
+            <span class="pull-right pull-none-folded">{{lvlpercent}}%</span>
+            <span class="hidden-folded">会员升级</span>
+          </div>
+          <div class="progress progress-xxs m-t-sm dk">
+            <div class="progress-bar progress-bar-info" [ngStyle]="{'width': lvlpercent+'%'}">
             </div>
           </div>
-          <!-- / aside footer -->
+          <!-- <div class="text-center-folded">
+            <span class="pull-right pull-none-folded">35%</span>
+            <span class="hidden-folded">Release</span>
+          </div> -->
+          <!-- <div class="progress progress-xxs m-t-sm dk">
+            <div class="progress-bar progress-bar-primary" style="width: 35%;">
+            </div>
+          </div> -->
         </div>
+        <!-- / aside footer -->
       </div>
+    </div>
   </aside>
   <!-- / aside -->
 
-  <router-outlet ></router-outlet>
+  <router-outlet></router-outlet>
   <!-- footer -->
   <footer id="footer" class="app-footer" role="footer">
     <div class="wrapper b-t bg-light">

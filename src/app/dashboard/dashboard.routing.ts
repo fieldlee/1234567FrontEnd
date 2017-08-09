@@ -14,6 +14,7 @@ import { BasicTypeComponent } from './basic-type/basic-type.component';
 import { BasicSubtypeComponent } from './basic-subtype/basic-subtype.component';
 import { BasicConfigComponent } from './basic-config/basic-config.component';
 import { BasicTagsComponent } from './basic-tags/basic-tags.component';
+import { DelegateComponent } from './dashboard/delegate/delegate.component';
 //,canActivate:[AuthGuard]   { path: '', redirectTo: '/page2', pathMatch: 'full' },
 // app/show/show.module#ShowModule
 const appRoutes: Routes = [
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
       { path: "forumlist", component: ForumListComponent },
       { path: "brand", component: BrandComponent },
       { path: "product", component: ProductComponent },
+      { path: "delegate", component: DelegateComponent },
       { path: "basic-config", component: BasicConfigComponent },
       { path: "basic-provice", component: BasicProviceComponent },
       { path: "basic-city", component: BasicCityComponent },

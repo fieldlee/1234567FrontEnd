@@ -1,0 +1,85 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <ol class="breadcrumb">
+    <li><a routerLink="/home">首页</a></li>
+    <li class="active">直播</li>
+  </ol>
+  <div class="app-content-body ">
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+        <!--广告位信息  -->
+        <div class="col-lg-8 col-md-12 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading font-bold">直播课程</div>
+            <div class="panel-body" id="remoteVideosContainer">
+              <canvas style="display:none"></canvas>
+              <a id="link"></a>
+            </div>
+            <div class="panel-footer bg-light lter">
+              <button (click)="reload()" class="btn btn-info  pull-right btn-md"><i class="fa fa-circle"></i>刷新</button>
+              <ul class="nav nav-pills nav-sm">
+                <li><button (click)="saveCapture()" class="btn btn-default"><i class="fa fa-camera text-muted"></i></button></li>
+                <li><button (click)="startRecording()" class="btn " [ngClass]="{'btn-danger':recording,'btn-default':!recording}"><i class="fa fa-video-camera text-muted "></i></button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 ">
+
+          <div class="wrapper-md">
+            <div class="panel panel-default">
+              <div class="panel-heading">在线沟通</div>
+              <div [ngSwitch]="mes.to" class="panel-body wrapper-md" *ngFor="let mes of messagelist">
+                <div *ngSwitchCase="undefined">
+                  <div class="m-b">
+                    <a href class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="..."></a>
+                    <div class="m-l-xxl">
+                      <div class="pos-rlt wrapper b b-light r r-2x">
+                        <span class="arrow left pull-up"></span>
+                        <p class="m-b-none">{{mes.message}}</p>
+                      </div>
+                      <small class="text-muted"><i class="fa fa-ok text-success"></i> {{mes.avator}}</small>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchDefault>
+                  <div class="m-b">
+                    <a href class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="..."></a>
+                    <div class="m-r-xxl">
+                      <div class="pos-rlt wrapper bg-primary r r-2x">
+                        <span class="arrow right pull-up arrow-primary"></span>
+                        <p class="m-b-none">{{mes.message}}</p>
+                      </div>
+                      <small class="text-muted">{{mes.avator}}</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <footer class="panel-footer">
+                <!-- chat form -->
+                <div>
+                  <a class="pull-left thumb-xs avatar"><img src="{{avatorPath}}" class="img-circle" alt="{{avator}}"></a>
+                  <form class="m-b-none m-l-xl">
+                    <div class="input-group">
+                      <input type="text" name="leaveMessge" [(ngModel)]="say" class="form-control" placeholder="请输入...">
+                      <span class="input-group-btn">
+                                  <button (click)="send()" class="btn btn-default" type="button">发送</button>
+                                </span>
+                    </div>
+                  </form>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

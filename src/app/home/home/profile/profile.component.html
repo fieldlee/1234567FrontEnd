@@ -9,7 +9,8 @@
 
     <div class="hbox hbox-auto-xs hbox-auto-sm">
       <div class="col">
-        <div [ngStyle]="{background:urlbackground}" style="background-size:cover">
+        <!--style="background:url(img/c4.jpg) center center; background-size:cover"  -->
+        <div [ngStyle]="{'background':urlbackground,'background-size':cover}">
           <div class="wrapper-lg bg-white-opacity">
             <div class="row m-t">
               <div class="col-sm-7">
@@ -22,9 +23,9 @@
                     <small class="m-l" *ngIf="havLoaction">{{province}}, {{city}}</small>
                   </div>
                   <p class="m-b">
-                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-twitter"></i></a>
-                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-facebook"></i></a>
-                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-google-plus"></i></a>
+                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-wechat" aria-hidden="true"></i></a>
+                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-qq" aria-hidden="true"></i></a>
+                    <a href class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-weibo" aria-hidden="true"></i></a>
                   </p>
                   <a *ngIf="!isSelf" (click)="addAttention()" class="btn btn-sm btn-success btn-rounded">+关注</a>
                 </div>
@@ -47,8 +48,9 @@
         <div class="wrapper bg-white b-b">
           <ul class="nav nav-pills nav-sm">
             <li [ngClass]="{active: currentTab==0 }"><a (click)="changeTab(0)">发布帖子</a></li>
-            <li *ngIf="isSelf" [ngClass]="{active: currentTab==1 }"><a (click)="changeTab(1)">个人信息</a></li>
-            <li *ngIf="isSelf" [ngClass]="{active: currentTab==2 }"><a (click)="changeTab(2)">修改密码</a></li>
+            <li *ngIf="isSelf" [ngClass]="{active: currentTab==1 }"><a (click)="changeTab(1)">收藏的帖子</a></li>
+            <li *ngIf="isSelf" [ngClass]="{active: currentTab==2 }"><a (click)="changeTab(2)">个人信息</a></li>
+            <li *ngIf="isSelf" [ngClass]="{active: currentTab==3 }"><a (click)="changeTab(3)">修改密码</a></li>
           </ul>
         </div>
 
@@ -61,17 +63,17 @@
                   </a>
               <div class="m-l-lg">
                 <div class="m-b-xs">
-                  <a routerLink="/home/home/profile/{{issForum.author}}" class="h4">{{issForum.avatar}}</a>
+                  <a routerLink="/home/home/profile/{{issForum.author}}" class="h4"></a>
                   <span class="text-muted m-l-sm pull-right">{{issForum.fromTime}}</span>
                 </div>
                 <div class="m-b">
                   <div>
                     <a routerLink="/home/home/content/{{issForum._id}}">
-                          {{issForum.title}}
-                        </a>
+                          <i style="font-size:15px">   {{issForum.title}} </i>
+                    </a>
                   </div>
                   <div class="m-t-sm">
-                    <a class="text-muted m-xs"><i class="icon-star"></i>{{issForum.support}}</a>
+                    <a class="text-muted m-xs"><i class="glyphicon glyphicon-thumbs-up icon"></i>{{issForum.support}}</a>
                     <a class="text-muted m-xs"><i class="icon-eye"></i> {{issForum.read}}</a>
                   </div>
                 </div>
@@ -79,8 +81,33 @@
             </div>
           </div>
         </div>
+        <!--收藏的帖子  -->
+        <div class="padder" *ngIf="(currentTab==1)">
+          <div class="streamline b-l b-info m-l-lg m-b padder-v">
+            <div *ngFor="let col of collections">
+              <a routerLink="/home/home/profile/{{col.author}}" class="pull-left thumb-sm avatar m-l-n-md">
+                  <img src="{{col.avatorPath}}" class="img-circle" alt="...">
+                  </a>
+              <div class="m-l-lg">
+                <div class="m-b-xs">
+                  <a routerLink="/home/home/profile/{{col.author}}" class="h4"> <i style="font-size:10px"> {{col.avator}} </i></a>
+                   <span class="text-muted m-l-sm pull-right">收藏：{{col.fromTime}}</span> 
+                </div>
+                <div class="m-b">
+                  <div>
+                    <a routerLink="/home/home/{{col.type=='news'?'newcontent':'content'}}/{{col.forumId}}"> <i style="font-size:20px"> {{col.title}} </i> </a>
+                  </div>
+                  <div class="m-t-sm">
+                    <!-- <a class="text-muted m-xs"><i class="glyphicon glyphicon-thumbs-up icon"></i>{{issForum.support}}</a>
+                    <a class="text-muted m-xs"><i class="icon-eye"></i> {{issForum.read}}</a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!--编辑个人信息  -->
-        <div *ngIf="isSelf&&(currentTab==1)" class="panel panel-default" style="padding:10px">
+        <div *ngIf="isSelf&&(currentTab==2)" class="panel panel-default" style="padding:10px">
           <form class="form-horizontal" #f="ngForm" (ngSubmit)="submit()">
             <div class="form-group">
               <label class="col-sm-2 control-label">昵称</label>
@@ -201,7 +228,7 @@
           </form>
         </div>
         <!--修改密码  -->
-        <div *ngIf="isSelf&&(currentTab==2)" class="panel panel-default" style="padding:10px">
+        <div *ngIf="isSelf&&(currentTab==3)" class="panel panel-default" style="padding:10px">
           <form class="form-horizontal" #f="ngForm" (ngSubmit)="submitpassword()">
             <div class="form-group">
               <label class="col-sm-2 control-label">原密码</label>

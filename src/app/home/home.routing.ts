@@ -14,6 +14,8 @@ import { BrandComponent } from './home/brand/brand.component';
 import { ProductComponent } from './home/product/product.component';
 import { PraiseComponent } from './home/praise/praise.component';
 import { SearchComponent } from './home/search/search.component';
+import { NotificationComponent } from './home/notification/notification.component';
+
 const appRoutes: Routes = [
   { path: "", redirectTo: 'home', pathMatch: 'full' },
   { path: "home", component: HomeComponent , children:[
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
     { path: "forum/:key", component: ForumsComponent},
     { path: "content", component: ContentComponent},
     { path: "issue", component: IssueComponent},
+    { path: "issuebyid/:id", component: IssueComponent},
     { path: "issue/:type", component: IssueComponent},
     { path: "issue/:type/:subtype", component: IssueComponent},//productid
     { path: "issue/:type/:subtype/:productid", component: IssueComponent},
@@ -37,7 +40,12 @@ const appRoutes: Routes = [
     { path: "help", component: HelpComponent},
     { path: "find", component: FindComponent},
     { path: "search", component: SearchComponent},
-    { path: "search/:key", component: SearchComponent}
+    { path: "notification", component: NotificationComponent},
+    { path: "search/:key", component: SearchComponent},
+    {
+      path: 'live',
+      loadChildren: './home/live/live.module#LiveModule' 
+    }
   ]},
   
 ];

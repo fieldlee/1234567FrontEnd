@@ -1,0 +1,93 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <ol class="breadcrumb">
+    <li><a routerLink="/home">首页</a></li>
+    <li class="active">直播</li>
+  </ol>
+  <div class="app-content-body ">
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+        <!--广告位信息  -->
+        <div class="col-lg-8 col-md-12 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading font-bold">直播课程</div>
+            <div class="panel-body">
+              <video id="localVideo" width="640" height="480" muted="muted" autoplay="true" poster="./public/img/background1.png"></video>
+              <canvas style="display:none"></canvas>
+              <a id="link"></a>
+              <input type="text" name="link" [(ngModel)]="link" class="form-control rounded">
+            </div>
+            <div class="panel-footer bg-light lter">
+              <button (click)="startLive()" class="btn  pull-right btn-md" [ngClass]="{'btn-info': cameraIsOn==false,'btn-danger':cameraIsOn==true}"><i class="fa fa-circle"></i> {{cameraIsOn==false?"开始课程":"结束课程"}}</button>
+              <ul class="nav nav-pills nav-sm">
+                <!-- routerLink="/home/home/live/receive/{{link}}" -->
+                <li><button (click)="saveCapture()" class="btn btn-default" [ngClass]="{'disabled': cameraIsOn==false}"><i class="fa fa-camera text-muted"></i></button></li>
+                <li><button (click)="startRecording()" class="btn  " [ngClass]="{'disabled': cameraIsOn==false,'btn-danger':recording,'btn-default':!recording}"><i class="fa fa-video-camera text-muted "></i></button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12 col-sm-12 ">
+          <div class="hbox hbox-auto-xs bg-light">
+            <div class="vbox">
+              <div class="cell scrollable hover">
+                <div class="cell-inner">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">在线沟通</div>
+
+                    <div [ngSwitch]="mes.to" class="panel-body wrapper-md" *ngFor="let mes of messagelist">
+                      <div *ngSwitchCase="undefined">
+                        <div class="m-b">
+                          <a (click)="anwser(mes.from,mes.avator)" class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="..."></a>
+                          <div class="m-l-xxl">
+                            <div class="pos-rlt wrapper b b-light r r-2x">
+                              <span class="arrow left pull-up"></span>
+                              <p class="m-b-none">{{mes.message}}</p>
+                            </div>
+                            <small class="text-muted"><i class="fa fa-ok text-success"></i> {{mes.avator}}</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngSwitchDefault>
+                        <div class="m-b">
+                          <a  class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="..."></a>
+                          <div class="m-r-xxl">
+                            <div class="pos-rlt wrapper bg-primary r r-2x">
+                              <span class="arrow right pull-up arrow-primary"></span>
+                              <p class="m-b-none">{{mes.message}}</p>
+                            </div>
+                            <small class="text-muted">{{mes.avator}}</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <footer class="panel-footer">
+                      <!-- chat form -->
+                      <div>
+                        <a class="pull-left thumb-xs avatar"><img src="{{avatorPath}}" class="img-circle" alt="{{avator}}"></a>
+                        <form class="m-b-none m-l-xl">
+                          <div class="input-group">
+                            <input type="text" name="leaveMessge" [(ngModel)]="say" class="form-control" placeholder="请输入...">
+                            <span class="input-group-btn">
+                        <button (click)="send()" class="btn btn-default" type="button">发送</button>
+                        </span>
+                          </div>
+                        </form>
+                      </div>
+                    </footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

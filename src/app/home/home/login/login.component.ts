@@ -104,7 +104,25 @@ export class LoginComponent implements OnInit {
           }else{
             window.localStorage.setItem("percent",  "10%");
           }
-    //       phone:String,
+          if(userObj["lvl"]){
+            window.localStorage.setItem("lvl", userObj["lvl"]);
+            if(userObj["lvl"]=="钻石会员"){
+              window.localStorage.setItem("lvlpercent", "100");
+            }else if(userObj["lvl"]=="普通会员") {
+              window.localStorage.setItem("lvlpercent", (Number(userObj["issueCount"])/50).toFixed(0));
+            }else if(userObj["lvl"]=="银会员"){
+              window.localStorage.setItem("lvlpercent", (Number(userObj["issueCount"])/100).toFixed(0));
+            }else if(userObj["lvl"]=="金会员"){
+              window.localStorage.setItem("lvlpercent", ((Number(userObj["issueCount"])-100)/100).toFixed(0));
+            }
+          }else{
+            window.localStorage.setItem("lvl", "普通会员");
+          }
+          
+
+    // lvl:{ type: String, default:"标准用户"},
+    // issueCount:{ type: Number, default:0},
+    // phone:String,
     // email:String,
     // registerTime:Date,
     // avator:String,

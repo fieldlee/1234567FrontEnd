@@ -1,16 +1,16 @@
 export class Product {
     _id: string;
-    name: String;
-    brand:String;
-    type: String;
-    subType: String;
-    recomment:String;
-    recommentPrice:String;
-    content:String;
-    status:String;
-    images:String[];
-    appearimages:String[];
-    detailimages:String[];
+    name: string;
+    brand:string;
+    type: string;
+    subType: string;
+    recomment:string;
+    recommentPrice:string;
+    content:string;
+    status:string;
+    images:string[];
+    appearimages:string[];
+    detailimages:string[];
     config:any;
     praise:any;
     constructor(){

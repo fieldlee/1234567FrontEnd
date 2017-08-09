@@ -38,9 +38,9 @@ export class LoadJQService {
   }
 
   froalaEditorComment(froalaEditorObjid: string) {
-    console.log($('#' + froalaEditorObjid));
     $('#' + froalaEditorObjid).froalaEditor({
-      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent']
+      language: 'zh_cn',
+      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent','html']
     });
   }
 
@@ -48,8 +48,9 @@ export class LoadJQService {
     callback3: (videourl: string) => void, callback4: (videourl: string) => void) {
 
     $('#' + froalaEditorObjid).froalaEditor({
+      language: 'zh_cn',
       // Set the image upload URL.
-      toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage',   'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'undo', 'redo'],
+      toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertFile','insertLink', 'insertTable', '|',  'insertHR', 'selectAll', 'clearFormatting', '|', 'undo', 'redo'],
       // toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent'],
       fileUploadURL: '/api/web/upload/upload_file',
       videoUploadURL: '/api/web/upload/upload_file',
@@ -57,11 +58,11 @@ export class LoadJQService {
       // Set max image size to 5MB.
       imageMaxSize: 5 * 1024 * 1024,
       fileMaxSize: 5 * 1024 * 1024,
-      videoMaxSize: 15 * 1024 * 1024,
+      videoMaxSize: 30 * 1024 * 1024,
       // Allow to upload PNG and JPG.
       fileAllowedTypes: ['*'],
       videoAllowedTypes: ['webm', 'mp4', 'ogg'],
-      imageAllowedTypes: ['jpeg', 'jpg', 'png']
+      imageAllowedTypes: ['jpeg', 'jpg', 'png',"pdf"]
     })
       .on('froalaEditor.image.beforeUpload', function (e, editor, images) {
         // Return false if you want to stop the image upload.
@@ -95,11 +96,26 @@ export class LoadJQService {
             console.log('image delete problem');
           })
       })
-      .on('froalaEditor.video.inserted', function (e, editor, $img, response) {
-        callback3($img.attr('src'));
+      .on('froalaEditor.video.inserted', function (e, editor, $video) {
+        callback3($video.contents().get(0).src);
       })
-      .on('froalaEditor.video.removed', function (e, editor, $img) {
-        callback4($img.attr('src'));
+      .on('froalaEditor.video.removed', function (e, editor, $video) {
+        
+
+        $.ajax({
+          method: "POST",
+          url: "/api/web/upload/delete_file",
+          data: {
+            src: $video.contents().get(0).src
+          }
+        })
+          .done(function (data) {
+            callback4($video.contents().get(0).src);
+            console.log('video was deleted');
+          })
+          .fail(function () {
+            console.log('video delete problem');
+          })
       })
       .on('froalaEditor.image.replaced', function (e, editor, $img, response) {
         // Image was replaced in the editor.
@@ -108,5 +124,4 @@ export class LoadJQService {
         // Response contains the original server response to the request if available.
       });
   }
-
 }

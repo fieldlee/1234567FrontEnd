@@ -83,12 +83,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">{{praisetitle}}</label>
                 <div class="col-sm-10">
-                  <input id="slider{{i}}" ui-jq="slider" ui-options="{
-              min: 0,
-              max: 5,
-              step: 1,
-              value: 4
-            }" class="slider slider-horizontal form-control" type="text">{{praise.praisestars[i]}}
+                  <input id="slider{{i}}" ui-jq="slider" ui-options="{min: 0,max: 5,step: 1,value: 4}" class="slider slider-horizontal form-control" type="text">
                 </div>
                 <div class="col-sm-10">
                   <textarea class="form-control " rows="2" [(ngModel)]="praise.praisevalues[i]" id="praisevalue{{i}}" placeholder="请输入您对{{praisetitle}}的感受..."></textarea>

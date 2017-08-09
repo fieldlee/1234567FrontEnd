@@ -1,10 +1,10 @@
 <!-- content -->
 <div id="content" class="app-content" role="main">
-    <ol class="breadcrumb">
-      <li><a href="/home">首页</a></li>
-      <li><a href="/home/home/find">发现</a></li>
-      <li class="active">产品</li>
-    </ol>
+  <ol class="breadcrumb">
+    <li><a href="/home">首页</a></li>
+    <li><a href="/home/home/find">发现</a></li>
+    <li class="active">产品</li>
+  </ol>
   <div class="app-content-body ">
     <div class="bg-light lter b-b wrapper-md hidden-print">
       <!-- <a href class="btn btn-sm btn-info pull-right" onClick="window.print();">Print</a> -->
@@ -98,7 +98,7 @@
           <div class="modal fade" id="imagegallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-header">
-                <button type="button" class="close"  data-dismiss="modal"><i class="icon-close" style="font-size:40px"></i></button>
+                <button type="button" class="close" data-dismiss="modal"><i class="icon-close " style="font-size:40px;color:white"></i></button>
                 <h4 class="modal-title">{{modalTitle}}</h4>
               </div>
               <div class="modal-content">
@@ -137,32 +137,42 @@
 
         </div>
         <!-- 相关论坛 -->
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <div class="panel panel-default ">
-              <div class="panel-heading font-bold">相关论坛
-                <div class="btn-group btn-group-sm" style="float:right;margin-top:-5px">
-                  <button type="button" routerLink="/home/home/issue/{{productInfo['type']}}/{{productInfo['subType']}}/{{productInfo['_id']}}" class="btn btn-success"><span class="glyphicon glyphicon-plus">发布帖子</span></button>
-                </div>
-              </div>
-              
-              <div class="panel-body">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+          <div class="panel panel-default ">
+            <div class="panel-heading font-bold">相关论坛
+              <div class="btn-group btn-group-sm" style="float:right;margin-top:-5px">
+                <button type="button" routerLink="/home/home/issue/{{productInfo['type']}}/{{productInfo['subType']}}/{{productInfo['_id']}}"
+                  class="btn btn-success"><span class="glyphicon glyphicon-plus">发布帖子</span></button>
               </div>
             </div>
 
-        <!-- 相关论坛 -->
-        <!-- 相关口碑 -->
-
-            <div class="panel panel-default ">
-              <div class="panel-heading font-bold">相关口碑
-                <div class="btn-group btn-group-sm" style="float:right;margin-top:-5px">
-                  <button type="button" routerLink="/home/home/praise/{{productInfo['_id']}}" class="btn btn-success"><span class="glyphicon glyphicon-plus">发布口碑</span></button>
-                </div>
-              </div>
-              <div class="panel-body">
-                
+            <div class="panel-body">
+              <div class="list-group bg-white">
+                <a routerLink="/home/home/content/{{forum._id}}" class="list-group-item" *ngFor="let forum of forums">
+                  <i class="fa fa-fw fa-envelope"></i> {{forum.title}}
+                </a>
               </div>
             </div>
           </div>
+
+          <!-- 相关论坛 -->
+          <!-- 相关口碑 -->
+
+          <div class="panel panel-default ">
+            <div class="panel-heading font-bold">相关口碑
+              <div class="btn-group btn-group-sm" style="float:right;margin-top:-5px">
+                <button type="button" routerLink="/home/home/praise/{{productInfo['_id']}}" class="btn btn-success"><span class="glyphicon glyphicon-plus">发布口碑</span></button>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="list-group bg-white">
+                <a routerLink="/home/home/praise/{{praise._id}}" class="list-group-item" *ngFor="let praise of praises">
+                  <i class="fa fa-fw fa-envelope"></i> {{praise.province}},{{praise.city}},{{praise.chenghu}}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- 相关口碑 -->
       </div>
     </div>

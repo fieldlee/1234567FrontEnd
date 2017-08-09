@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
 import { ContantService } from '../../../contant.service';
-import {News} from '../../../class/news';
-import {ForumInfo} from '../../../class/forum-info';
+import { News } from '../../../class/news';
+import { Ads } from '../../../class/ads';
+import { ForumInfo } from '../../../class/forum-info';
 import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 @Component({
@@ -18,25 +19,25 @@ export class HomedashboardComponent implements OnInit {
   subType: string;
   subtypes: string[];
   brands: string[];
-  province:string;
-  provinces:string[];
-  city:string;
-  citys:string[];
-  district:string;
-  districts:string[];
-  newslist:News[];
-  forumlist:ForumInfo[];
-  forumrecent:ForumInfo[];
-  page:Number = 1;
+  province: string;
+  provinces: string[];
+  city: string;
+  citys: string[];
+  district: string;
+  districts: string[];
+  newslist: News[];
+  forumlist: ForumInfo[];
+  forumrecent: ForumInfo[];
+  page: Number = 1;
+  index: Number = 1;
+  adslist:Ads[]=[];
   constructor(private httpService: HttpService,
-    private contantService:ContantService, 
+    private contantService: ContantService,
     private loadJqService: LoadJQService,
-  private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
-    
-
     this.type = "";
     this.subType = "";
     this.province = "";
@@ -44,34 +45,34 @@ export class HomedashboardComponent implements OnInit {
     this.district = "";
     this.brands = new Array();
     this.httpService.getType().then(response => {
-      console.log(response.results);
       this.types = new Array();
       response.results.forEach(element => {
         this.types.push(element.type);
       });
     });
-    this.httpService.getBrands().then(response=>{
-      console.log(response);
+    this.httpService.getBrands().then(response => {
       this.brands = new Array();
-      response.forEach(ele=>{
+      response.forEach(ele => {
         this.brands.push(ele.name);
       })
     })
-    this.httpService.getProvinces().then(resp=>{
-      console.log(resp.results);
+    this.httpService.getProvinces().then(resp => {
       this.provinces = new Array();
       resp.results.forEach(element => {
         this.provinces.push(element.name);
       });
     });
 
-    this.httpService.getNews(this.page.toString()).then(resp=>{
-        console.log(resp);
-        this.newslist = resp;
+    this.httpService.getNews(this.page.toString()).then(resp => {
+      this.newslist = resp;
     });
 
-    this.httpService.getRecentForums().then(resp=>{
+    this.httpService.getRecentForums().then(resp => {
       this.forumrecent = resp.results as ForumInfo[];
+    });
+
+    this.httpService.getAds().then(resp=>{
+      this.adslist = resp;
     });
   }
   typeListener(): void {
@@ -90,52 +91,81 @@ export class HomedashboardComponent implements OnInit {
 
   ngAfterViewInit() {
     this.loadJqService.reloadJQ(null);
-    
+
+    var win = $(window);
+    var self = this;
+    var tab_1 = $("#tab_1");
+    // Each time the user scrolls
+    win.scroll(function() {
+        if ($(window).scrollTop() + $(window).height() >= tab_1.height()+tab_1.offset().top) {
+          $(".fixed_tool").addClass("show");
+        }
+    });
   }
-  changeTab(index:Number){
+  changeTab(index: Number) {
+
     this.forumlist = []; // 初始化论坛数据
     this.page = 1;
-    if(index==1){
-         this.httpService.getNews(this.page.toString()).then(resp=>{
+    var type = "键盘乐器";
+    var typeCode = "A";
+    if (index == 2) {
+      type = "键盘乐器";
+      typeCode = "A";
+    }
+    if (index == 3) {
+      type = "管式乐器";
+      typeCode = "B";
+    }
+    if (index == 4) {
+      type = "拉弦乐器";
+      typeCode = "C";
+    }
+    if (index == 5) {
+      type = "弹拨乐器";
+      typeCode = "D";
+    }
+    if (index == 6) {
+      type = "打击乐器";
+      typeCode = "E";
+    }
+    if (index == 7) {
+      type = "吹奏乐器";
+      typeCode = "F";
+    }
+    if (this.index == index) {
+      if (index == 1) {
+        this.changetoNews("news");
+      } else {
+        this.changetoNews(typeCode);
+      }
+      return;
+    } else {
+      this.index = index;
+      if (index == 1) {
+        this.httpService.getNews(this.page.toString()).then(resp => {
           console.log(resp);
           this.newslist = resp;
         });
-    }else{
-      var type="键盘乐器";
-        if(index==2){
-          type="键盘乐器";
-        }
-        if(index==3){
-          type="管式乐器";
-        }
-        if(index==4){
-          type="拉弦乐器";
-        }
-        if(index==5){
-          type="弹拨乐器";
-        }
-        if(index==6){
-          type="打击乐器";
-        }
-        if(index==7){
-          type="吹奏乐器";
-        }
-        this.httpService.getForumsByType(type,this.page.toString() ).then(resp=>{
-            this.forumlist = resp.results as ForumInfo[] ;
+      } else {
+
+        this.httpService.getForumsByType(type, this.page.toString()).then(resp => {
+          this.forumlist = resp.results as ForumInfo[];
         })
+      }
     }
+    $(".fixed_tool").removeClass("show");
   }
 
   provinceListener(): void {
     this.httpService.getCitys(this.province).then(resp => {
       this.citys = new Array();
       resp.results.forEach(element => {
-        this.citys.push(element.city) ;
+        this.citys.push(element.city);
       });
     });
   }
 
-  cityListener(){
+  cityListener() {
     this.httpService.getDistricts(this.province, this.city).then(resp => {
       console.log(resp);
       this.districts = new Array();
@@ -145,14 +175,27 @@ export class HomedashboardComponent implements OnInit {
     });
   }
 
-  changetoNews(key:string){
+  changetoNews(key: string) {
     switch (key) {
-    case "news":
+      case "news":
         this.router.navigate(['/home/home/news']);
         break;
-    default:
-        this.router.navigate(['/home/home/forum/'+key]);
+      default:
+        this.router.navigate(['/home/home/forum/' + key]);
         break;
+    }
+  }
+
+  adsClick(ads:Ads){
+    console.log(ads);
+    if(ads.type == "url"){
+      window.open(ads.value,'_blank');
+    }
+    if(ads.type == "news"){
+      this.router.navigate(['/home/home/newcontent/'+ads.value]);
+    }
+    if(ads.type == "product"){
+      this.router.navigate(['/home/home/product/'+ads.value]);
     }
   }
 }

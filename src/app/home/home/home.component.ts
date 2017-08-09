@@ -2,12 +2,13 @@ import { Component, OnInit ,ChangeDetectorRef} from '@angular/core';
 import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
 import {ForumsComponent} from './forums/forums.component';
 import {ContantService} from '../../contant.service';
+import {HttpService} from '../../http.service';
 declare var BootstrapDialog: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers:[ContantService]
+  providers:[ContantService,HttpService]
 })
 export class HomeComponent implements OnInit {
   key:string;
@@ -17,10 +18,15 @@ export class HomeComponent implements OnInit {
   avatorPath:string = "";
   percent : string = "";
   username :string="";
+  lvlpercent :string="";
+  curlvl :string="";
+  tolvl:string="";
+  newsNumber:string = "";
   constructor(
     private ref: ChangeDetectorRef,
     private route :ActivatedRoute,
     private router:Router,
+    private httpService:HttpService,
     private contantService:ContantService
   ) {
     this.avatorName = window.localStorage.getItem("avator");
@@ -37,8 +43,30 @@ export class HomeComponent implements OnInit {
     if(window.localStorage.getItem("avatorPath")){
       this.avatorPath = window.localStorage.getItem("avatorPath");
     }
+    this.curlvl = window.localStorage.getItem("lvl");
+    if(this.curlvl==""|| this.curlvl==undefined){
+      this.curlvl="普通会员";
+    }
+    if(this.curlvl=="普通会员"){
+      this.tolvl = "银会员";
+    }else if (this.curlvl == "银会员"){
+      this.tolvl = "金会员";
+    }else if(this.curlvl == "金会员"){
+      this.tolvl = "钻石会员";
+    }
+    this.lvlpercent = window.localStorage.getItem("lvlpercent");
+    if(this.lvlpercent==""|| this.lvlpercent==undefined){
+      this.lvlpercent="5";
+    }
     this.percent = window.localStorage.getItem("percent");
     this.username = window.localStorage.getItem("username");
+
+    this.httpService.getNewsNumber().then(resp=>{
+      console.log(resp);
+        if(resp.success){
+          this.newsNumber = resp.count+"";
+        }
+    });
   }
 
   keypress(event){

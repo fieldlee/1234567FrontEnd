@@ -3,7 +3,7 @@ import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
 import { HttpService } from '../../../http.service';
 import { ContantService } from '../../../contant.service';
 import { ForumInfo } from '../../../class/forum-info';
-
+import { Ads } from '../../../class/ads';
 declare var $ :any;
 @Component({
   selector: 'app-forums',
@@ -21,7 +21,7 @@ export class ForumsComponent implements OnInit{
   loadingable:boolean = true;
   isloading:boolean = false;
   page:number = 1;
-  
+  adslist:Ads[]=[];
   constructor(private route:ActivatedRoute,
     private router:Router,
     private contantService:ContantService,
@@ -42,9 +42,14 @@ export class ForumsComponent implements OnInit{
             console.log(resp);
             this.page = parseInt(resp.page);
             this.forumlist = resp.results as ForumInfo[];
+            $('#forumTab a:first').tab('show');//每次都打开第一个tab
           })
         }
-    }) 
+    });
+    
+    this.httpService.getAds().then(resp=>{
+      this.adslist = resp;
+    });
   }
 
   ngAfterViewInit() {
@@ -142,5 +147,17 @@ export class ForumsComponent implements OnInit{
       this.router.navigate(['/home/home/issue',this.contantService.getInstrumentType(this.key)])
     }
     
+  }
+  adsClick(ads:Ads){
+    console.log(ads);
+    if(ads.type == "url"){
+      window.open(ads.value,'_blank');
+    }
+    if(ads.type == "news"){
+      this.router.navigate(['/home/home/newcontent/'+ads.value]);
+    }
+    if(ads.type == "product"){
+      this.router.navigate(['/home/home/product/'+ads.value]);
+    }
   }
 }
