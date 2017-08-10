@@ -167,7 +167,7 @@
               <label class="col-sm-2 control-label">出生日期</label>
               <div class="col-sm-8">
                 <input ui-jq="daterangepicker" name="birthday" value="{{birthdayString}}" ui-options="{
-                format: 'YYYY-MM-DD',
+                locale: {format: 'YYYY-MM-DD'},
                 singleDatePicker: true,
                 showDropdowns: true
               }" class="form-control w-md" />

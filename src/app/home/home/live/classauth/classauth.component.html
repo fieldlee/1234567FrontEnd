@@ -18,26 +18,103 @@
         <div class="col-lg-8 ">
           <div class="panel ">
             <div class="panel-body">
-
-              <form class="form-horizontal" method="get">
+              <form class="form-horizontal" method="post" #f="ngForm" (ngSubmit)="submit()">
                 <div class="form-group">
                   <label class="col-sm-2 control-label">课程名称</label>
                   <div class="col-sm-10">
-                    <input type="text" name="classname"  class="form-control rounded">
+                    <input type="text" name="classname" [(ngModel)]="class.title" class="form-control rounded">
                   </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">课程适合人群</label>
                   <div class="col-sm-10">
-                    <input type="text" name="suit"  class="form-control">
+                    <input type="text" name="suit" [(ngModel)]="class.subtitle" class="form-control">
                   </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                  <label class="col-sm-2 control-label">开课时间</label>
+                  <label class="col-sm-2 control-label">选择您的身份</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" >
+                    <ul class="roles">
+                      <li id="speecher" class="speecher role">
+                        <img style="width:30px;height:25px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFYAAAA8CAYAAAD8OU3LAAAFjklEQVR42u2ceWwWRRjG2w8rYDxpsVZRwCDi8XmBB2qURk0gUiWgKDEchhhvKFoUNZG01TSI4Shpg0o8kBqPIKgQ0AQMKSEkEFGgQhERkQgBotazEaw+Y54my2bm29ndb3dnYP/4/dPMfvvO09l5j3l3CyqrqgsMpRDcABrBPnAQvA5uAV0Mtvt/TDTqavAy2AP+VXCAgg8xVWRTDLkMvAh25hBThVjN88BNIJMKW1V9IZgOWgKIqWIvmMMtpPB4ErYvmAY25VFMFWIrmQWuTULkOG7SC0wB60FHDILK+A7MBINsF7YUPALWgH8SElPFLlAHrrRF2B5gIvgMHDFMTBU7wAt0nkYJeyoYCz4Bf1sipoptoBpckpSwJ4HRYDH4y3IxVWwFz4MBUQvbFdwJ3gG/xzzJDt63FnyVgMjins+BC/IlbBEYCt4EvyS4eua57LoOvAH+TMCWLxgunu9XWJEeloNXwCFDHsu7FMafDibxsU3Crg2gCvTJJexAUM/00LT9bolGqnojWJjQnt/BGH0yOMUpbIMFzmQL4+LTNEK+Snr4JOzcDYo7hd1lkbf+g/vrYA0HcjNoAu0x2icc+7mdwor8/e2EnEEYNoPHudfmErgEPAlaI7TlZ7AA9Jc5r5PBGPBxzP/lsIgF8Rb3Wa/CuXDM7+Zpfm3c1ysYjmqFW2IVTAArwWGLRG7hHtvDQ+QzwVMB6r+/MaYWMX23sAmCeJQeBKsNLKioENHBIha/Cz1W8W3gA4+UXHj9kaB7VCltGWPHtQmWAIPUAJ7gAsk1t7PAMwpnLo6C+sVVhOnNAHmDJQK38zEu91jFGcak7gpdK/1QrGXDfsynN1tULpzKvVY1p7GSp3J+koXui0FNxOFNGMReuoLO2StUq3Nde8QZUiV5NHMFmMGjkSTFPMwC/ESNiMFJN0nk0GDSYWIhD/Vm8yQ1DjHF6lrFiKYkhO0PuH73oE4vQ1jB5jK99HMKmmEY1EBvm08xRTj4OesKpT7nUsRjc1lh352VXh61sM7iw0vgKp/Xd2EcKdLBn0KI2cz0tizg/V9jmXSHYtxS1z3vj0tYt8etCXB2dCIYzjSxTaNUt45ZVq8AYpbTwx+Q1B9k1zztGlebhLDucp/vYw1mOCLTed/1GG5kQaW3z9/LsNoltp/9HoUd2fVD/YZdUQsrq7if5/MeogZ7e4B/ToaFGeEHftS08UvFb13kGtdkkrDOx3gtU+OyCKKPwYw+fghgW7Pid4td4xabKKw7JFrNkKg4hB3XsPVzd0h7dIUV97neZGFlGdF4jSOYAkYg+U4+mhVbUYsi6bjDBmHdBRMR4tzrKtVlQ/TR6rBSMsc5OcYfUhVmTBXWya9gWUwFnmWSOX7vcc0wW4WNE5mwXtnh6FRYbz6UzHGFR9bXNxXWmyZFM4iqLXWBbc7LJGEFD0nGLsx1oJgKezSLFPOskIy91JY41gQaFfMcJxl7TypseGEnS8bOSoUNL+x0ydiNqbD6zNQ8VOwsJp2dCqtHnWKe9Yrxj6bChhO2MUeNORVWgxrFPF/Ncc2gKIT9+hgTdprPFasseocVtsKi5jgdHlPMc4bHiUg2ioaNSRa1d3p1ZZf6iGOdfBpVJ0yWPaa2Ctzq0RE+XOM3RkTZYpTlC3e2tNp/y+a4EzT6gnU+QnFG1L1bJXQEOw0VVBxgjtIQ1Ml2P9WxOBriOpvh9hjQE1sb4sXjas373Bdnt6Fzq5jKQ7u2iIVsZ7ehaA/Kx0cfSvlyh867XtkkP7aTYZPyBPYELAffVAb77sFePt7iHeCHGbQXRWDzs5r2rDL1g2A9Kbr4rtat3A/vJsP4N7EKz2EzXVx2iYa6jzxEfU90ihv9tTVD6co3OWXv0Y6Iu6P7WGQUI4V17Jc96sn5Dx1r5wWy3EZjAAAAAElFTkSuQmCC"
+                          alt="">
+                        <span>我是老师</span>
+                        <div class="checkbox">
+                          <label class="i-checks">
+                            <input type="radio" name="lecture" value="老师" [(ngModel)]="class.lecture">
+                            <i></i>
+                          </label>
+                        </div>
+                      </li>
+                      <li id="institute" class="institute role">
+                        <img style="width:30px;height:25px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD8AAABGCAYAAAB7ckzWAAAEWUlEQVR42u2cW0gUURjHV7PMsLILlQZqFywDo0Cieqiggh60iLAL3UiK0qctvET1kJeHKCujosJEKCmCsAtBFIHRQyaB9ZClaZgVhlkSWJptun1H/gPTaXZ3dnecc2Z3Hn5YZ3Zmzm925pzvnPPNOpx5RQ6TiSEKiCaiH38LUG5qXcw8WQSxhWgn3Bq0Y3tEqMkvJuo8SPPU4fOWl08krhGDOsUVBrFfohXlY4lSotdPaZ5eHCfWCvKRRDbREaQ0TweOGymr/AqiwWBpngacRxr52UTNMEvz1OC8wuTjiDL01W4B9OP8cWbKRxG5RJcgaZ4u1CdquOXXEy2SSPO8Rf0Ml19I1EoqzVOL+gYtH09UEgMWEVcYQL3jA5Fng4zDRI/FpHl64BGjR97X4MOqaA6aAh18WJV/Bk3Kt30mgMGHVRmEb4QDfaQ7DMll8s1hKt/ssGA3Zlh36AhT8SEcQfahN4hLArhN/BIlz+L7JAEzv2pSiI8i5LMEiytsECGfJon8LBnl5xBHiAriGLFsGGeHpZI/SvwhXMQ71eDoJjEmlOVzsL2KmIiyaOIA4omr3OdHEhN0Ml5m+RHEZ+Ip/s1vP424OkVV9tzP826SVT4V27I93BVzsX0PNy1WqBO2mJkgq3watu30MsXNtu8LxWd+FNFN3PNQ0UPYd76qLBO9AY8yETmJmElM9bBaI1WDV4jtx1VTR2y+YDvm2e9wn6/1Mif/hStzYcWmiEiWUZ6JnkTD9p2oJz5hnwceWmx1bFCPxckK3BVJWJSYTixRJTW40ICmyCTP5Paj1Vd/ng1CSrwsOWdAukqjUdNaNGGN6jfivSzya4hOfOuPiWJiL2ZPb0HuJ+HUEGcXZ7efjR1rC1plkF+LqO6llwUD1mhdx/7FKEtAI3kwiEXSbpHyMxDCPtOZRHAOd8dyLCw8CrK72yVS/gJu6WSdlWVdYhvW1lirvsiAhIhWUfJP8K37U+FyHKcpQOEMPPPK/0tEybMup49YhQr5YjWk3RoDHT0UY99CVdk6UfJsxHUXfa8/y8lvEM35k8d3Fvtf5gZP6aK7umidQ9Nx+DxLNTvFHWMHdzur+/ZqnLtMI1FxqZny6QYMSk5ggkNd1onMq1RV2WjcWW7EDFrH2mymfKkB8hsRCapv33koYxdhATEW8f8AltU8HavSTHn2fOcFmSzMbv8fGqkkLF7/gPD1BfGb2Ooj4fGr2YsWSgZEdxCwqPA12gsHFzi1IX7I9HERS5wCVmyMpFqjEZuCi+BNfCUuoKXlGVf8fIyy8Ni4Q0Ge8QrRm68kqYtGJFPIukTdghhgGyJH1pXlEw8NzPgcWqJuCufkhJwwlc9RYubyMEtIKlcSksI6Fc1OQrTTT/9nGnHez7G6DLhQ78lGpJyz0dZ9i4jfR30Nf9mAzc03SirdiPrZr5nYLxjZr5bZLxXar5PaLxLbr5DbPx5g/2yEiB8MyceUdR/+5jsF/GDIX6EoMkYi/0AqAAAAAElFTkSuQmCC"
+                          alt="">
+                        <span>我是琴行</span>
+                        <label class="i-checks">
+                            <input type="radio" name="lecture"  value="琴行"  [(ngModel)]="class.lecture">
+                            <i></i>
+                        </label>
+                      </li>
+                      <li id="audience" class="audience role">
+                        <img style="width:30px;height:25px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAyCAYAAAD2vz2aAAAFCUlEQVRo3tVaSWhWSRD+ozFRM0Sj5uCWiYwe3A6K64AXD6OgTkTNgBuCmKCgRgcZIi6Y4EHBi6JjBNeZMBoExSWKiho17itqgihuOBl34wLu5k011IOyePnT1e/1+/93+C4hXy3f392vuqpj8xaUxAJAW8AswB5ADeANoB5wA7AVkAdoEYefDhgP2AK4BngFeAt4DDgOKAX0jcNvgT6Ur1r0/xHwCFAJmAtoH0Sufg2kARZhck4TuA3IZvxUwBzAEw2+wjHAAGYjG203xX0HWIY/TkIE6wQ4r5mowlLGzxHyXXwBlACaEVtLBfzLgK5hC9YRcFcQ5FGWYB/cbo4PbAc0R3vN0Icu9z6gS1iCqW10WhDcB0A3wu+CZ4sTAP4kdruhL13uJTxSrAtWLExqJeGqlVAVkFguJhH7K4TcP2wL1lbzgHfxCbevy58esFgKzwBtyFHxScB9Cci0KdhcYTK72FZ+aEEwhcXEzy4hd7ZNwap8bJdfLYml8C/5qEwUcg/ZEixVeKg6WHq4/L8sCqbwMyl3JLyPTRTVxoL9JAzkMeM/sCxYMfElLVl62BBsoDCIasLNtCyWQjnxVy3kDkkGwfb7WJ0mOEL87Rdy+9sQLEcYxE5W2dsW7BTxVyHk5tgQLAXrFt0gKtm907Zge4m/SgGvHnOzUlZIlvpV1r75almwjcTfFcOjI3DBpgkCecsu3LWWBSsi1y/JbWSqTcHShdV6H8JdY1mwXuint4DzH6CV7cv3VEFACwhvqEWxrhM/v9taXX76YTs1A7rAPhoXLAk2g/jR9VERZgMxHeseaVH4iwWxbuG1TdkfLKjZWobdolailWkEd5DxNgYo1hcUybV9QINT5qevH8TEaCYGHi/I0eT/WwPOBSTYLGJ3lIa4RYmaGv2Io697monVsYlRG2Gbm0PVdPPZ5KhOk/sAY88NQ7AcnB1+Fib4GpDvMaJbDfgmtKWEGcFs5aMP6XbeJrkWSQRT05mFgPfCoJSwqwBZjdhthz3/Bk17T3HrpTXSPl9l8GOqnJaQD4dvwToZtEvcr9dAD3uqEh+L9z3T65JaTRs8hrox/NstA5tnAZ39CtYP279S5xvwcOeX98mGycTDYY9+VmuMwTHY7v1MBRuAbxykh/FMD1vqXcQZi5V+A7bAsz2+4NJVXN/Iyo0rWE/Ac6EjNd6a4LGqirBv7oQA1ZoeyWIYJxy9uaO77rqCZWo+7uAri38FVSX9T0hCUXxj/f0YHgUNQjt3yLwzrmAmSc5hNn4AnEiAWPwZQYqPib2DWsQVLM/A6GaPA/dUgsVysZbFtsnARl5jgrU0mEzXsq9hc3xU5yQRitmPWSPkP6QXdSpYkcG5NYj9gsuTTCz3CzqGxDjI4Ms5jwuWavAEaR0Ta3gIfXtTvGBF6VqDpwipVLB8g0qbvhnNwEdqThJjD4m3vcHdM58KtltILmGra0WSi+XVZioRcne7gmUIH5moy2oH4rizwSOVROEGmWR1EDYTVI4ZJm3jTWx1rY+IWN9tLcPu74gYNtMkpGGspfI+YoLRJwXDhNxS6Yu9OlY9z4+YWHxemiJ8GrVPkW4KCGVsO16MqGClJIe/JYV6TNiV+I04yo2oWA4uEjePKQLec0UoABRqgraaCyIsGH1OmiXIv9DPyKk84oKND3suWRNxwZaHKViaxvA22bEjTMFyIy6WwskwBRuSJEl/wEGNCc6b5P4/7317augkoI4AAAAASUVORK5CYII="
+                          alt="">
+                        <span>我是听众</span>
+                        <label class="i-checks">
+                          <input type="radio" name="lecture" value="听众" [(ngModel)]="class.lecture">
+                          <i></i>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">手机号码</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="telphone" placeholder="请输入手机号" class="form-control">
+                  </div>
+                  <label class="col-sm-2 control-label"><a >获取验证码</a></label>
+                  
+                  <div class="col-sm-4">
+                    <input type="text" name="verify" placeholder="请输入验证码"  class="form-control">
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">开始日期</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="classStartDate" ui-jq="daterangepicker" ui-options="{locale: {format: 'YYYY-MM-DD'},singleDatePicker: true,showDropdowns: true}"
+                      class="form-control">
+                  </div>
+                  <label class="col-sm-2 control-label">结束日期</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="classEndDate" ui-jq="daterangepicker" ui-options="{locale: {format: 'YYYY-MM-DD'},singleDatePicker: true,showDropdowns: true}"
+                      class="form-control">
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程开始时间</label>
+                  <div class="col-sm-10">
+                    <button class="btn btn-info" (click)="schedule()">排课</button>
+                    <div class="col-sm-12 list-group bg-white">
+                      <a class="list-group-item" *ngFor="let item of class.schedules"> {{item.dateTime}} -- {{item.free}}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程简介</label>
+                  <div class="col-sm-10">
+                    <div name="classContent" id="classContent"></div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <div class="col-sm-2 col-sm-offset-10">
+                    <button type="submit" class="btn btn-info">发布课程</button>
                   </div>
                 </div>
               </form>
@@ -45,6 +122,55 @@
           </div>
         </div>
 
+        <div class="col-lg-4">
+          <div class="panel ">
+            <div class="panel-body">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="commentbymodal" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">排课</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-sm-12">
+          <label class="col-sm-6 control-label">上课日期和时间</label>
+
+          <label class="col-sm-3 control-label">是否免费试听</label>
+          <label class="col-sm-3 control-label">添加</label>
+          <div class="col-sm-6">
+            <input type="text" name="classdate" ui-jq="daterangepicker" ui-options="{locale: {format: 'YYYY-MM-DD hh:mm'},singleDatePicker:true,timePicker:true,timePicker24Hour:true}"
+              class="form-control">
+          </div>
+
+          <div class="col-sm-3">
+            <label class="i-checks">
+              <input type="checkbox" name="free"  value="free"><i></i>
+                试听
+            </label>
+          </div>
+          <div class="col-sm-3">
+            <button type="button" (click)="addSchedule()" class="btn btn-info btn-sm">添加</button>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="list-group bg-white">
+            <a class="list-group-item" *ngFor="let item of class.schedules"> {{item.dateTime}} -- {{item.free}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">确定</button>
       </div>
     </div>
   </div>

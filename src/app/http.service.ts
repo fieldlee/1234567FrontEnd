@@ -103,6 +103,22 @@ export class HttpService {
       .catch(this.handleError);
   }
 
+  // 创建课程
+  createClass(classinfo:any):Promise<any>{
+    const url = `${this.rootUrl}/web/class`;
+    this.http.post(url,JSON.stringify(classinfo), { headers: this.constructHeader() })
+    .toPromise()
+    .then(resp=>resp.json())
+    .catch(this.handleError);
+  }
+  getClass():Promise<any>{
+    const url = `${this.rootUrl}/web/class`;
+    this.http.get(url)
+      .toPromise()
+      .then(resp=> resp.json())
+      .catch(this.handleError);
+  }
+
   // 广告信息配置
 
   getAds(): Promise<Ads[]> {
@@ -614,6 +630,9 @@ export class HttpService {
       .then(resp => resp)
       .catch(this.handleError);
   }
+
+
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

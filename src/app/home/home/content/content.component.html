@@ -32,14 +32,14 @@
                       <a href class="h4">{{forum.avator}}</a> {{forum.fromTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                      <a  class="text-muted m-xs" data-toggle="dropdown"><i class="icon-share " style="font-size:20px" ></i></a>                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a class="text-muted m-xs" data-toggle="dropdown"><i class="icon-share " style="font-size:20px" ></i></a>                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                       <ul class="dropdown-menu list-inline">
-                        <li ><a (click)="share('weichat')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-wechat" aria-hidden="true"></i></a>微信朋友圈</li>
+                        <li><a (click)="share('weichat')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-wechat" aria-hidden="true"></i></a>微信朋友圈</li>
                         <li class="divider"></li>
-                        <li ><a (click)="share('qq')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-qq" aria-hidden="true"></i></a>QQ空间圈</li>
+                        <li><a (click)="share('qq')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-qq" aria-hidden="true"></i></a>QQ空间圈</li>
                         <li class="divider"></li>
-                        <li ><a (click)="share('weibo')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-weibo" aria-hidden="true"></i></a>分享微博</li>
+                        <li><a (click)="share('weibo')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-weibo" aria-hidden="true"></i></a>分享微博</li>
                       </ul>
                       <a (click)="collect()" class="text-muted m-xs" data-toggle="tooltip" data-placement="top" title="收藏帖子的数量"><i class="icon-star" style="font-size:20px">{{forum.collect}}</i></a>                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <a (click)="support()" class="text-muted m-xs" data-toggle="tooltip" data-placement="top" title="赞帖子的数量"><i class="glyphicon glyphicon-thumbs-up icon" style="font-size:20px">{{forum.support}}</i></a>
@@ -164,3 +164,4 @@
       </div>
     </div>
   </div>
+</div>

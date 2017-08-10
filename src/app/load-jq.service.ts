@@ -50,7 +50,7 @@ export class LoadJQService {
     $('#' + froalaEditorObjid).froalaEditor({
       language: 'zh_cn',
       // Set the image upload URL.
-      toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertFile','insertLink', 'insertTable', '|',  'insertHR', 'selectAll', 'clearFormatting', '|', 'undo', 'redo'],
+      toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable', '|',  'insertHR', 'selectAll', 'clearFormatting', '|', 'undo', 'redo'],
       // toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent'],
       fileUploadURL: '/api/web/upload/upload_file',
       videoUploadURL: '/api/web/upload/upload_file',

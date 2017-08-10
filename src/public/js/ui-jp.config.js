@@ -38,7 +38,8 @@ var jp_config = {
     './public/libs/jquery/fullcalendar/dist/fullcalendar.theme.css'],
   daterangepicker: ['./public/libs/jquery/moment/moment.js',
     './public/libs/jquery/bootstrap-daterangepicker/daterangepicker.js',
-    './public/libs/jquery/bootstrap-daterangepicker/daterangepicker-bs3.css'],
+    './public/libs/jquery/bootstrap-daterangepicker/daterangepicker-bs3.css'
+    ],
   tagsinput: ['./public/libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
     './public/libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'],
   froalaEditor: ["./public/editor/js/froala_editor.min.js",
