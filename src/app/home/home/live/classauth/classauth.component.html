@@ -15,10 +15,10 @@
           </div>
         </div>
 
-        <div class="col-lg-8 ">
-          <div class="panel ">
+        <div class="col-lg-8" [ngClass]="{divhidden: !isself}">
+          <div class="panel panel-default">
             <div class="panel-body">
-              <form class="form-horizontal" method="post" #f="ngForm" (ngSubmit)="submit()">
+              <form class="form-horizontal" method="get">
                 <div class="form-group">
                   <label class="col-sm-2 control-label">课程名称</label>
                   <div class="col-sm-10">
@@ -35,7 +35,7 @@
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">选择您的身份</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-6">
                     <ul class="roles">
                       <li id="speecher" class="speecher role">
                         <img style="width:30px;height:25px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFYAAAA8CAYAAAD8OU3LAAAFjklEQVR42u2ceWwWRRjG2w8rYDxpsVZRwCDi8XmBB2qURk0gUiWgKDEchhhvKFoUNZG01TSI4Shpg0o8kBqPIKgQ0AQMKSEkEFGgQhERkQgBotazEaw+Y54my2bm29ndb3dnYP/4/dPMfvvO09l5j3l3CyqrqgsMpRDcABrBPnAQvA5uAV0Mtvt/TDTqavAy2AP+VXCAgg8xVWRTDLkMvAh25hBThVjN88BNIJMKW1V9IZgOWgKIqWIvmMMtpPB4ErYvmAY25VFMFWIrmQWuTULkOG7SC0wB60FHDILK+A7MBINsF7YUPALWgH8SElPFLlAHrrRF2B5gIvgMHDFMTBU7wAt0nkYJeyoYCz4Bf1sipoptoBpckpSwJ4HRYDH4y3IxVWwFz4MBUQvbFdwJ3gG/xzzJDt63FnyVgMjins+BC/IlbBEYCt4EvyS4eua57LoOvAH+TMCWLxgunu9XWJEeloNXwCFDHsu7FMafDibxsU3Crg2gCvTJJexAUM/00LT9bolGqnojWJjQnt/BGH0yOMUpbIMFzmQL4+LTNEK+Snr4JOzcDYo7hd1lkbf+g/vrYA0HcjNoAu0x2icc+7mdwor8/e2EnEEYNoPHudfmErgEPAlaI7TlZ7AA9Jc5r5PBGPBxzP/lsIgF8Rb3Wa/CuXDM7+Zpfm3c1ysYjmqFW2IVTAArwWGLRG7hHtvDQ+QzwVMB6r+/MaYWMX23sAmCeJQeBKsNLKioENHBIha/Cz1W8W3gA4+UXHj9kaB7VCltGWPHtQmWAIPUAJ7gAsk1t7PAMwpnLo6C+sVVhOnNAHmDJQK38zEu91jFGcak7gpdK/1QrGXDfsynN1tULpzKvVY1p7GSp3J+koXui0FNxOFNGMReuoLO2StUq3Nde8QZUiV5NHMFmMGjkSTFPMwC/ESNiMFJN0nk0GDSYWIhD/Vm8yQ1DjHF6lrFiKYkhO0PuH73oE4vQ1jB5jK99HMKmmEY1EBvm08xRTj4OesKpT7nUsRjc1lh352VXh61sM7iw0vgKp/Xd2EcKdLBn0KI2cz0tizg/V9jmXSHYtxS1z3vj0tYt8etCXB2dCIYzjSxTaNUt45ZVq8AYpbTwx+Q1B9k1zztGlebhLDucp/vYw1mOCLTed/1GG5kQaW3z9/LsNoltp/9HoUd2fVD/YZdUQsrq7if5/MeogZ7e4B/ToaFGeEHftS08UvFb13kGtdkkrDOx3gtU+OyCKKPwYw+fghgW7Pid4td4xabKKw7JFrNkKg4hB3XsPVzd0h7dIUV97neZGFlGdF4jSOYAkYg+U4+mhVbUYsi6bjDBmHdBRMR4tzrKtVlQ/TR6rBSMsc5OcYfUhVmTBXWya9gWUwFnmWSOX7vcc0wW4WNE5mwXtnh6FRYbz6UzHGFR9bXNxXWmyZFM4iqLXWBbc7LJGEFD0nGLsx1oJgKezSLFPOskIy91JY41gQaFfMcJxl7TypseGEnS8bOSoUNL+x0ydiNqbD6zNQ8VOwsJp2dCqtHnWKe9Yrxj6bChhO2MUeNORVWgxrFPF/Ncc2gKIT9+hgTdprPFasseocVtsKi5jgdHlPMc4bHiUg2ioaNSRa1d3p1ZZf6iGOdfBpVJ0yWPaa2Ctzq0RE+XOM3RkTZYpTlC3e2tNp/y+a4EzT6gnU+QnFG1L1bJXQEOw0VVBxgjtIQ1Ml2P9WxOBriOpvh9hjQE1sb4sXjas373Bdnt6Fzq5jKQ7u2iIVsZ7ehaA/Kx0cfSvlyh867XtkkP7aTYZPyBPYELAffVAb77sFePt7iHeCHGbQXRWDzs5r2rDL1g2A9Kbr4rtat3A/vJsP4N7EKz2EzXVx2iYa6jzxEfU90ihv9tTVD6co3OWXv0Y6Iu6P7WGQUI4V17Jc96sn5Dx1r5wWy3EZjAAAAAElFTkSuQmCC"
@@ -57,28 +57,44 @@
                             <i></i>
                         </label>
                       </li>
-                      <li id="audience" class="audience role">
-                        <img style="width:30px;height:25px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAyCAYAAAD2vz2aAAAFCUlEQVRo3tVaSWhWSRD+ozFRM0Sj5uCWiYwe3A6K64AXD6OgTkTNgBuCmKCgRgcZIi6Y4EHBi6JjBNeZMBoExSWKiho17itqgihuOBl34wLu5k011IOyePnT1e/1+/93+C4hXy3f392vuqpj8xaUxAJAW8AswB5ADeANoB5wA7AVkAdoEYefDhgP2AK4BngFeAt4DDgOKAX0jcNvgT6Ur1r0/xHwCFAJmAtoH0Sufg2kARZhck4TuA3IZvxUwBzAEw2+wjHAAGYjG203xX0HWIY/TkIE6wQ4r5mowlLGzxHyXXwBlACaEVtLBfzLgK5hC9YRcFcQ5FGWYB/cbo4PbAc0R3vN0Icu9z6gS1iCqW10WhDcB0A3wu+CZ4sTAP4kdruhL13uJTxSrAtWLExqJeGqlVAVkFguJhH7K4TcP2wL1lbzgHfxCbevy58esFgKzwBtyFHxScB9Cci0KdhcYTK72FZ+aEEwhcXEzy4hd7ZNwap8bJdfLYml8C/5qEwUcg/ZEixVeKg6WHq4/L8sCqbwMyl3JLyPTRTVxoL9JAzkMeM/sCxYMfElLVl62BBsoDCIasLNtCyWQjnxVy3kDkkGwfb7WJ0mOEL87Rdy+9sQLEcYxE5W2dsW7BTxVyHk5tgQLAXrFt0gKtm907Zge4m/SgGvHnOzUlZIlvpV1r75almwjcTfFcOjI3DBpgkCecsu3LWWBSsi1y/JbWSqTcHShdV6H8JdY1mwXuint4DzH6CV7cv3VEFACwhvqEWxrhM/v9taXX76YTs1A7rAPhoXLAk2g/jR9VERZgMxHeseaVH4iwWxbuG1TdkfLKjZWobdolailWkEd5DxNgYo1hcUybV9QINT5qevH8TEaCYGHi/I0eT/WwPOBSTYLGJ3lIa4RYmaGv2Io697monVsYlRG2Gbm0PVdPPZ5KhOk/sAY88NQ7AcnB1+Fib4GpDvMaJbDfgmtKWEGcFs5aMP6XbeJrkWSQRT05mFgPfCoJSwqwBZjdhthz3/Bk17T3HrpTXSPl9l8GOqnJaQD4dvwToZtEvcr9dAD3uqEh+L9z3T65JaTRs8hrox/NstA5tnAZ39CtYP279S5xvwcOeX98mGycTDYY9+VmuMwTHY7v1MBRuAbxykh/FMD1vqXcQZi5V+A7bAsz2+4NJVXN/Iyo0rWE/Ac6EjNd6a4LGqirBv7oQA1ZoeyWIYJxy9uaO77rqCZWo+7uAri38FVSX9T0hCUXxj/f0YHgUNQjt3yLwzrmAmSc5hNn4AnEiAWPwZQYqPib2DWsQVLM/A6GaPA/dUgsVysZbFtsnARl5jgrU0mEzXsq9hc3xU5yQRitmPWSPkP6QXdSpYkcG5NYj9gsuTTCz3CzqGxDjI4Ms5jwuWavAEaR0Ta3gIfXtTvGBF6VqDpwipVLB8g0qbvhnNwEdqThJjD4m3vcHdM58KtltILmGra0WSi+XVZioRcne7gmUIH5moy2oH4rizwSOVROEGmWR1EDYTVI4ZJm3jTWx1rY+IWN9tLcPu74gYNtMkpGGspfI+YoLRJwXDhNxS6Yu9OlY9z4+YWHxemiJ8GrVPkW4KCGVsO16MqGClJIe/JYV6TNiV+I04yo2oWA4uEjePKQLec0UoABRqgraaCyIsGH1OmiXIv9DPyKk84oKND3suWRNxwZaHKViaxvA22bEjTMFyIy6WwskwBRuSJEl/wEGNCc6b5P4/7317augkoI4AAAAASUVORK5CYII="
-                          alt="">
-                        <span>我是听众</span>
-                        <label class="i-checks">
-                          <input type="radio" name="lecture" value="听众" [(ngModel)]="class.lecture">
-                          <i></i>
-                        </label>
-                      </li>
                     </ul>
                   </div>
+                  <div class="col-sm-4">
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">主讲老师</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="lecturename" [(ngModel)]="class.lecturename" placeholder="请您的称呼" class="form-control">
+                  </div>
+
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">手机号码</label>
                   <div class="col-sm-4">
-                    <input type="text" name="telphone" placeholder="请输入手机号" class="form-control">
+                    <input type="text" name="telphone" [(ngModel)]="class.telphone" placeholder="请输入手机号" class="form-control">
                   </div>
                   <label class="col-sm-2 control-label"><a >获取验证码</a></label>
-                  
+
                   <div class="col-sm-4">
-                    <input type="text" name="verify" placeholder="请输入验证码"  class="form-control">
+                    <input type="text" name="verify" placeholder="请输入验证码" class="form-control">
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程价格</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="price" [(ngModel)]="class.price" placeholder="请课程价格" class="form-control">
+                  </div>
+                  <label class="col-sm-2 control-label">是否允许学生录屏</label>
+
+                  <div class="col-sm-4">
+                    <label class="i-switch i-switch-md bg-info m-t-xs m-r">
+                      <input type="checkbox" name='switchrecord'>
+                      <i></i>
+                    </label>
                   </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -114,13 +130,132 @@
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <div class="col-sm-2 col-sm-offset-10">
-                    <button type="submit" class="btn btn-info">发布课程</button>
+                    <button (click)="submit()" class="btn btn-info">发布课程</button>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">已加入：</label>
+                  <div class="col-sm-8 m-b m-t-lg">
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a7.jpg" alt="...">
+                      <i class="on b-white"></i>
+                    </a>
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a8.jpg" alt="...">
+                      <i class="busy b-white"></i>
+                    </a>
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a9.jpg" alt="...">
+                      <i class="away b-white"></i>
+                    </a>
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a10.jpg" alt="...">
+                      <i class="on b-white"></i>
+                    </a>
+                    <a class="btn btn-default btn-rounded font-bold"> +152 </a>
                   </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
+
+        <div class="col-lg-8 " [ngClass]="{divhidden:isself}">
+          <div class="panel ">
+            <div class="panel-body">
+              <form class="form-horizontal" method="get">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程名称</label>
+                  <div class="col-sm-10">
+                    {{class.title}}
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程适合人群</label>
+                  <div class="col-sm-10">
+                    {{class.subtitle}}
+                  </div>
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">主讲老师</label>
+                  <div class="col-sm-10">
+                    {{class.lecturename}}
+                  </div>
+
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程价格</label>
+                  <div class="col-sm-2">
+                    {{class.price}}元
+                  </div>
+                  <div class="col-sm-8">
+                    {{class.record?"允许学生录屏":"不允许学生录屏"}}
+                  </div>
+
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">开始日期</label>
+                  <div class="col-sm-4">
+                    {{class.start}}
+                  </div>
+                  <label class="col-sm-2 control-label">结束日期</label>
+                  <div class="col-sm-4">
+                    {{class.end}}
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程表</label>
+                  <div class="col-sm-10">
+                    <div class="col-sm-12 list-group bg-white">
+                      <a class="list-group-item" *ngFor="let item of class.schedules"> {{item.dateTime}} -- {{item.free}}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程简介</label>
+                  <div class="col-sm-10">
+                    <div [innerHTML]="class.content"></div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">已加入：</label>
+                  <div class="col-sm-8 m-b m-t-lg">
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a7.jpg" alt="...">
+                      <i class="on b-white"></i>
+                    </a>
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a8.jpg" alt="...">
+                      <i class="busy b-white"></i>
+                    </a>
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a9.jpg" alt="...">
+                      <i class="away b-white"></i>
+                    </a>
+                    <a class="avatar thumb-xs m-r-xs">
+                      <img src="./public/img/a10.jpg" alt="...">
+                      <i class="on b-white"></i>
+                    </a>
+                    <a class="btn btn-default btn-rounded font-bold"> +152 </a>
+                  </div>
+                  <div class="col-sm-2">
+                    <a (click)="joinclick()" class="btn btn-info btn-rounded font-bold">加入，学习</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
 
         <div class="col-lg-4">
           <div class="panel ">
@@ -141,36 +276,79 @@
         <h4 class="modal-title">排课</h4>
       </div>
       <div class="modal-body">
-        <div class="col-sm-12">
-          <label class="col-sm-6 control-label">上课日期和时间</label>
-
-          <label class="col-sm-3 control-label">是否免费试听</label>
-          <label class="col-sm-3 control-label">添加</label>
-          <div class="col-sm-6">
+        <form role="form">
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class=" col-sm-6 form-group">
+            <label>上课日期和时间</label>
             <input type="text" name="classdate" ui-jq="daterangepicker" ui-options="{locale: {format: 'YYYY-MM-DD hh:mm'},singleDatePicker:true,timePicker:true,timePicker24Hour:true}"
               class="form-control">
           </div>
-
-          <div class="col-sm-3">
+          <div class=" col-sm-3 form-group">
+            <label>是否免费试听</label>
             <label class="i-checks">
-              <input type="checkbox" name="free"  value="free"><i></i>
+                <input type="checkbox" name="free"  value="free"><i></i>
                 试听
-            </label>
+              </label>
           </div>
-          <div class="col-sm-3">
+          <div class=" col-sm-3 form-group">
+            <label>添加</label><br>
             <button type="button" (click)="addSchedule()" class="btn btn-info btn-sm">添加</button>
           </div>
-        </div>
-
-        <div class="col-sm-12">
-          <div class="list-group bg-white">
-            <a class="list-group-item" *ngFor="let item of class.schedules"> {{item.dateTime}} -- {{item.free}}</a>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="col-sm-12">
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let item of class.schedules">
+                {{item.dateTime}} -- {{item.free}}
+                <button (click)="deleteSchedule(item.dateTime)" style="margin-right:40px;float:right" class="btn btn-rounded btn-sm btn-icon btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
+              </li>
+            </ul>
           </div>
-        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button type="button" class="btn btn-info" data-dismiss="modal">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="joinbymodal" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">加入学习</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">手机号码</label>
+            <div class="col-sm-10">
+              <input type="text" name="telphone" placeholder="请输入手机号" class="form-control">
+            </div>
+          </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><a><b>验证码</b></a></label>
+            <div class="col-sm-10">
+              <input type="text" name="verifycode" placeholder="请输入验证码" class="form-control">
+            </div>
+          </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">缴费金额</label>
+            <div class="col-sm-10">
+              <span style="color:red"><b> {{class.price}} </b></span>元
+            </div>
+          </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-info" data-dismiss="modal">确认加入,缴费</button>
       </div>
     </div>
   </div>

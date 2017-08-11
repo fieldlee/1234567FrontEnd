@@ -104,21 +104,37 @@ export class HttpService {
   }
 
   // 创建课程
-  createClass(classinfo:any):Promise<any>{
+  createClass(classinfo: any): Promise<any> {
     const url = `${this.rootUrl}/web/class`;
-    this.http.post(url,JSON.stringify(classinfo), { headers: this.constructHeader() })
-    .toPromise()
-    .then(resp=>resp.json())
-    .catch(this.handleError);
+    return this.http.post(url,JSON.stringify(classinfo), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
-  getClass():Promise<any>{
+
+  getClass(): Promise<any> {
     const url = `${this.rootUrl}/web/class`;
-    this.http.get(url)
+    return this.http.get(url)
       .toPromise()
       .then(resp=> resp.json())
       .catch(this.handleError);
   }
 
+  getClassById(id:string): Promise<any> {
+    const url = `${this.rootUrl}/web/class/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(resp=> resp.json())
+      .catch(this.handleError);
+  }
+
+  joinClass(info:any):Promise<any>{
+    const url = `${this.rootUrl}/web/class/join`;
+    return this.http.post(url,JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   // 广告信息配置
 
   getAds(): Promise<Ads[]> {

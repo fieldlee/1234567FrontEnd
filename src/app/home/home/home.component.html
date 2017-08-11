@@ -378,14 +378,7 @@
                   </li>
                 </ul> -->
             </li>
-            <li>
-              <a routerLink="/home/home/find" [ngClass]="{auto:true}">
-                 <b class="badge bg-info pull-right">9</b>
-                 <i><img style="width:25px" src="./public/img/Find.png"></i>
-                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
-                  <span class="font-bold">发现</span>
-                </a>
-            </li>
+            
               <li>
               <a routerLink="/home/home/news" [ngClass]="{auto:true}">
                  <b class="badge bg-info pull-right" >{{newsNumber}}</b>
@@ -400,6 +393,18 @@
                  <i><img style="width:25px" src="./public/img/Camera.png"></i>
                   <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
                   <span class="font-bold">直播</span>
+                </a>
+            </li>
+            <li class="line dk"></li>
+            <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
+              <span><b>发现乐器</b></span>
+            </li>
+            <li>
+              <a routerLink="/home/home/find" [ngClass]="{auto:true}">
+                 <b class="badge bg-info pull-right">9</b>
+                 <i><img style="width:25px" src="./public/img/Find.png"></i>
+                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
+                  <span class="font-bold">发现</span>
                 </a>
             </li>
             <li class="line dk"></li>

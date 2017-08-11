@@ -1,26 +1,25 @@
 .feature {
-        display: block;
-        width: 100%;
-        margin: 0;
-    }
-
-    .author {
-        font-style: italic;
-        line-height: 1.3;
-        color: #aab6aa;
-    }
-
-    .blog-stripe .block-title {
-        background: black;
-        width: 100%;
-        color: white;
-        height: 100px;
-        padding-top: 20px;
-    }
+   display: block;
+   width: 100%;
+   margin: 0;
+}
+.author {
+   font-style: italic;
+   line-height: 1.5;
+   color : #222;
+}
+.blog-stripe .block-title {
+ background: black;
+  width: 100%;
+  color: white;
+  height: 100px;
+  padding-top: 10px;
+}
 
     .all-blogs .media {
         margin-left: -40px;
-        padding-bottom: 20px;
+        margin-top: -10px;
+        padding-bottom: 10px;
         border-bottom: 1px solid #CCCCCC;
     }
     .shape {
