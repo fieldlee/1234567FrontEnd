@@ -9,6 +9,7 @@ export class ForumInfo {
     tags:string[];
     content:string;
     contentSafe : SafeHtml ;
+    topup:Boolean;
     author:string;
     avator:string;
     avatorPath:string;

@@ -80,7 +80,6 @@ export class LiveStreamComponent implements OnInit {
       if (message.type == "message") {
         self.messagelist.push(message);
       }
-
     });
   }
 

@@ -191,6 +191,33 @@ export class ContentComponent implements OnInit {
     }
   }
 
+  topup(id:string){
+    this.httpService.topupForumById(id).then(resp=>{
+      var message = "";
+      var type = "success";
+      if(resp.success){
+        message = resp.message;
+        type = "success";
+      }else{
+        message = resp.message;
+        type = "warning";
+      }
+      $.notify("成功置顶该帖子", {
+        type: "success",
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        }
+      }, {
+          animate: {
+            enter: 'animated lightSpeedIn',
+            exit: 'animated lightSpeedOut'
+          }
+        });
+      return;
+    })
+  }
+
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.

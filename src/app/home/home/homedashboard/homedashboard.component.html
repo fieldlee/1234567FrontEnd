@@ -34,18 +34,17 @@
                               <div class="form-group">
                                 <label class="col-sm-2 control-label">分类</label>
                                 <div class="col-sm-4">
-                                  <select name="type" [(ngModel)]="type" placeholder="请选择分类" class="form-control m-b" (change)="typeListener()">
-                                <option value="">请选择乐器类别</option>
-                                <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
-                              </select>
+                                  <select name="type" id="selectType" [(ngModel)]="type" placeholder="请选择分类" class="form-control m-b" (change)="typeListener()">
+                                    <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
+                                  </select>
                                 </div>
 
                                 <label class="col-sm-2 control-label">具体分类</label>
                                 <div class="col-sm-4">
-                                  <select name="subtype" [(ngModel)]="subType" placeholder="请选择具体分类" class="form-control m-b">
-                                <option value="">请选择具体分类</option>
-                                <option *ngFor="let s of subtypes" value="{{s}}">{{s}}</option>
-                              </select>
+                                  <select name="subtype" id="selectSubType" [(ngModel)]="subType" placeholder="请选择具体分类" class="form-control m-b">
+                                    <!-- <option value="">请选择具体分类</option> -->
+                                    <option *ngFor="let s of subtypes" value="{{s}}">{{s}}</option>
+                                  </select>
                                 </div>
                               </div>
                               <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -81,18 +80,16 @@
                               <div class="form-group">
                                 <label class="col-sm-2 control-label">分类</label>
                                 <div class="col-sm-4">
-                                  <select name="typefordelegate" [(ngModel)]="type" placeholder="请选择分类" class="form-control m-b" (change)="typeListener()">
-                                <option value="">请选择乐器类别</option>
-                                <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
-                              </select>
+                                  <select name="typefordelegate" id="selectTypeDele" [(ngModel)]="type" placeholder="请选择分类" class="form-control m-b">
+                                    <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
+                                  </select>
                                 </div>
                              
                                 <label class="col-sm-2 control-label">具体分类</label>
                                 <div class="col-sm-4">
-                                  <select name="subtypefordelegate" [(ngModel)]="subType" placeholder="请选择具体分类" class="form-control m-b">
-                                <option value="">请选择具体分类</option>
-                                <option *ngFor="let s of subtypes" value="{{s}}">{{s}}</option>
-                              </select>
+                                  <select name="subtypefordelegate" id="selectSubTypeDele" [(ngModel)]="subType" placeholder="请选择具体分类" class="form-control m-b">
+                                    <option *ngFor="let s of subtypes" value="{{s}}">{{s}}</option>
+                                  </select>
                                 </div>
                               </div>
                               <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -101,23 +98,20 @@
                                 <div class="col-sm-10">
                                   <div class="col-sm-4">
 
-                                    <select name="province" [(ngModel)]="province" class="form-control m-b" (change)="provinceListener()">
-                                <option value="">请选择省份</option>
-                                <option *ngFor="let p of provinces" value="{{p}}">{{p}}</option>
-                              </select>
+                                    <select name="province" id="selectProvince" [(ngModel)]="province" class="form-control m-b" (change)="provinceListener()">
+                                      <option *ngFor="let p of provinces" value="{{p}}">{{p}}</option>
+                                    </select>
                                   </div>
                                   <div class="col-sm-4 ">
 
-                                    <select name="city" [(ngModel)]="city" class="form-control m-b" (change)="cityListener()">
-                                <option value="">请选择市</option>
-                                <option *ngFor="let c of citys" value="{{c}}">{{c}}</option>
-                              </select>
+                                    <select name="city" id="selectCity" [(ngModel)]="city" class="form-control m-b" (change)="cityListener()">
+                                      <option *ngFor="let c of citys" value="{{c}}">{{c}}</option>
+                                    </select>
                                   </div>
                                   <div class="col-sm-4 ">
-                                    <select name="district" [(ngModel)]="district" class="form-control m-b">
-                                <option value="">请选择区县</option>
-                                <option *ngFor="let dis of districts" value="{{dis}}">{{dis}}</option>
-                              </select>
+                                    <select name="district" id="selectDistrict" [(ngModel)]="district" class="form-control m-b">
+                                      <option *ngFor="let dis of districts" value="{{dis}}">{{dis}}</option>
+                                    </select>
                                   </div>
                                 </div>
                               </div>

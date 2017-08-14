@@ -24,14 +24,7 @@ export class PraiseComponent implements OnInit {
     this.praise.praisetitles = ["","","","","","","","","","","",""];
     
   }
-  ngAfterViewInit() {
-    
-  }
-  ngAfterViewChecked() {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
-    this.loadJQService.reloadJQ(null);
-  }
+  
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.productid = params["id"];
@@ -92,7 +85,33 @@ export class PraiseComponent implements OnInit {
       });
     }
   }
+  ngAfterContentChecked() {
+ 
+    var self = this;
+    this.loadJQService.reloadJQ(null);
+
+    $('#province').select2({
+        placeholder: '请选择省份'
+    }).on('select2:select', function (evt) {
+      self.provinceListener();
+    });
+
+    $('#city').select2({
+        placeholder: '请选择市'
+    }).on('select2:select', function (evt) {
+      self.cityListener();
+    });
+    $('#district').select2({
+        placeholder: '请选择区县'
+    })
+  }
+
+
+
+
+
   provinceListener(): void {
+    this.praise.province = $('#province').val();
     this.httpService.getCitys(this.praise.province).then(resp => {
       this.citys = new Array();
       resp.results.forEach(element => {
@@ -102,6 +121,7 @@ export class PraiseComponent implements OnInit {
   }
 
   cityListener(): void {
+    this.praise.city = $('#city').val();
     this.httpService.getDistricts(this.praise.province, this.praise.city).then(resp => {
       this.districts = new Array();
       resp.results.forEach(element => {
@@ -112,6 +132,8 @@ export class PraiseComponent implements OnInit {
 
 
   submitPraise() {
+    this.praise.district = $("#district").val();
+
     for (var i = 0; i < this.praise.praisetitles.length; i++) {
       if ($("#slider" + i).val() == "") {
         this.praise.praisestars[i] = "4";
@@ -151,10 +173,6 @@ export class PraiseComponent implements OnInit {
           align: 'center'
         }
       }, {
-          placement: {
-            from: "bottom",
-            align: "center"
-          },
           animate: {
             enter: 'animated lightSpeedIn',
             exit: 'animated lightSpeedOut'

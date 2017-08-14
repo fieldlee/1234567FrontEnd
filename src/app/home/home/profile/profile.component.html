@@ -91,7 +91,7 @@
               <div class="m-l-lg">
                 <div class="m-b-xs">
                   <a routerLink="/home/home/profile/{{col.author}}" class="h4"> <i style="font-size:10px"> {{col.avator}} </i></a>
-                   <span class="text-muted m-l-sm pull-right">收藏：{{col.fromTime}}</span> 
+                  <span class="text-muted m-l-sm pull-right">收藏：{{col.fromTime}}</span>
                 </div>
                 <div class="m-b">
                   <div>
@@ -117,43 +117,32 @@
             </div>
             <div class="line line-dashed b-b line-lg pull-in"></div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">头像</label>
-              <div class="col-sm-10">
-                <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
-                  <input ui-jq="filestyle" accept="image/*" name="userPhoto" type="file" data-icon="false" (change)="changeListener($event)"
-                    data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
-                </form>
+              <label class="col-sm-2 control-label">修改头像</label>
+              <div class="col-sm-2">
+                <button type="button" (click)="UploadImage('head')" class="btn btn-primary">上传图片</button>
               </div>
-            </div>
-            <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="form-group">
               <label class="col-sm-2 control-label">个人背景</label>
-              <div class="col-sm-10">
-                <form id="uploadForm2" enctype="multipart/form-data" action="/api/web/file" method="post">
-                  <input ui-jq="filestyle" accept="image/*" name="userPhoto" type="file" data-icon="false" (change)="changeListener2($event)"
-                    data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s">
-                </form>
+              <div class="col-sm-6">
+                <button type="button" (click)="UploadImage('back')" class="btn btn-primary">上传图片</button>
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in"></div>
             <div class="form-group">
               <label class="col-sm-2 control-label">手机</label>
-              <div class="col-sm-8">
+              <div class="col-sm-4">
                 <input type="text" name="phone" class="form-control" [(ngModel)]="phone">
                 <span class="help-block m-b-none">可以通过手机短信登录，以及找回密码。</span>
               </div>
-            </div>
-            <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="form-group">
+           
               <label class="col-sm-2 control-label">Email</label>
-              <div class="col-sm-8">
+              <div class="col-sm-4">
                 <input type="email" name="email" class="form-control" [(ngModel)]="email">
               </div>
             </div>
             <div class="line line-dashed b-b line-lg pull-in"></div>
             <div class="form-group">
               <label class="col-sm-2 control-label">性别</label>
-              <div class="col-sm-8">
+              <div class="col-sm-4">
                 <label class="radio-inline">
                       <input type="radio" name="sex" [(ngModel)]="sex" value="男"> 男
                     </label>
@@ -161,11 +150,9 @@
                       <input type="radio" name="sex" [(ngModel)]="sex" value="女"> 女
                     </label>
               </div>
-            </div>
-            <div class="line line-dashed b-b line-lg pull-in"></div>
-            <div class="form-group">
+          
               <label class="col-sm-2 control-label">出生日期</label>
-              <div class="col-sm-8">
+              <div class="col-sm-4">
                 <input ui-jq="daterangepicker" name="birthday" value="{{birthdayString}}" ui-options="{
                 locale: {format: 'YYYY-MM-DD'},
                 singleDatePicker: true,
@@ -177,20 +164,18 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">地址</label>
               <div class="col-sm-3">
-                <select name="province" [(ngModel)]="province" class="form-control m-b" (change)="provinceListener()">
-                      <option value="">请选择省份</option>
+                <select name="province" id="province" [(ngModel)]="province" class="form-control m-b" (change)="provinceListener()">
                       <option *ngFor="let p of provinces" value="{{p}}">{{p}}</option>
                     </select>
               </div>
               <div class="col-sm-3">
-                <select name="city" [(ngModel)]="city" class="form-control m-b" (change)="cityListener()">
-                      <option value="">请选择所在市</option>
+                <select name="city" id="city" [(ngModel)]="city" class="form-control m-b" (change)="cityListener()">
+
                       <option *ngFor="let c of citys" value="{{c}}">{{c}}</option>
                     </select>
               </div>
               <div class="col-sm-3">
-                <select name="district" [(ngModel)]="district" class="form-control m-b">
-                      <option value="">请选择所在区县</option>
+                <select name="district" id="district" [(ngModel)]="district" class="form-control m-b">
                       <option *ngFor="let dis of districts" value="{{dis}}"> {{dis}}</option>
                     </select>
               </div>
@@ -311,3 +296,81 @@
   </div>
 </div>
 <!-- /content -->
+
+
+<div class="modal fade" id="modifyHeadermodal" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">修改头像</h4>
+      </div>
+      <div class="modal-body">
+        <div class="wrapper">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="image-crop" style="background-color:cornsilk">
+                <img id="imageHead" style="width:100%" src="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h4>预览</h4>
+              <div id="headerPreview" class="img-preview img-preview-sm"></div>
+              <h4>操作</h4>
+              <div class="btn-group">
+                <label title="Upload image file" for="inputImage" class="btn btn-primary">
+                  <input type="file" accept="image/*" name="file" id="inputImage" class="hide"  (change)="changeListener($event)" >
+                    选择图片
+                  </label>
+                <label title="Donload image" (click)="change()" id="download" class="btn btn-primary">下载</label>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="getHeaderImageData()" class="btn btn-info" data-dismiss="modal">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modifyBackmodal" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">修改背景</h4>
+      </div>
+      <div class="modal-body">
+        <div class="wrapper">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="image-crop" style="background-color:cornsilk">
+                <img id="imageBack" style="width:100%" src="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h4>预览</h4>
+              <div id="backPreview" class="img-preview img-preview-sm"></div>
+              <h4>操作</h4>
+              <div class="btn-group">
+                <label title="Upload image file" for="inputBackImage" class="btn btn-primary">
+                  <input type="file" accept="image/*" name="file" id="inputBackImage" class="hide"  (change)="changeListener($event)" >
+                    选择图片
+                  </label>
+                <label title="Donload image" (click)="change()" id="download" class="btn btn-primary">下载</label>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="getBackImageData()" class="btn btn-info" data-dismiss="modal">确认</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,15 +20,13 @@
             <div class="form-group">
               <label class="col-sm-2 control-label">产品分类</label>
               <div class="col-sm-4">
-                <select name="type" class="form-control m-b" [(ngModel)]="forum.type" (change)="typeListener()">
-                <option></option>
+                <select name="type" id="type" class="form-control m-b" [(ngModel)]="forum.type" (change)="typeListener()">
                 <option *ngFor="let t of types" value="{{t}}">{{t}}</option>
                 </select>
               </div>
               <label class="col-sm-2 control-label">产品子类</label>
               <div class="col-sm-4">
-                <select name="subtype" class="form-control m-b" [(ngModel)]="forum.subType">
-                <option></option>
+                <select name="subtype" id="subtype" class="form-control m-b" [(ngModel)]="forum.subType">
                 <option *ngFor="let sub of subTypes" value="{{sub}}">{{sub}}</option>
                 </select>
               </div>

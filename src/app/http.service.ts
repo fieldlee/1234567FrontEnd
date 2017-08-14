@@ -17,7 +17,7 @@ export class HttpService {
   private rootUrl = '/api';
   constructor(private http: Http) { }
 
-  constructHeader() {
+  constructEncodeHeader(){
     var header = new Headers();
     header.append('Content-Type', 'application/json');
     header.append('Access-Control-Allow-Origin', '*');
@@ -27,8 +27,17 @@ export class HttpService {
     if (window.localStorage.getItem("username")) {
       header.append('x-access-username', window.localStorage.getItem("username"));
     }
-    if (window.localStorage.getItem("avator")) {
-      header.append('x-access-avator', window.localStorage.getItem("avator"));
+    return header;
+  }
+  constructHeader() {
+    var header = new Headers();
+    header.append('Content-Type', 'application/json');
+    header.append('Access-Control-Allow-Origin', '*');
+    if (window.localStorage.getItem("x-access-token")) {
+      header.append('x-access-token', window.localStorage.getItem("x-access-token"));
+    }
+    if (window.localStorage.getItem("username")) {
+      header.append('x-access-username', window.localStorage.getItem("username"));
     }
     return header;
   }
@@ -51,18 +60,33 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-    updateUser(user:any):Promise<any>{
+  updateUser(user:any):Promise<any>{
       const url = `${this.rootUrl}/auth/user/update`;
       const header = this.constructHeader();
-      return this.http.post(url,user,{ headers: header }).toPromise()
+      return this.http.post(url,JSON.stringify(user),{ headers: header }).toPromise()
         .then(response=>response.json())
         .catch(this.handleError);
     }
+  updateUserAvator(id:string,data:any):Promise<any>{
+    const url = `${this.rootUrl}/auth/user/update/avator/${id}`;
+      const header = this.constructEncodeHeader();
+      return this.http.post(url,data,{ headers: header }).toPromise()
+        .then(response=>response.json())
+        .catch(this.handleError);
+  }
+  updateUserBack(id:string,data:any):Promise<any>{
+    const url = `${this.rootUrl}/auth/user/update/back/${id}`;
+      const header = this.constructEncodeHeader();
+      return this.http.post(url,data,{ headers: header }).toPromise()
+        .then(response=>response.json())
+        .catch(this.handleError);
+  }
+  
   // register
   register(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/register`;
     const header = this.constructHeader();
-    return this.http.post(url, formdata, { headers: header })
+    return this.http.post(url, JSON.stringify(formdata), { headers: header })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -71,7 +95,7 @@ export class HttpService {
   forget(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/forget`;
     const header = this.constructHeader();
-    return this.http.post(url, formdata, { headers: header })
+    return this.http.post(url, JSON.stringify(formdata), { headers: header })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -80,7 +104,7 @@ export class HttpService {
   changepassword(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/changepassword`;
     const header = this.constructHeader();
-    return this.http.post(url, formdata, { headers: header })
+    return this.http.post(url, JSON.stringify(formdata), { headers: header })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -266,7 +290,6 @@ export class HttpService {
   }
   getFollowByUser(folwJson:any):Promise<any>{
     // const folwjson = { "username": window.localStorage.getItem("username"), "followusername": username };
-
     const url = `${this.rootUrl}/web/follow/byuser`;
     return this.http.post(url,JSON.stringify(folwJson),{ headers: this.constructHeader() })
       .toPromise()
@@ -289,7 +312,6 @@ export class HttpService {
       .catch(this.handleError);
   }
   getForumsByType(type:String,page:string): Promise<any> {
-
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/forum/${type}/${page}?${time}`;
     console.log(url);
@@ -342,6 +364,14 @@ export class HttpService {
   getCollections(username:string):Promise<any>{
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/collect/${username}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  
+  topupForumById(id:String):Promise<any>{
+    const url = `${this.rootUrl}/web/forum/sub/topup/${id}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json())

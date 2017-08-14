@@ -1,0 +1,9 @@
+.img-preview {
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+}
+.img-preview-sm {
+  height: 150px;
+  width: 150px;
+}

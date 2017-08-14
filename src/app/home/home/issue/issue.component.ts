@@ -49,7 +49,7 @@ export class IssueComponent implements OnInit {
       this.type = params["type"];
       this.subType = params["subtype"];
       this.productid = params["productid"];
-      console.log(this.productid);
+
       if(this.productid){
         this.httpService.getProductById(this.productid).then(resp=>{
             if(resp.success==false){ //如果产品没有的话
@@ -111,6 +111,7 @@ export class IssueComponent implements OnInit {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     const self = this;
+
     this.loadJq.reloadJQ(null);
     this.loadJq.froalaEditor("forumContent", function (imageurl: string) {
       if (self.forum.images == undefined) {
@@ -145,9 +146,9 @@ export class IssueComponent implements OnInit {
   }
   
   typeListener() {
+
     this.httpService.getSubType(this.forum.type).then(
       resp => {
-
         this.subTypes = new Array();
         resp.results.forEach(element => {
           this.subTypes.push(element.subType);

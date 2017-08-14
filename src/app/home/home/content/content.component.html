@@ -29,7 +29,7 @@
                   </div>
                   <div class="col-sm-10">
                     <div class="m-b-xs">
-                      <a href class="h4">{{forum.avator}}</a> {{forum.fromTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <a routerLink="/home/home/profile/{{forum.author}}" class="h5">{{forum.avator}}</a> {{forum.fromTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                       <a class="text-muted m-xs" data-toggle="dropdown"><i class="icon-share " style="font-size:20px" ></i></a>                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -48,6 +48,7 @@
                         data-toggle="tooltip" data-placement="top" title="关注后，实时获得帖子动态">{{hadAttent?'已关注':'+关注'}}</button>                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <button *ngIf="isSelfForum" routerLink="/home/home/issuebyid/{{forum._id}}" class="btn m-b-xs w-xs btn-primary" data-toggle="tooltip"
                         data-placement="top" title="编辑发布的帖子">编辑</button>
+                      <button *ngIf="isSelfForum" (click)="topup(forum._id)" class="btn m-b-xs w-xs btn-primary" >置顶</button>
                     </div>
                   </div>
                 </div>
@@ -89,7 +90,7 @@
               </a>
                   <div class="m-l-lg">
                     <div class="m-b-xs">
-                      <a href class="h4">{{rep.avator}}</a>
+                      <a routerLink="/home/home/profile/{{rep.author}}" class="h6">{{rep.avator}}</a>
                       <span class="text-muted m-l-sm pull-right">
                     {{rep.fromTime}}
                   </span>
@@ -113,7 +114,7 @@
                         <span class="text-muted m-l-sm pull-right">
                       {{subCom.fromTime}}
                     </span>
-                        <a routerLink="/home/home/profile/{{subCom.author}}">{{subCom.avator}}</a>
+                        <a routerLink="/home/home/profile/{{subCom.author}}" class="h6">{{subCom.avator}}</a>
                         <div [innerHTML]="subCom.contentSafe"></div>
                       </div>
                     </div>

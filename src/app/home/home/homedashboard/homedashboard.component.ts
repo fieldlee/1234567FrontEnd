@@ -76,6 +76,13 @@ export class HomedashboardComponent implements OnInit {
     });
   }
   typeListener(): void {
+    
+    
+    if($('#selectType').val()){
+      this.type = $('#selectType').val();
+    }else{
+      this.type = $('#selectTypeDele').val();
+    }
     this.httpService.getSubType(this.type).then(
       resp => {
         console.log(resp);
@@ -85,8 +92,10 @@ export class HomedashboardComponent implements OnInit {
           this.subtypes[i] = element.subType;
           i = i + 1;
         });
+       
       })
   }
+
 
 
   ngAfterViewInit() {
@@ -101,7 +110,45 @@ export class HomedashboardComponent implements OnInit {
           $(".fixed_tool").addClass("show");
         }
     });
+
+    // 选择框
+    var self = this;
+    $("#selectType").select2({
+      placeholder: '请选择乐器分类'
+    }).on('select2:select', function (evt) {
+      self.typeListener();
+    });
+    $("#selectSubType").select2({
+      placeholder: '请选择乐器'
+    });
+//  找琴行选择
+    $("#selectTypeDele").select2({
+      placeholder: '请选择乐器分类'
+    }).on('select2:select', function (evt) {
+      self.typeListener();
+    });
+    $("#selectSubTypeDele").select2({
+      placeholder: '请选择乐器'
+    });
+
+//  找琴行选择省市区
+    $('#selectProvince').select2({
+        placeholder: '请选择省份'
+    }).on('select2:select', function (evt) {
+      self.provinceListener();
+    });
+
+    $('#selectCity').select2({
+        placeholder: '请选择市'
+    }).on('select2:select', function (evt) {
+      self.cityListener();
+    });
+
+    $('#selectDistrict').select2({
+        placeholder: '请选择区县'
+    });
   }
+
   changeTab(index: Number) {
 
     this.forumlist = []; // 初始化论坛数据
@@ -157,6 +204,7 @@ export class HomedashboardComponent implements OnInit {
   }
 
   provinceListener(): void {
+    this.province = $('#selectProvince').val();
     this.httpService.getCitys(this.province).then(resp => {
       this.citys = new Array();
       resp.results.forEach(element => {
@@ -166,8 +214,8 @@ export class HomedashboardComponent implements OnInit {
   }
 
   cityListener() {
+    this.city = $('#selectCity').val();
     this.httpService.getDistricts(this.province, this.city).then(resp => {
-      console.log(resp);
       this.districts = new Array();
       resp.results.forEach(element => {
         this.districts.push(element.district);
