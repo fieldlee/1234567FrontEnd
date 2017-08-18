@@ -1,0 +1,54 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <ol class="breadcrumb">
+    <li><a routerLink="/home">首页</a></li>
+    <li><a routerLink="/home/home/score">曲谱</a></li>
+    <li class="active">发布曲谱</li>
+  </ol>
+  <div class="app-content-body">
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row col-md-10 col-md-offset-1 col-xs-12">
+                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Example: Audio with data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                <audio id="mp3play" controls>
+                  <!-- <source src="http://playerdemo.iainhouston.com/tests/BeBopAliens.ogg" type="audio/ogg" /> -->
+                  <source src="{{mp3Path}}" type="audio/mpeg" />
+                  <!-- <a href="http://playerdemo.iainhouston.com/tests/BeBopAliens.mp3"></a> -->
+                </audio>
+              </div>
+            </div>
+          </div>
+          <!-- 曲谱 -->
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row  col-md-offset-1 ">
+                <div class=riffbox style="align:center" id="mainscore">
+                  <div id="score" (click)='getClickPosition($event)'  title="" style="position: relative; background-size:contain;    width:650px;    height:841px; background-repeat:no-repeat;">
+                    <div class="layer1" id="layer1"></div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="row col-md-2 col-md-offset-5">
+                <div class="  btn-group" style="margin-right: auto; margin-left: auto">
+                  <button (click)="prepage()" type="button" class="btn btn-lg btn-bg btn-default" [ngClass]="{'disabled': curPage==0}" ><i class="fa fa-chevron-left"></i></button>
+                  <button (click)="nextpage()" type="button" class="btn btn-lg btn-bg btn-default" [ngClass]="{'disabled': curPage>=filesPath.length-1}"><i class="fa fa-chevron-right"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>

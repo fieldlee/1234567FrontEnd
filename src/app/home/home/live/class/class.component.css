@@ -9,20 +9,36 @@
    color : #222;
 }
 .blog-stripe .block-title {
- background: black;
+  background: black;
   width: 100%;
   color: white;
   height: 100px;
   padding-top: 10px;
 }
 
-    .all-blogs .media {
-        margin-left: -40px;
-        margin-top: -10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #CCCCCC;
-    }
-    .shape {
+.all-blogs .media {
+   margin-left: -40px;
+   margin-top: -10px;
+   padding-bottom: 10px;
+   border-bottom: 1px solid #CCCCCC;
+}
+.status {
+
+    float: right;
+    vertical-align: middle;
+    /* padding-bottom: -40px; */
+    margin-top: -40px;
+}
+.status-text {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+    right: -40px;
+    top: 2px;
+    white-space: nowrap;
+}
+.shape {
     border-style: solid;
     border-width: 0 70px 40px 0;
     float: right;

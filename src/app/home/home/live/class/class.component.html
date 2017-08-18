@@ -20,7 +20,7 @@
             </div>
             <div class="panel-body">
               <ul class="all-blogs">
-                <li class="media" *ngFor="let class of classlist">
+                <li class="media" *ngFor="let class of classmyjoin">
                   <div class="shape">
                     <div class="shape-text">hot</div>
                   </div>
@@ -34,8 +34,10 @@
                     <p class="author" style="margin-right:20px">开课时间：{{class.start}} -- {{class.end}}</p>
                     <p class="author" style="margin-right:20px;color:red">RMB:{{class.price}}</p>
                   </div>
+                  <div class="status">
+                      <button class="btn m-b-xs w-xs btn-danger btn-rounded disabled">{{class.status}}</button>
+                  </div>
                 </li>
-
               </ul>
             </div>
           </div>
@@ -65,7 +67,7 @@
                   <div class="tab-pane active" id="tab-1">
                     <div class="wrapper-md">
                       <ul class="all-blogs">
-                        <li class="media" *ngFor="let class of classlist">
+                        <li class="media" *ngFor="let class of classlisting">
                           <div class="shape">
                             <div class="shape-text">hot</div>
                           </div>
@@ -79,6 +81,9 @@
                             <p class="author" style="margin-right:20px">开课时间：{{class.start}} -- {{class.end}}</p>
                             <p class="author" style="margin-right:20px;color:red">RMB:{{class.price}}</p>
                           </div>
+                          <div class="status">
+                              <button class="btn m-b-xs w-xs btn-danger btn-rounded disabled">{{class.status}}</button>
+                          </div>
                         </li>
 
                       </ul>
@@ -87,45 +92,25 @@
                   <div class="tab-pane" id="tab-2">
                     <div class="wrapper-md">
                       <ul class="all-blogs">
-                        <li class="media">
+                        <li class="media" *ngFor="let class of classlistover">
                           <div class="shape">
                             <div class="shape-text">hot</div>
                           </div>
-                          <a class="pull-left" href="#">
-                        <img style="width:200px" src="http://placehold.it/200x100" alt="...">
-                    </a>
-                          <div class="media-body">
-                            <h4 class="media-heading">Latest Google Updates</h4>
-                            <p class="author">Mike Smith</p>
-                          </div>
-                        </li>
-                        <li class="media">
-                          <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/200x100" alt="...">
-                    </a>
-                          <div class="media-body">
-                            <h4 class="media-heading">Newest bootstrap version</h4>
-                            <p class="author">Dave Hesler</p>
-                          </div>
-                        </li>
-                        <li class="media">
-                          <a class="pull-left" href="#">
-                            <img class="media-object" src="http://placehold.it/200x100" alt="...">
+                          <a class="pull-left" routerLink="/home/home/live/classauth/{{class._id}}">
+                            <img style="width:200px;height:150px"  src="{{class.images[0]}}" alt="...">
                           </a>
                           <div class="media-body">
-                            <h4 class="media-heading">Android rolls our another update</h4>
-                            <p class="author">Michael Davis</p>
+                            <a routerLink="/home/home/live/classauth/{{class._id}}"><h4 class="media-heading">{{class.title}}</h4></a>
+                            <p class="author">{{class.subtitle}}</p>
+                            <p class="author" style="margin-right:20px">主讲：{{class.lecturename}}</p>
+                            <p class="author" style="margin-right:20px">开课时间：{{class.start}} -- {{class.end}}</p>
+                            <p class="author" style="margin-right:20px;color:red">RMB:{{class.price}}</p>
+                          </div>
+                          <div class="status">
+                              <button class="btn m-b-xs w-xs btn-default btn-rounded disabled">{{class.status}}</button>
                           </div>
                         </li>
-                        <li class="media">
-                          <a class="pull-left" href="#">
-                            <img class="media-object" src="http://placehold.it/200x100" alt="...">
-                          </a>
-                          <div class="media-body">
-                            <h4 class="media-heading">Survey results are out</h4>
-                            <p class="author">Mike Smith</p>
-                          </div>
-                        </li>
+
                       </ul>
                     </div>
                   </div>

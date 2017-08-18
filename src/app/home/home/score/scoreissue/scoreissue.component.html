@@ -1,0 +1,129 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+  <ol class="breadcrumb">
+    <li><a routerLink="/home">首页</a></li>
+    <li><a routerLink="/home/home/score">曲谱</a></li>
+    <li class="active">发布曲谱</li>
+  </ol>
+  <div class="app-content-body">
+    <div class="wrapper-sm">
+      <div class="row">
+        <!--广告位信息  -->
+        <div class="col-lg-12">
+          <div class="panel ">
+            <div class="panel-body">col-lg-12</div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <form class="form-horizontal" method="post">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">曲谱名称</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="scorename" [(ngModel)]="score.title" class="form-control rounded">
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">曲谱类型</label>
+                  <div class="col-sm-4">
+                    <select name="type" id="type" [(ngModel)]="score.type" placeholder="请选择曲谱类型" class="form-control m-b">
+                          <option *ngFor="let s of scoreTypes" value="{{s}}">{{s}}</option>
+                        </select>
+                  </div>
+                  <label class="col-sm-2 control-label">难易度</label>
+                  <div class="col-sm-4">
+                    <select name="difficult" id="difficult" [(ngModel)]="score.difficult" placeholder="请选择难易度" class="form-control m-b">
+                          <option *ngFor="let s of scoreDifficults" value="{{s}}">{{s}}</option>
+                        </select>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">曲产地</label>
+                  <div class="col-sm-4">
+                    <label class="checkbox-inline i-checks">
+                          <input type="radio" name="region" value="国外" [(ngModel)]="score.region"><i></i> 国外名曲
+                        </label>
+                    <label class="checkbox-inline i-checks">
+                          <input type="radio" name="region" value="国内" [(ngModel)]="score.region"><i></i> 国内名曲
+                        </label>
+                  </div>
+                  <label class="col-sm-2 control-label">曲风</label>
+                  <div class="col-sm-4">
+                    <label class="checkbox-inline i-checks">
+                          <input type="radio" name="style" value="古典" [(ngModel)]="score.style"><i></i> 古典
+                        </label>
+                    <label class="checkbox-inline i-checks">
+                          <input type="radio" name="style" value="现代" [(ngModel)]="score.style"><i></i> 现代
+                        </label>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">MP3</label>
+                  <div class="col-sm-10">
+                    <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
+                      <input ui-jq="filestyle" accept="file/*" name="userPhoto" type="file" (change)="changeListener($event)" data-classButton="btn btn-info"
+                        data-classInput="form-control inline v-middle input-s">
+                    </form>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="clear" *ngIf="score.mp3 != undefined">
+                      <div class="pull-right text-sm text-muted">
+                        <button (click)="remove('mp3',score.mp3.path)" type="button" class="btn btn-sm btn-bg btn-danger"><i class="fa fa-close"></i></button>
+                      </div>
+                      <div>{{score.mp3.name}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">曲谱文件</label>
+                  <div class="col-sm-10">
+                    <form id="uploadForm2" enctype="multipart/form-data" action="/api/web/file" method="post">
+                      <input ui-jq="filestyle" accept="image/*" name="userPhoto" type="file" (change)="changeListener2($event)" data-classButton="btn btn-info"
+                        data-classInput="form-control inline v-middle input-s">
+                    </form>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="clear" *ngFor="let file of score.files">
+                      <div class="pull-right text-sm text-muted">
+                        <button (click)="remove('file',file.path)" type="button" class="btn btn-sm btn-bg btn-danger"><i class="fa fa-close"></i></button>
+                      </div>
+                      <div>{{file.name}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">时间对应代码</label>
+                  <div class="col-sm-10">
+                    <form>
+                      <textarea style="border-width:1px" class="form-control no-border" name="bpt" [(ngModel)]="score.bpt" rows="5" placeholder="代码..."></textarea>
+                    </form>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <div class="col-sm-2 col-sm-offset-10">
+                    <button (click)="submit()" class="btn btn-info">发布曲谱</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-lg-4">
+          <div class="panel ">
+            <div class="panel-body">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

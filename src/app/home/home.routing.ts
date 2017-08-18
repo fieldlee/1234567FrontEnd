@@ -45,6 +45,10 @@ const appRoutes: Routes = [
     {
       path: 'live',
       loadChildren: './home/live/live.module#LiveModule' 
+    },
+    {
+      path: 'score',
+      loadChildren: './home/score/score.module#ScoreModule' 
     }
   ]},
   

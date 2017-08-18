@@ -1,0 +1,125 @@
+<!-- content -->
+<div id="content" class="app-content" role="main">
+    <ol class="breadcrumb">
+        <li><a routerLink="/home">首页</a></li>
+        <li class="active">曲谱</li>
+      </ol>
+  <div class="app-content-body ">
+
+    <div class="row">
+      <div class="col-lg-8 col-md-12 col-sm-12 wrapper bg-white b-b">
+        <div class="hbox hbox-auto-xs hbox-auto-sm">
+          <div class="col w-md bg-light dk b-r bg-auto">
+            <div class="wrapper b-b bg">
+              <button class="btn btn-sm btn-default pull-right visible-sm visible-xs" ui-toggle="show" target="#email-menu"><i class="fa fa-bars"></i></button>
+              <a routerLink="/home/home/score/scoreissue" class="btn btn-sm btn-danger w-xs font-bold">+发布曲谱</a>
+            </div>
+            <div class="wrapper hidden-sm hidden-xs" id="email-menu">
+              <ul class="nav nav-pills nav-stacked nav-sm">
+                <li class="active"><a >钢琴谱</a></li>
+                <li><a >小提琴谱</a></li>
+                <li><a >萨克斯谱</a></li>
+                <li><a >大提琴谱</a></li>
+                <li><a >架子鼓谱</a></li>
+                <!-- <li><a></a></li> -->
+              </ul>
+              <div class="wrapper">Labels</div>
+              <ul class="nav nav-pills nav-stacked nav-sm">
+                <li>
+                  <a><i class="fa fa-fw fa-circle text-info"></i>Angular</a>
+                </li>
+                <li>
+                  <a><i class="fa fa-fw fa-circle text-primary"></i>Bootstrap</a>
+                </li>
+                <li>
+                  <a><i class="fa fa-fw fa-circle text-success"></i>Work</a>
+                </li>
+                <li>
+                  <a><i class="fa fa-fw fa-circle text-muted"></i>Client</a>
+                </li>
+              </ul>
+              <div class="wrapper">收藏</div>
+              <ul class="nav nav-pills nav-stacked nav-sm">
+                <li><a>我的曲谱</a></li>
+              </ul>
+              <div class="wrapper">
+                <form name="label">
+                  <div class="input-group">
+                    <input type="text" class="form-control input-sm" placeholder="New label">
+                    <span class="input-group-btn">
+	              <button class="btn btn-sm btn-default" type="button">Add</button>
+	            </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+
+            <div>
+              <!-- header -->
+              <div class="wrapper bg-light lter b-b">
+                <!-- <div class="btn-group pull-right">
+	          <button type="button" class="btn btn-sm btn-bg btn-default"><i class="fa fa-chevron-left"></i></button>
+	          <button type="button" class="btn btn-sm btn-bg btn-default"><i class="fa fa-chevron-right"></i></button>
+	        </div> -->
+                <div class="btn-toolbar">
+                  <div class="btn-group dropdown">
+                    <button class="btn btn-default btn-md btn-bg dropdown-toggle" data-toggle="dropdown">
+	              <span class="dropdown-label">Filter</span>                    
+	              <span class="caret"></span>
+	            </button>
+                    <ul class="dropdown-menu text-left text-sm">
+                      <li><a ui-sref="app.mail.list({fold:'unread'})">Unread</a></li>
+                      <li><a ui-sref="app.mail.list({fold:'starred'})">Starred</a></li>
+                    </ul>
+                  </div>
+                  <div class="btn-group">
+                    <button class="btn btn-md btn-bg btn-default" data-toggle="tooltip" data-placement="bottom" data-title="Refresh" data-original-title=""
+                      title=""><i class="fa fa-refresh"></i></button>
+                  </div>
+                </div>
+              </div>
+              <!-- / header -->
+
+              <!-- list -->
+              <ul class="list-group list-group-lg no-radius m-b-none m-t-n-xxs">
+                <li class="list-group-item clearfix b-l-3x b-l-info" *ngFor="let score of scoreslist">
+                  <!-- <a class="avatar thumb pull-left m-r" href="#/app/page/profile">
+	            <img ng-src="img/a10.jpg" src="img/a10.jpg">
+	          </a> -->
+                  <div class="pull-right text-sm text-muted">
+                    <span class="hidden-xs ">5 months ago</span>
+                    <i class="fa fa-paperclip m-l-sm"></i>
+                  </div>
+                  <div class="clear">
+                    <div><a routerLink="/home/home/score/scoreplay/{{score._id}}" class="h3">{{score.title}}</a><span class="label bg-light m-l-sm ">mp3</span></div>
+                    <div class="text-ellipsis m-t-xs "></div>
+                  </div>
+                </li>
+                
+              </ul>
+              <!-- / list -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--广告位信息  -->
+      <div class="col-lg-4 col-md-12 col-sm-12 wrapper bg-white b-b" style="padding:10px">
+          <div class="channel">
+            <h4 class="channel_title">相关阅读</h4>
+            <div class="channel_list">
+              <ul class="channel_list_show" *ngFor="let for of forumList">
+                <li><a routerLink="/home/home/content/{{for._id}}" title="{{for.title}}">{{for.title}}</a>
+                  <div class="channel_subtitle"><span>{{for.avator}}</span><span>{{for.fromTime}}</span></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  </div>
+</div>
+<!-- /content -->

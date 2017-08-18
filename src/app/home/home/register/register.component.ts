@@ -75,6 +75,7 @@ export class RegisterComponent implements OnInit {
         var userObj = resp["data"];
         window.localStorage.setItem("username", userObj["username"]);
         window.localStorage.setItem("avator", userObj["avator"]);
+        window.localStorage.setItem("avatorPath", userObj["avatorPath"]);
         window.localStorage.setItem("admin", userObj["admin"]);
         window.localStorage.setItem("phone", userObj["phone"]);
         window.localStorage.setItem("email", userObj["email"]);

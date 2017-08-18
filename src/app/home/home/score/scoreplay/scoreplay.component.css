@@ -1,0 +1,69 @@
+.playa input[type="range"] {  
+    background-color: #ddd;
+    border: 1px solid #bbb;
+    border-radius: 0.5em;
+    opacity: 0.5;
+    height: 1em;
+    top: 2px;
+    position: relative;
+  }
+  
+  .playa  .thumbnail  {
+      width:100%;
+  }
+  
+  /* sliders and buttons need a uniform height */
+  .playa .btn-group .btn {
+      display:inline-block;
+      float:none;
+      height: 2.2em;
+  }
+  
+  /*  contains the attribution link */
+  .playa .row:nth-child(4) { 
+    overflow: hidden;
+  }
+  
+  /* Acknowledgements:
+  To Glyphicons (http://glyphicons.com/) for the Halflings glyphs font */
+  
+  /* .spin is used to rotate glyphicon glyphicon-refresh */
+  .spin {
+    -webkit-animation: spin 2s infinite linear;
+    -moz-animation: spin 2s infinite linear;
+    -o-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+  }
+  
+  @-moz-keyframes spin {
+    from {
+      -moz-transform: rotate(0deg);
+    }
+    to {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  
+  @-webkit-keyframes spin {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .riffbox a{color:#AA2716}
+  #score{position:relative;background-repeat:no-repeat;overflow:hidden;background-size: 650px 841px;width:650px;height:841px;}
+
+  .layer1{background-color: rgba( 152, 216, 148, 0.2);visibility:hidden;position:absolute;top:0px;left:0px;width:0px;height:0px;border:1px solid #c0c0c0;border-radius:3px}
+  #score:hover{cursor:pointer}
+  

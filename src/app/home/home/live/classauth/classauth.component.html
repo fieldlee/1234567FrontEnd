@@ -62,6 +62,18 @@
                   <div class="col-sm-4">
                   </div>
                 </div>
+                <div [ngStyle]="{'display': (class.lecture=='老师'||class.lecture=='琴行')?'block':'none'}">
+                  <div class="line line-dashed b-b line-lg pull-in"></div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">{{class.lecture=="老师"?"身份证":"营业执照"}}</label>
+                    <div class="col-sm-10">
+                      <form id="uploadForm" enctype="multipart/form-data" action="/api/web/file" method="post">
+                        <input ui-jq="filestyle" accept="image/*" name="userPhoto"  placeholder="{{class.certifyfilename}}" type="file" data-icon="true"
+                          (change)="changeListener($event)" data-classButton="btn btn-info" data-classInput="form-control inline v-middle input-s">
+                      </form>
+                    </div>
+                  </div>
+                </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">主讲老师</label>
@@ -129,31 +141,37 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                  <div class="col-sm-2 col-sm-offset-10">
+                  <label class="col-sm-2 control-label">课程教材</label>
+                  <div class="col-sm-10">
+                    <form id="uploadForm2" enctype="multipart/form-data" action="/api/web/file" method="post">
+                      <input ui-jq="filestyle" accept="image/*" name="userPhoto"   type="file" data-icon="true"
+                        (change)="changeListener2($event)" data-classButton="btn btn-info" data-classInput="form-control inline v-middle input-s">
+                    </form>
+                    <div class="col-sm-12 list-group bg-white">
+                        <a href="{{item.path}}" class="list-group-item" *ngFor="let item of class.materials"> {{item.name}}</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <div class="col-sm-4 col-sm-offset-8">
                     <button (click)="submit()" class="btn btn-info">发布课程</button>
+                    <button *ngIf="classid != undefined" (click)="close()" class="btn btn-danger">关闭课程</button>
                   </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">已加入：</label>
-                  <div class="col-sm-8 m-b m-t-lg">
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a7.jpg" alt="...">
-                      <i class="on b-white"></i>
-                    </a>
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a8.jpg" alt="...">
-                      <i class="busy b-white"></i>
-                    </a>
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a9.jpg" alt="...">
-                      <i class="away b-white"></i>
-                    </a>
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a10.jpg" alt="...">
-                      <i class="on b-white"></i>
-                    </a>
-                    <a class="btn btn-default btn-rounded font-bold"> +152 </a>
+                  <div class="col-sm-10 m-b m-t-lg">
+                    <label class="col-sm-4 control-label">用户名</label>
+                    <label class="col-sm-4 control-label">手机号码</label>
+                    <label class="col-sm-4 control-label">缴费情况</label>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div *ngFor="let avator of class.joins">
+                      <label class="col-sm-4 control-label">{{avator.joinAvator}}</label>
+                      <label class="col-sm-4 control-label">{{avator.joinTel}}</label>
+                      <label class="col-sm-4 control-label">{{avator.joinPayStatus=="1"?"已缴费":"未缴费"}}</label>
+                    </div>
                   </div>
                 </div>
               </form>
@@ -222,34 +240,58 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">课程简介</label>
                   <div class="col-sm-10">
-                    <div [innerHTML]="class.content"></div>
+                    <div [innerHTML]="class.contentSafe"></div>
+                  </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">课程教材</label>
+                  <div class="col-sm-10">
+                    <div class="col-sm-12 list-group bg-white">
+                        <a href="{{item.path}}" class="list-group-item" *ngFor="let item of class.materials"> {{item.name}}</a>
+                    </div>
                   </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">已加入：</label>
-                  <div class="col-sm-8 m-b m-t-lg">
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a7.jpg" alt="...">
-                      <i class="on b-white"></i>
+                  <div class="col-sm-10 m-b m-t-lg">
+                    <a class="avatar thumb-xs m-r-xs" *ngFor="let avator of class.joins">
+                      <img src="{{avator.joinAvatorPath}}" alt="{{avator.joinAvator}}">
                     </a>
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a8.jpg" alt="...">
-                      <i class="busy b-white"></i>
-                    </a>
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a9.jpg" alt="...">
-                      <i class="away b-white"></i>
-                    </a>
-                    <a class="avatar thumb-xs m-r-xs">
-                      <img src="./public/img/a10.jpg" alt="...">
-                      <i class="on b-white"></i>
-                    </a>
-                    <a class="btn btn-default btn-rounded font-bold"> +152 </a>
+                    <button *ngIf="class.joins.length>0" class="btn m-b-xs w-xs btn-default btn-rounded disabled">{{class.joins.length}}人</button>
                   </div>
-                  <div class="col-sm-2">
-                    <a (click)="joinclick()" class="btn btn-info btn-rounded font-bold">加入，学习</a>
+                  <div *ngIf="curHadJoin==false">
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">手机号码</label>
+                      <div class="col-sm-4">
+                        <input type="text" name="telphone" [(ngModel)]="joinTel" placeholder="请输入手机号" class="form-control">
+                      </div>
+                      <label class="col-sm-2 control-label"><a >获取验证码</a></label>
+                      <div class="col-sm-4">
+                        <input type="text" name="verifyJoin" placeholder="请输入验证码" class="form-control">
+                      </div>
+                    </div>
                   </div>
+                  <div *ngIf="curHadPay==false">
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">待付金额</label>
+                      <div class="col-sm-2">
+                        <span style="color:red"><b>{{class.price}}</b></span>元
+                      </div>
+                      <div class="col-sm-2">
+                        <a (click)="pay()" class="btn btn-info btn-rounded font-bold">立即支付</a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="line line-dashed b-b line-lg pull-in"></div>
+                  <div class="col-sm-2 col-sm-offset-10">
+                    <a (click)="joinclass()" class="btn btn-info btn-rounded font-bold" [ngClass]="{'disabled': curHadJoin==true}">{{(curHadJoin==true)?'您已加入':'加入，学习'}}</a>
+                  </div>
+
                 </div>
               </form>
             </div>

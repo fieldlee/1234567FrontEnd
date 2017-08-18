@@ -136,6 +136,14 @@ export class HttpService {
       .catch(this.handleError);
   }
 
+  closeClass(classinfo: any): Promise<any> {
+    const url = `${this.rootUrl}/web/class/close`;
+    return this.http.post(url,JSON.stringify(classinfo), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
   getClass(): Promise<any> {
     const url = `${this.rootUrl}/web/class`;
     return this.http.get(url)
@@ -157,6 +165,30 @@ export class HttpService {
     return this.http.post(url,JSON.stringify(info), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
+      .catch(this.handleError);
+  }
+  // 创建曲谱信息
+  createScore(score:any):Promise<any>{
+    const url = `${this.rootUrl}/web/score`;
+    return this.http.post(url,JSON.stringify(score), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getScores(page:string):Promise<any>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/score/${page}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response =>response.json())
+      .catch(this.handleError);
+  }
+  getScoreById(id:string):Promise<any>{
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/score/id/${id}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response =>response.json())
       .catch(this.handleError);
   }
   // 广告信息配置
@@ -369,7 +401,7 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-  
+
   topupForumById(id:String):Promise<any>{
     const url = `${this.rootUrl}/web/forum/sub/topup/${id}`;
     return this.http.get(url)
