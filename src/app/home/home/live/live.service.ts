@@ -19,9 +19,9 @@ export class LiveService {
     if (window.localStorage.getItem("username")) {
       header.append('x-access-username', window.localStorage.getItem("username"));
     }
-    if (window.localStorage.getItem("avator")) {
-      header.append('x-access-avator', window.localStorage.getItem("avator"));
-    }
+    // if (window.localStorage.getItem("avator")) {
+    //   header.append('x-access-avator', window.localStorage.getItem("avator"));
+    // }
     return header;
   }
 
@@ -75,9 +75,37 @@ export class LiveService {
     return fmt;
   }
 
+  updateShowMainid(showid,mainid){
+    const url = `${this.rootUrl}/web/show/update`;
+    return this.http.post(url, JSON.stringify({"showid":showid,"mainid":mainid}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
 
+  startShow(showid,mainid){
+    const url = `${this.rootUrl}/web/show/start`;
+    return this.http.post(url, JSON.stringify({"showid":showid,"mainid":mainid}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
 
+  leaveShow(showid,memberid,type){
+    const url = `${this.rootUrl}/web/show/leave`;
+    return this.http.post(url, JSON.stringify({"showid":showid,"memberid":memberid,"type":type}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
 
+  joinShow(showid,memberid){
+    const url = `${this.rootUrl}/web/show/join`;
+    return this.http.post(url, JSON.stringify({"showid":showid,"memberid":memberid}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

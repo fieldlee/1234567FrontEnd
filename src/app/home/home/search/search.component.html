@@ -54,7 +54,7 @@
                              <div class="subtitle"><span>{{product.brand}}</span><span>{{product.type}}</span><span> {{product.subType}}</span></div> 
                           </div>
                           <a routerLink="/home/home/product/{{product._id}}" *ngIf="product.appearimages.length>0" title=" {{product.title}}" class="img"
-                            [ngStyle]="{'background-image': 'url(http://localhost:3000' + product.appearimages[0] + ')'}"></a>
+                            [ngStyle]="{'background-image': 'url(' + product.appearimages[0] + ')'}"></a>
                         </div>
                       </div>
                     </div>

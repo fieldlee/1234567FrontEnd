@@ -7,11 +7,14 @@ import { ReceiveStreamComponent } from './receive-stream/receive-stream.componen
 import { ClassComponent } from './class/class.component';
 import { ClassauthComponent } from './classauth/classauth.component';
 import { JoinclassComponent } from './joinclass/joinclass.component';
+import { IssueshowComponent } from './issueshow/issueshow.component';
 
 const LiveRoutes: Routes = [
       { path: '',  redirectTo:"class" },
       { path: 'class',  component: ClassComponent },
+      { path: 'issueshow',  component: IssueshowComponent },
       { path: 'live',  component: LiveStreamComponent },
+      { path: 'live/:type/:id',  component: LiveStreamComponent },
       { path: 'classauth', component:ClassauthComponent},
       { path: 'classauth/:id', component:ClassauthComponent},
       { path: 'receive/:id', component: ReceiveStreamComponent },
@@ -27,6 +30,6 @@ const LiveRoutes: Routes = [
   exports: [
     RouterModule
   ],
-  declarations: [LiveStreamComponent, ReceiveStreamComponent, ClassComponent, ClassauthComponent, JoinclassComponent]
+  declarations: [LiveStreamComponent, ReceiveStreamComponent, ClassComponent, ClassauthComponent, JoinclassComponent, IssueshowComponent]
 })
 export class LiveModule { }

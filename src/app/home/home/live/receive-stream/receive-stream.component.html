@@ -35,9 +35,9 @@
           <div class="wrapper-md">
             <div class="panel panel-default">
               <div class="panel-heading">在线沟通</div>
-              <div [ngSwitch]="mes.to" class="panel-body wrapper-md" *ngFor="let mes of messagelist">
+              <div [ngSwitch]="mes.to" class="panel-body" *ngFor="let mes of messagelist">
                 <div *ngSwitchCase="undefined">
-                  <div class="m-b">
+                  <div class="m-x">
                     <a href class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="..."></a>
                     <div class="m-l-xxl">
                       <div class="pos-rlt wrapper b b-light r r-2x">
@@ -49,7 +49,7 @@
                   </div>
                 </div>
                 <div *ngSwitchDefault>
-                  <div class="m-b">
+                  <div class="m-x">
                     <a href class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="..."></a>
                     <div class="m-r-xxl">
                       <div class="pos-rlt wrapper bg-primary r r-2x">

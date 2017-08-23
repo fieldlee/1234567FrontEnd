@@ -3,6 +3,7 @@ import { Routes, RouterModule,ActivatedRoute,Router} from '@angular/router';
 import { HttpService } from '../../../../http.service';
 import { ContantService } from '../../../../contant.service';
 import { Class } from '../../../../class/class';
+import { Show } from '../../../../class/show';
 import { LiveService } from '../live.service';
 @Component({
   selector: 'app-class',
@@ -15,6 +16,8 @@ export class ClassComponent implements OnInit {
   classlisting :Class[]=[];
   classlistover :Class[]=[];
   classmyjoin :Class[]=[];
+
+  showlist:Show[]=[];
   constructor(private route:ActivatedRoute,
     private router:Router,
     private contantService:ContantService,
@@ -22,6 +25,11 @@ export class ClassComponent implements OnInit {
     private httpService:HttpService) { }
 
   ngOnInit() {
+    this.httpService.getShow().then(resp=>{
+      if(resp.success){
+        this.showlist = resp.results as Show[];
+      }
+    });
     this.httpService.getClass().then(resp=>{
       if(resp.results.length>0){
         this.classlist = resp.results as Class[];
@@ -56,6 +64,14 @@ export class ClassComponent implements OnInit {
         }
       }
     });
+  }
+
+  openlive(show:Show){
+    if(show.author == window.localStorage.getItem("username")){
+      this.router.navigate(['/home/home/live/live/show/'+show._id])
+    }else{
+      this.router.navigate(['/home/home/live/receive/'+show._id]);
+    }
   }
 
   issue(){

@@ -270,7 +270,7 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox" >
               <div class="item " [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index">
-                <a (click)="adsClick(ads)"><img src="http://localhost:3000{{ads.path}}"  alt="{{ads.subtitle}}"></a>
+                <a (click)="adsClick(ads)"><img src="{{ads.path}}"  alt="{{ads.subtitle}}"></a>
                 <div class="carousel-caption">
                   <h3>{{ads.title}}</h3>
                   <p>{{ads.subtitle}}</p>

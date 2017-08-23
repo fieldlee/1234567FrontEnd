@@ -3,6 +3,7 @@ import { NgSwitch, NgSwitchDefault, NgSwitchCase } from '@angular/common';
 import { HttpService } from '../../../../http.service';
 import { LoadJQService } from '../../../../load-jq.service';
 import { LiveService } from '../live.service';
+import { Show } from '../../../../class/show';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 declare var $: any;
 declare var MediaRecorder: any;
@@ -15,6 +16,8 @@ declare var MediaRecorder: any;
 export class ReceiveStreamComponent implements OnInit {
   remoteStreams = [];
   client: any;
+  showId = "";
+  show:Show;
   streamId = "";
   avator = "";
   avatorPath = "";
@@ -29,18 +32,33 @@ export class ReceiveStreamComponent implements OnInit {
     private liveSercie: LiveService,
     private loadJQService: LoadJQService) {
     this.client = liveSercie.getClient();//读取客户端的client
+    this.show = new Show();
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.streamId = params["id"];
-      if (this.streamId != undefined) {
-        this.loadData();
-        this.call(this.streamId);
+      this.showId = params["id"];
+      if (this.showId != undefined) {
+        this.httpService.getShowById(this.showId).then(resp=>{
+          if (resp.success) {
+            this.show = resp.data as Show;
+            if (this.show.mainid != undefined) {
+              this.streamId = this.show.mainid;// 主播id
+              this.loadData();
+              this.call(this.streamId);
+            }
+          }
+        })
       }
     });
     this.avatorPath = window.localStorage.getItem("avatorPath");
     this.avator = window.localStorage.getItem("avator");
+  }
+
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.loadJQService.reloadJQ(null);
   }
 
   ngAfterContentInit() {
@@ -50,6 +68,17 @@ export class ReceiveStreamComponent implements OnInit {
       if (message.type == "message") {
         self.messagelist.push(message);
       }
+    });
+
+    this.client.getSocket().on('id', function (id) {
+      console.log("------receive stream start-----");
+      console.log(id);
+      self.liveSercie.joinShow(self.showId,id).then(resp=>{
+        if (resp.success) {
+          self.show = resp.data as Show; //读取直播信息
+        }
+      })
+      console.log("------receive stream end-----");
     });
     //Called after ngOnInit when the component's or directive's content has been initialized.
     //Add 'implements AfterContentInit' to the class.
@@ -63,6 +92,18 @@ export class ReceiveStreamComponent implements OnInit {
       }).catch(function (err) {
         console.log('navigator.getUserMedia error: ', err);
       });
+
+  }
+
+  ngOnDestroy() {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    // 离开直播
+    this.liveSercie.leaveShow(this.showId,this.client.getId(),"member").then(resp=>{
+      if (resp.success) {
+        
+      }
+    })
   }
 
   reload() {
@@ -104,7 +145,6 @@ export class ReceiveStreamComponent implements OnInit {
         }
         this.remoteStreams = streams;
       }
-
     })
   }
 
@@ -114,6 +154,12 @@ export class ReceiveStreamComponent implements OnInit {
       this.remoteStreams.push(stream);
     }
     this.client.peerInit(stream.id);
+    // 加入直播
+    this.liveSercie.joinShow(this.showId,this.streamId).then(resp=>{
+      if (resp.success) {
+        this.show = resp.data as Show;
+      }
+    })
     stream.isPlaying = !stream.isPlaying;
   }
 

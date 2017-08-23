@@ -22,6 +22,10 @@
    padding-bottom: 10px;
    border-bottom: 1px solid #CCCCCC;
 }
+.top {
+        float: top;
+        margin-top: 5px;
+    }
 .status {
 
     float: right;

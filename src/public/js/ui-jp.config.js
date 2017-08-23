@@ -42,10 +42,8 @@ var jp_config = {
     ],
   tagsinput: ['./public/libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
     './public/libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'],
-  froalaEditor: ["./public/editor/js/froala_editor.min.js",
-    "./public/editor/js/languages/zh_cn.js",
-    "./public/editor/css/froala_editor.css",
-    "./public/editor/css/froala_style.css"],
+  froalaEditor: ["./public/editor/js/froala_editor.min.js"
+  ],
   liveStream: ["./public/js/io.adapter.js",
                "./public/js/io.rtc.client.js"]
 };

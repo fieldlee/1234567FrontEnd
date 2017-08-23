@@ -4,7 +4,9 @@ import { HttpService } from '../../../../http.service';
 import { ContantService } from '../../../../contant.service';
 import { LoadJQService } from '../../../../load-jq.service';
 import { Score } from '../../../../class/score';
+import { Comment } from '../../../../class/comment';
 import { Location } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl, SafeUrl, SafeHtml } from '@angular/platform-browser';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 declare var $: any;
 declare var pt: any;
@@ -21,6 +23,7 @@ export class ScoreplayComponent implements OnInit {
   l1: any;
   scoreid: string;
   score: Score;
+  relateScores:Score[]=[];
   mp3Path: string;
   filesPath: string[] = [];
   backGroundPath: string;
@@ -28,10 +31,24 @@ export class ScoreplayComponent implements OnInit {
   curPage: Number = 0;
   mp3Player: any;
   playbtn: any;
+  commentList: Comment[]=[];
+  page: Number = 1;
+  scoreComment: string;
+  curComment: Comment;
+  commentrepid: string;
+  commentAvatorName: string;
+  loadingable: boolean = true;
+  isloading: boolean = false;
+  hadAttent: boolean = false;
+  isSelfForum:boolean = false;
   constructor(private contantService: ContantService,
+    private sanitizer: DomSanitizer,
     private loadJq: LoadJQService,
     private httpService: HttpService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) { 
+      this.curComment = new Comment();
+      this.score = new Score();
+    }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -41,31 +58,88 @@ export class ScoreplayComponent implements OnInit {
           console.log(resp);
           if (resp.success) {
             this.score = resp.data as Score;
-            this.mp3Path = "http://localhost:3000" + this.score.mp3.path;
+            this.mp3Path =  this.score.mp3.path;
             this.preloadMP3();//预加载mp3
-
+            this.filesPath = [];
+            this.curPage = 0;
+            this.page = 1;
             for (var index = 0; index < this.score.files.length; index++) {
               var element = this.score.files[index];
-              this.filesPath.push("http://localhost:3000" + element.path);
+              this.filesPath.push( element.path);
             }
+           
+            document.getElementById("score").style.backgroundImage = `url()`;
             if (this.filesPath.length > 0) {
               const page = parseInt(this.curPage.toString());
               this.backGroundPath = this.filesPath[page];
+              
               document.getElementById("score").style.backgroundImage = `url(${this.backGroundPath})`;
               this.counter = this.filesPath.length;
             }
             this.curPage = 0;
             this.preload();//预加载曲谱
             this.playshowArea();
+            // 读取相关乐谱
+            this.httpService.getScoresByType(this.score.type,this.page.toString()).then(resp=>{
+              if(resp.success){
+                this.relateScores = resp.results as Score[];
+                const curscoreid = this.scoreid;
+                this.relateScores = this.relateScores.filter(function(item){
+                  return item._id != curscoreid;
+                })
+              }
+            })
           }
-        })
+        });
+        // 获得评论
+        this.loadComment(this.page.toString());
+        // 判断是否是自己的帖子
+        if (this.score.author == window.localStorage.getItem("username")) {
+          this.isSelfForum = true;
+        }
+
+        //  获得关注信息
+        const folwjson = { "username": window.localStorage.getItem("username"), "followusername": this.score.author };
+        this.httpService.getFollowByUser(folwjson).then(resp => {
+
+          if (resp.success) {
+            this.hadAttent = false;
+          } else {
+            this.hadAttent = true;
+          }
+        });
       }
     });
   }
+
+  loadComment(page) {
+    this.httpService.getScoreComment(this.scoreid, page).then(resp => {
+      if (resp.success) {
+        for (var i = 0; i < resp.results.length; i++) {
+          var tCom = resp.results[i] as Comment;
+          if (tCom.subComments && tCom.subComments.length > 0) {
+            for (var j = 0; j < tCom.subComments.length; j++) {
+              tCom.subComments[j].contentSafe = this.sanitizer.bypassSecurityTrustHtml(tCom.subComments[j].content);
+            }
+          }
+          resp.results[i].contentSafe = this.sanitizer.bypassSecurityTrustHtml(tCom.content);
+        }
+        if (page == "1") {
+          this.commentList = resp.results as Comment[];
+        }
+        else {
+          var comments = resp.results as Comment[];
+          this.commentList = this.commentList.concat(comments);
+        }
+      }
+    });
+  }
+
   preloadMP3() {
     this.mp3Player = document.getElementById("mp3play");
     this.mp3Player.src = this.mp3Path;
     this.mp3Player.load();
+    this.buildMp3play();
   }
   preload() {
     var images = new Array(this.filesPath.length);
@@ -140,9 +214,48 @@ export class ScoreplayComponent implements OnInit {
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.buildMp3play();
+    
     // document.getElementById("score").addEventListener('click', this.getClickPosition, false);
+    this.loadJq.froalaEditorComment('scoreComment');
+    this.loadJq.froalaEditorComment('Commentconent');
+    //  用户评论翻屏
+    var win = $(window);
+    var self = this;
+    var commentDiv = $("#forumCommentDiv");
+    // Each time the user scrolls
+    win.scroll(function () {
+      if (self.loadingable == true && self.isloading == false) {
 
+        if ($(window).scrollTop() + $(window).height() >= commentDiv.height() + commentDiv.offset().top) {
+          self.isloading = true;
+          self.page = parseInt(self.page.toString()) + 1;
+          //  获得帖子的评论
+          console.log(self.page);
+          self.httpService.getScoreComment(self.scoreid, self.page.toString()).then(resp => {
+            console.log(resp);
+            var comlist = new Array();
+            if (resp.results.length == 0) {
+              self.isloading = false;
+              self.loadingable = false;
+            } else {
+              self.isloading = false;
+              for (var i = 0; i < resp.results.length; i++) {
+                var tCom = resp.results[i] as Comment;
+                if (tCom.subComments && tCom.subComments.length > 0) {
+                  for (var j = 0; j < tCom.subComments.length; j++) {
+                    tCom.subComments[j].contentSafe = self.sanitizer.bypassSecurityTrustHtml(tCom.subComments[j].content);
+                  }
+                }
+                resp.results[i].contentSafe = self.sanitizer.bypassSecurityTrustHtml(tCom.content);
+              }
+              self.commentList = self.commentList.concat(resp.results as Comment[]);
+              // this.commentNumber = resp.count.toString();
+            }
+
+          })
+        }
+      }
+    });
   }
 
   playshowArea() {
@@ -199,8 +312,221 @@ export class ScoreplayComponent implements OnInit {
     }
   }
 
+  supportScore() {
+    if (this.score.support) {
+      this.score.support = (Number(this.score.support) + 1).toString();
+    } else {
+      this.score.support = "1";
+    }
+    this.httpService.supportScoreById(this.scoreid).then(resp => {
+      var message = "成功收到您的赞";
+      var type = "success";
+      $.notify(message, {
+        type: type,
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        }
+      }, {
+          animate: {
+            enter: 'animated lightSpeedIn',
+            exit: 'animated lightSpeedOut'
+          }
+        });
+      return;
+    })
+  }
+
+  collect() {
+    // if (window.localStorage.getItem("username")) {
+    //   var body = {
+    //     "avatorPath": this.forum.avatorPath,
+    //     "avator": this.forum.avator,
+    //     "forumId": this.forum._id,
+    //     "author": this.score.author,
+    //     "title": this.score.title,
+    //     "username": window.localStorage.getItem("username")
+    //   };
+    //   this.httpService.collectForum(body).then(resp => {
+    //     var message = "";
+    //     var type = "";
+    //     if (resp.success) {
+    //       if (this.forum.collect) {
+    //         this.forum.collect = (Number(this.forum.collect) + 1).toString();
+    //       } else {
+    //         this.forum.collect = "1";
+    //       }
+    //       message = "成功收藏了此帖子";
+    //       type = 'success';
+    //     } else {
+    //       message = resp.message;
+    //       type = "warning";
+    //     }
+    //     $.notify(message, {
+    //       type: type,
+    //       placement: {
+    //         from: 'bottom',
+    //         align: 'center'
+    //       }
+    //     }, {
+    //         animate: {
+    //           enter: 'animated lightSpeedIn',
+    //           exit: 'animated lightSpeedOut'
+    //         }
+    //       });
+    //     return;
+    //   })
+    // } else {
+    //   $.notify("请先登录后，再收藏此帖子", {
+    //     type: "warning",
+    //     placement: {
+    //       from: 'bottom',
+    //       align: 'center'
+    //     }
+    //   }, {
+    //       animate: {
+    //         enter: 'animated lightSpeedIn',
+    //         exit: 'animated lightSpeedOut'
+    //       }
+    //     });
+    //   return;
+    // }
+  }
+
+  addAttention(username) {
+    const folwjson = { "username": window.localStorage.getItem("username"), "followusername": username };
+
+    this.httpService.createFollow(folwjson).then(resp => {
+      if (resp.success) {
+        $.notify(resp.message, {
+          type: 'success',
+          placement: {
+            from: 'bottom',
+            align: 'center'
+          }
+        }, {
+            animate: {
+              enter: 'animated lightSpeedIn',
+              exit: 'animated lightSpeedOut'
+            }
+          });
+        return;
+      } else {
+        $.notify(resp.message, {
+          type: 'warning',
+          placement: {
+            from: 'bottom',
+            align: 'center'
+          }
+        }, {
+            animate: {
+              enter: 'animated lightSpeedIn',
+              exit: 'animated lightSpeedOut'
+            }
+          });
+        return;
+      }
+    });
+  }
+
+  supportComment(id) {
+    for (var i = 0; i < this.commentList.length; i++) {
+      if (this.commentList[i]._id == id) {
+        if (this.commentList[i].support) {
+          this.commentList[i].support = (Number(this.commentList[i].support) + 1).toString();
+        } else {
+          this.commentList[i].support = "1";
+        }
+      }
+    }
+    this.httpService.supportScoreCommentById(id).then(resp => {
+      if (resp.success) {
+        $.notify("成功收到您的赞", {
+          type: 'success',
+          placement: {
+            from: 'bottom',
+            align: 'center'
+          }
+        }, {
+            animate: {
+              enter: 'animated lightSpeedIn',
+              exit: 'animated lightSpeedOut'
+            }
+          });
+        return;
+      }
+    });
+  }
+
+  replyComment(id, name) {
+    this.commentrepid = id;
+    this.commentAvatorName = name;
+  }
+
+  repSubmit() {
+    if ($("#Commentconent").froalaEditor('html.get', true) == undefined || $("#Commentconent").froalaEditor('html.get', true) == "") {
+      $.notify("请输入评论内容", {
+        type: 'warning',
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        }
+      }, {
+          animate: {
+            enter: 'animated lightSpeedIn',
+            exit: 'animated lightSpeedOut'
+          }
+        });
+      return;
+    }
+
+    this.curComment.content = $("#Commentconent").froalaEditor('html.get', true);
+    this.curComment.author = window.localStorage.getItem("username");
+    this.curComment.issueTime = new Date();
+    this.curComment.parentId = this.commentrepid;
+    this.httpService.createScoreComment(this.curComment).then(resp => {
+      this.curComment = new Comment();
+      $('#Commentconent').froalaEditor('html.set', '');//清空回复内容
+      $('#commentbymodal').modal('hide'); //隐藏modal
+      // 获得帖子的评论
+      this.page = 1;
+      this.loadComment(this.page.toString());
+    })
+  };
+  // 提交评论
+  submitComment() {
+    this.scoreComment = $("#scoreComment").froalaEditor('html.get', true);
+    if (this.scoreComment == undefined || this.scoreComment == "") {
+      $.notify("请输入评论内容", {
+        type: 'warning',
+        placement: {
+          from: 'bottom',
+          align: 'center'
+        }
+      }, {
+          animate: {
+            enter: 'animated lightSpeedIn',
+            exit: 'animated lightSpeedOut'
+          }
+        });
+      return;
+    }
+
+    this.curComment.content = this.scoreComment;
+    this.curComment.author = window.localStorage.getItem("username");
+    this.curComment.issueTime = new Date();
+    this.curComment.parentId = this.scoreid;
+    this.httpService.createScoreComment(this.curComment).then(resp => {
+      this.curComment = new Comment();
+      this.scoreComment = "";
+      $('#scoreComment').froalaEditor('html.set', '');
+      this.page = 1;
+      this.loadComment(this.page.toString());
+    })
+  }
+
   elementInViewport(el) {
-    
+
     var top = el.offsetTop;
     var left = el.offsetLeft;
     var width = el.offsetWidth;
@@ -211,7 +537,7 @@ export class ScoreplayComponent implements OnInit {
       left += el.offsetLeft;
     }
     return (
-    top >= window.pageYOffset && left >= window.pageXOffset && (top + height) <= (window.pageYOffset + window.innerHeight) && (left + width) <= (window.pageXOffset + window.innerWidth));
+      top >= window.pageYOffset && left >= window.pageXOffset && (top + height) <= (window.pageYOffset + window.innerHeight) && (left + width) <= (window.pageXOffset + window.innerWidth));
   }
 
   updatePlay(time) {
@@ -261,7 +587,7 @@ export class ScoreplayComponent implements OnInit {
         document.getElementById('mainscore').style.height = '100%';
         // 滚屏显示可见曲谱
         console.log(this.elementInViewport(this.l1));
-        if(this.elementInViewport(this.l1)==false ){
+        if (this.elementInViewport(this.l1) == false) {
           this.l1.scrollIntoView(false);
         }
       } else {

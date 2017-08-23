@@ -304,11 +304,11 @@ export class ProfileComponent implements OnInit {
     if (imageDate.length > 100000) {
       qulity = 0.1;
     } else if (imageDate.length > 50000) {
-      qulity = 0.2;
+      qulity = 0.3;
     } else if (imageDate.length > 25000) {
-      qulity = 0.5;
-    } else {
       qulity = 0.8;
+    } else {
+      qulity = 1.0;
     }
     var newImageData = this.imageCanvas.cropper("getDataURL",{
                     width: 150,
@@ -329,11 +329,11 @@ export class ProfileComponent implements OnInit {
     if (imageDate.length > 100000) {
       qulity = 0.1;
     } else if (imageDate.length > 50000) {
-      qulity = 0.2;
+      qulity = 0.3;
     } else if (imageDate.length > 25000) {
-      qulity = 0.5;
-    } else {
       qulity = 0.8;
+    } else {
+      qulity = 1.0;
     }
     
     var newImageData = this.imageBackCanvas.cropper("getDataURL",{

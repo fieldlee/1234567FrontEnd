@@ -49,7 +49,10 @@ var PeerManager = (function () {
         || event.target) // Firefox
         .iceConnectionState) {
         case 'disconnected':
+        if (remoteVideosContainer != undefined){
           remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        }
+          
           break;
       }
     };
@@ -78,7 +81,7 @@ var PeerManager = (function () {
     );
   }
   function handleMessage(message) {
-    console.log(message);
+
     var type = message.type,
       from = message.from,
       pc = (peerDatabase[from] || addPeer(from)).pc;
@@ -86,9 +89,6 @@ var PeerManager = (function () {
     console.log('received ' + type + ' from ' + from);
 
     switch (type) {
-      case 'message':
-
-        break;
       case 'init':
         toggleLocalStream(pc);
         offer(from);

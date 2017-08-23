@@ -66,7 +66,7 @@ export class ContentComponent implements OnInit {
             //  获得关注信息
             const folwjson = { "username": window.localStorage.getItem("username"), "followusername": this.forum.author };
             this.httpService.getFollowByUser(folwjson).then(resp => {
-              
+
               if (resp.success) {
                 this.hadAttent = false;
               } else {
@@ -100,8 +100,8 @@ export class ContentComponent implements OnInit {
     this._location.back();
   }
 
-  share(type:string){
-    
+  share(type: string) {
+
   }
 
   support() {
@@ -191,14 +191,14 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  topup(id:string){
-    this.httpService.topupForumById(id).then(resp=>{
+  topup(id: string) {
+    this.httpService.topupForumById(id).then(resp => {
       var message = "";
       var type = "success";
-      if(resp.success){
+      if (resp.success) {
         message = resp.message;
         type = "success";
-      }else{
+      } else {
         message = resp.message;
         type = "warning";
       }

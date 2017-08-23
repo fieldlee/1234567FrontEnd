@@ -89,12 +89,18 @@
 	            <img ng-src="img/a10.jpg" src="img/a10.jpg">
 	          </a> -->
                   <div class="pull-right text-sm text-muted">
-                    <span class="hidden-xs ">5 months ago</span>
+                    <span class="hidden-xs ">{{score.fromTime}}</span>
                     <i class="fa fa-paperclip m-l-sm"></i>
                   </div>
                   <div class="clear">
-                    <div><a routerLink="/home/home/score/scoreplay/{{score._id}}" class="h3">{{score.title}}</a><span class="label bg-light m-l-sm ">mp3</span></div>
-                    <div class="text-ellipsis m-t-xs "></div>
+                    <div><a routerLink="/home/home/score/scoreplay/{{score._id}}" class="h3">{{score.title}}</a><span class="label bg-light m-l-sm ">{{score.mp3!=undefined?"mp3":"曲谱"}}</span></div>
+                    <div class="text-ellipsis m-t-xs ">
+                        
+                      {{score.avator}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{score.difficult}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{score.support}}赞 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{score.read}}查看
+                    </div>
                   </div>
                 </li>
                 

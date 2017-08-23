@@ -8,7 +8,13 @@ export class Score {
     files:any[];
     difficult:string;
     bpt:string;
+    author:string;
+    avator:string;
+    authorPath:string;
     style:string;
+    read:string;
+    support:string;
+    fromTime:string;
     constructor(){
         this.files = new Array();
     }

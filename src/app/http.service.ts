@@ -17,7 +17,7 @@ export class HttpService {
   private rootUrl = '/api';
   constructor(private http: Http) { }
 
-  constructEncodeHeader(){
+  constructEncodeHeader() {
     var header = new Headers();
     header.append('Content-Type', 'application/json');
     header.append('Access-Control-Allow-Origin', '*');
@@ -51,7 +51,7 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-// getUsername
+  // getUsername
   getUser(username: any): Promise<any> {
     const url = `${this.rootUrl}/auth/user/${username}`;
     const header = this.constructHeader();
@@ -60,28 +60,28 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-  updateUser(user:any):Promise<any>{
-      const url = `${this.rootUrl}/auth/user/update`;
-      const header = this.constructHeader();
-      return this.http.post(url,JSON.stringify(user),{ headers: header }).toPromise()
-        .then(response=>response.json())
-        .catch(this.handleError);
-    }
-  updateUserAvator(id:string,data:any):Promise<any>{
+  updateUser(user: any): Promise<any> {
+    const url = `${this.rootUrl}/auth/user/update`;
+    const header = this.constructHeader();
+    return this.http.post(url, JSON.stringify(user), { headers: header }).toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  updateUserAvator(id: string, data: any): Promise<any> {
     const url = `${this.rootUrl}/auth/user/update/avator/${id}`;
-      const header = this.constructEncodeHeader();
-      return this.http.post(url,data,{ headers: header }).toPromise()
-        .then(response=>response.json())
-        .catch(this.handleError);
+    const header = this.constructEncodeHeader();
+    return this.http.post(url, data, { headers: header }).toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
-  updateUserBack(id:string,data:any):Promise<any>{
+  updateUserBack(id: string, data: any): Promise<any> {
     const url = `${this.rootUrl}/auth/user/update/back/${id}`;
-      const header = this.constructEncodeHeader();
-      return this.http.post(url,data,{ headers: header }).toPromise()
-        .then(response=>response.json())
-        .catch(this.handleError);
+    const header = this.constructEncodeHeader();
+    return this.http.post(url, data, { headers: header }).toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
   }
-  
+
   // register
   register(formdata: any): Promise<any> {
     const url = `${this.rootUrl}/auth/register`;
@@ -126,11 +126,53 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-
+  // 创建直播
+  createShow(showinfo:any):Promise<any>{
+    const url = `${this.rootUrl}/web/show`;
+    return this.http.post(url, JSON.stringify(showinfo), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  closeShow(showinfo:any):Promise<any>{
+    const url = `${this.rootUrl}/web/show/close`;
+    return this.http.post(url, JSON.stringify(showinfo), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getShow():Promise<any>{
+    const url = `${this.rootUrl}/web/show`;
+    return this.http.get(url)
+      .toPromise()
+      .then(resp => resp.json())
+      .catch(this.handleError);
+  }
+  getShowById(id:string):Promise<any>{
+    const url = `${this.rootUrl}/web/show/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(resp => resp.json())
+      .catch(this.handleError);
+  }
+  joinShow(info: any): Promise<any> {
+    const url = `${this.rootUrl}/web/show/join`;
+    return this.http.post(url, JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  supportShowById(id: String): Promise<any> {
+    const url = `${this.rootUrl}/web/show/support/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   // 创建课程
   createClass(classinfo: any): Promise<any> {
     const url = `${this.rootUrl}/web/class`;
-    return this.http.post(url,JSON.stringify(classinfo), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify(classinfo), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -138,7 +180,7 @@ export class HttpService {
 
   closeClass(classinfo: any): Promise<any> {
     const url = `${this.rootUrl}/web/class/close`;
-    return this.http.post(url,JSON.stringify(classinfo), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify(classinfo), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -148,47 +190,112 @@ export class HttpService {
     const url = `${this.rootUrl}/web/class`;
     return this.http.get(url)
       .toPromise()
-      .then(resp=> resp.json())
+      .then(resp => resp.json())
       .catch(this.handleError);
   }
 
-  getClassById(id:string): Promise<any> {
+  getClassById(id: string): Promise<any> {
     const url = `${this.rootUrl}/web/class/${id}`;
     return this.http.get(url)
       .toPromise()
-      .then(resp=> resp.json())
+      .then(resp => resp.json())
+      .catch(this.handleError);
+  }
+  joinClass(info: any): Promise<any> {
+    const url = `${this.rootUrl}/web/class/join`;
+    return this.http.post(url, JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  supportClassById(id: String): Promise<any> {
+    const url = `${this.rootUrl}/web/class/support/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  supportClassCommentById(id: String): Promise<any> {
+    const url = `${this.rootUrl}/web/classcomment/support`;
+    return this.http.post(url, JSON.stringify({ "id": id }), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getClassComment(pid: String, page: string): Promise<any> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/classcomment/${pid}/${page}?${time}`;
+    return this.http.get(url).toPromise()
+      .then(response => response.json())
       .catch(this.handleError);
   }
 
-  joinClass(info:any):Promise<any>{
-    const url = `${this.rootUrl}/web/class/join`;
-    return this.http.post(url,JSON.stringify(info), { headers: this.constructHeader() })
+  createClassComment(comment: Comment): Promise<any> {
+    const url = `${this.rootUrl}/web/classcomment`;
+    return this.http.post(url, JSON.stringify(comment), { headers: this.constructHeader() })
       .toPromise()
-      .then(response => response.json())
+      .then(response => response.json().data)
       .catch(this.handleError);
   }
   // 创建曲谱信息
-  createScore(score:any):Promise<any>{
+  createScore(score: any): Promise<any> {
     const url = `${this.rootUrl}/web/score`;
-    return this.http.post(url,JSON.stringify(score), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify(score), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  getScores(page:string):Promise<any>{
+  getScores(page: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/score/${page}?${time}`;
     return this.http.get(url)
       .toPromise()
-      .then(response =>response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
-  getScoreById(id:string):Promise<any>{
+  getScoresByType(type:string,page:string): Promise<any> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/score/type/${type}/${page}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getScoreById(id: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/score/id/${id}?${time}`;
     return this.http.get(url)
       .toPromise()
-      .then(response =>response.json())
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  supportScoreById(id: String): Promise<any> {
+    const url = `${this.rootUrl}/web/score/support/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  supportScoreCommentById(id: String): Promise<any> {
+    const url = `${this.rootUrl}/web/scorecomment/support`;
+    return this.http.post(url, JSON.stringify({ "id": id }), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getScoreComment(pid: String, page: string): Promise<any> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/scorecomment/${pid}/${page}?${time}`;
+    return this.http.get(url).toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  createScoreComment(comment: Comment): Promise<any> {
+    const url = `${this.rootUrl}/web/scorecomment`;
+    return this.http.post(url, JSON.stringify(comment), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json().data)
       .catch(this.handleError);
   }
   // 广告信息配置
@@ -197,7 +304,7 @@ export class HttpService {
     const url = `${this.rootUrl}/web/ads`;
     return this.http.get(url)
       .toPromise()
-      .then(response =>response.json().results as Ads[])
+      .then(response => response.json().results as Ads[])
       .catch(this.handleError);
   }
 
@@ -213,13 +320,13 @@ export class HttpService {
     const url = `${this.rootUrl}/web/ads/delete`;
     return this.http.post(url, JSON.stringify(ads), { headers: this.constructHeader() })
       .toPromise()
-      .then(response =>response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
 
-//  查询
+  //  查询
 
-  search(body:any):Promise<any>{
+  search(body: any): Promise<any> {
     const url = `${this.rootUrl}/web/search`;
     return this.http.post(url, JSON.stringify(body), { headers: this.constructHeader() })
       .toPromise()
@@ -227,7 +334,7 @@ export class HttpService {
       .catch(this.handleError);
   }
   // 论坛活动
-  
+
   getActions(): Promise<ForumAction[]> {
     const url = `${this.rootUrl}/web/action`;
     return this.http.get(url)
@@ -257,34 +364,34 @@ export class HttpService {
     const url = `${this.rootUrl}/web/news/number?${time}`;
     return this.http.get(url)
       .toPromise()
-      .then(response =>  response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
 
-  getNews(page:string): Promise<News[]> {
+  getNews(page: string): Promise<News[]> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/news/${page}?${time}`;
     return this.http.get(url)
       .toPromise()
-      .then(response => 
-          response.json().results as News[]
+      .then(response =>
+        response.json().results as News[]
       )
       .catch(this.handleError);
   }
 
-  getNewsById(id:string): Promise<any> {
+  getNewsById(id: string): Promise<any> {
     const url = `${this.rootUrl}/web/news/byid/${id}`;
     return this.http.get(url)
       .toPromise()
-      .then(response => 
-          response.json().data
+      .then(response =>
+        response.json().data
       )
       .catch(this.handleError);
   }
 
-  supportNewsById(id:String):Promise<any>{
+  supportNewsById(id: String): Promise<any> {
     const url = `${this.rootUrl}/web/news/support`;
-    return this.http.post(url,JSON.stringify({"id":id}), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify({ "id": id }), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -305,45 +412,45 @@ export class HttpService {
       .catch(this.handleError);
   }
   // 关注
-  getFollow():Promise<any>{
+  getFollow(): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/follow?${time}`;
-    return this.http.get(url,{ headers: this.constructHeader() })
+    return this.http.get(url, { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  createFollow(folwJson:any):Promise<any>{
+  createFollow(folwJson: any): Promise<any> {
     const url = `${this.rootUrl}/web/follow`;
     return this.http.post(url, JSON.stringify(folwJson), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  getFollowByUser(folwJson:any):Promise<any>{
+  getFollowByUser(folwJson: any): Promise<any> {
     // const folwjson = { "username": window.localStorage.getItem("username"), "followusername": username };
     const url = `${this.rootUrl}/web/follow/byuser`;
-    return this.http.post(url,JSON.stringify(folwJson),{ headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify(folwJson), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
   // 论坛发布
-  getRecentForums():Promise<any>{
+  getRecentForums(): Promise<any> {
     const url = `${this.rootUrl}/web/forum/sub/recent`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  getForumsByUsername(username:String): Promise<any> {
+  getForumsByUsername(username: String): Promise<any> {
     const url = `${this.rootUrl}/web/forum/sub/byusername/${username}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  getForumsByType(type:String,page:string): Promise<any> {
+  getForumsByType(type: String, page: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/forum/${type}/${page}?${time}`;
     console.log(url);
@@ -352,8 +459,8 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-  getForumsByTypeAndSub(type:String,subtype:String,page:string): Promise<any> {
-     console.log(page);
+  getForumsByTypeAndSub(type: String, subtype: String, page: string): Promise<any> {
+    console.log(page);
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/forum/${type}/${subtype}/${page}?${time}`;
     return this.http.get(url)
@@ -361,7 +468,7 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
-  getForumsById(id:String): Promise<ForumInfo> {
+  getForumsById(id: String): Promise<ForumInfo> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/forum/sub/byid/${id}?${time}`;
     return this.http.get(url)
@@ -369,7 +476,7 @@ export class HttpService {
       .then(response => response.json().data as ForumInfo)
       .catch(this.handleError);
   }
-  getForumsByProductId(id:String): Promise<any> {
+  getForumsByProductId(id: String): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/forum/sub/byproductid/${id}?${time}`;
     return this.http.get(url)
@@ -378,22 +485,22 @@ export class HttpService {
       .catch(this.handleError);
   }
   // 收藏帖子 
-  collectNews(body:any):Promise<any>{
+  collectNews(body: any): Promise<any> {
     const url = `${this.rootUrl}/web/collect`;
-    return this.http.post(url,JSON.stringify(body), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify(body), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  collectForum(body:any):Promise<any>{
+  collectForum(body: any): Promise<any> {
     const url = `${this.rootUrl}/web/collect`;
-    return this.http.post(url,JSON.stringify(body), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify(body), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
 
-  getCollections(username:string):Promise<any>{
+  getCollections(username: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/collect/${username}?${time}`;
     return this.http.get(url)
@@ -402,7 +509,7 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-  topupForumById(id:String):Promise<any>{
+  topupForumById(id: String): Promise<any> {
     const url = `${this.rootUrl}/web/forum/sub/topup/${id}`;
     return this.http.get(url)
       .toPromise()
@@ -410,16 +517,16 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-  supportForumById(id:String):Promise<any>{
+  supportForumById(id: String): Promise<any> {
     const url = `${this.rootUrl}/web/forum/sub/support/${id}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  supportCommentById(id:String):Promise<any>{
+  supportCommentById(id: String): Promise<any> {
     const url = `${this.rootUrl}/web/comment/support`;
-    return this.http.post(url,JSON.stringify({"id":id}), { headers: this.constructHeader() })
+    return this.http.post(url, JSON.stringify({ "id": id }), { headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -447,23 +554,23 @@ export class HttpService {
       .catch(this.handleError);
   }
   //  回帖
-  getComment(pid:String,page:string):Promise<any>{
+  getComment(pid: String, page: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/comment/${pid}/${page}?${time}`;
     return this.http.get(url).toPromise()
-    .then(response=>response.json())
-    .catch(this.handleError);
-  } 
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
 
-  createComment(comment:Comment):Promise<any>{
+  createComment(comment: Comment): Promise<any> {
     const url = `${this.rootUrl}/web/comment`;
-    return this.http.post(url,JSON.stringify(comment), { headers: this.constructHeader() })
-    .toPromise()
-    .then(response=>response.json().data)
-    .catch(this.handleError);
-    }
+    return this.http.post(url, JSON.stringify(comment), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json().data)
+      .catch(this.handleError);
+  }
   //  品牌信息
-  getBrandById(id:string): Promise<Brand> {
+  getBrandById(id: string): Promise<Brand> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/brand/${id}?${time}`;
     return this.http.get(url)
@@ -494,28 +601,28 @@ export class HttpService {
       .catch(this.handleError);
   }
   //  产品口碑信息
-  getPraiseConfig(type:string):Promise<any>{
+  getPraiseConfig(type: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/praise/config/${type}?${time}`;
     return this.http.get(url).toPromise()
       .then(response => response.json())
       .catch(this.handleError);
   }
-  createParise(praise:Praise):Promise<Praise>{
+  createParise(praise: Praise): Promise<Praise> {
     const url = `${this.rootUrl}/web/praise`;
     return this.http.post(url, JSON.stringify(praise), { headers: this.constructHeader() }).toPromise()
-      .then(response =>  response.json().data as Praise)
+      .then(response => response.json().data as Praise)
       .catch(this.handleError);
   }
 
-  getPariseById(id:string):Promise<Praise>{
+  getPariseById(id: string): Promise<Praise> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/praise/${id}?${time}`;
     return this.http.get(url).toPromise()
       .then(response => response.json().data as Praise)
       .catch(this.handleError);
   }
-  getPariseByProductId(id:string):Promise<any>{
+  getPariseByProductId(id: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/praise/byproduct/${id}?${time}`;
     return this.http.get(url).toPromise()
@@ -523,7 +630,7 @@ export class HttpService {
       .catch(this.handleError);
   }
   //  产品信息
-  getProductById(id:string): Promise<any> {
+  getProductById(id: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/product/${id}?${time}`;
     return this.http.get(url)
@@ -542,24 +649,24 @@ export class HttpService {
   createProduct(product: Product): Promise<Product> {
     const url = `${this.rootUrl}/web/product`;
     return this.http.post(url, JSON.stringify(product), { headers: this.constructHeader() }).toPromise()
-      .then(response =>  response.json().data as Product )
+      .then(response => response.json().data as Product)
       .catch(this.handleError);
   }
   deleteProduct(product: Product): Promise<any> {
     const url = `${this.rootUrl}/web/product/delete`;
     return this.http.post(url, JSON.stringify(product), { headers: this.constructHeader() }).toPromise()
-      .then(response =>  response.json())
+      .then(response => response.json())
       .catch(this.handleError);
   }
   // 创建琴行信息
-  createDelegate(delegate:any):Promise<any>{
+  createDelegate(delegate: any): Promise<any> {
     const url = `${this.rootUrl}/basic/delegate`;
-    return this.http.post(url,JSON.stringify(delegate), { headers: this.constructHeader() }).toPromise()
+    return this.http.post(url, JSON.stringify(delegate), { headers: this.constructHeader() }).toPromise()
       .then(repsonse => repsonse.json())
       .catch(this.handleError);
   }
 
-  getDelegates():Promise<any>{
+  getDelegates(): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/basic/delegate?${time}`;
     return this.http.get(url).toPromise()
@@ -567,7 +674,7 @@ export class HttpService {
       .catch(this.handleError);
   }
 
-  deleteDelegate(id:string):Promise<any>{
+  deleteDelegate(id: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/basic/delegate/delete/${id}?${time}`;
     return this.http.get(url).toPromise()
@@ -682,8 +789,8 @@ export class HttpService {
       .then(resp => resp.json())
       .catch(this.handleError);
   }
-// 品牌产品信息
-  getBrandProducts():Promise<any>{
+  // 品牌产品信息
+  getBrandProducts(): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/brand?${time}`;
     return this.http.get(url)
@@ -692,15 +799,14 @@ export class HttpService {
       .catch(this.handleError);
   }
   // 省市区get json
-  getRegion(){
+  getRegion() {
     return this.http.get("https://raw.githubusercontent.com/louisgeek/LouisAreaSelectDemo/master/DropDownViewLib/src/main/res/raw/ssq.json")
       .toPromise()
       .then(resp => resp.json())
       .catch(this.handleError);
   }
-
   // 获得stream
-  getStream():Promise<any>{
+  getStream(): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/streams?${time}`;
     return this.http.get(url)
@@ -708,8 +814,6 @@ export class HttpService {
       .then(resp => resp)
       .catch(this.handleError);
   }
-
-
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only

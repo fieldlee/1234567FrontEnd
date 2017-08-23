@@ -14,41 +14,169 @@
             <div class="panel-body">col-lg-12</div>
           </div>
         </div>
+        <div class="col-lg-8 col-md-12 col-sm-12">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <h2>{{score.title}}</h2>
+            <div class="col-lg-12">
+              <div class="col-sm-1">
+                <a routerLink="/home/home/profile/{{score.author}}" class=" pull-left thumb-sm avatar m-l-n-md">
+                <img src="{{score.avatorPath}}" class="img-circle" alt="...">
+            </a>
+              </div>
+              <div class="col-sm-10">
+                <div class="m-b-xs">
+                  <a routerLink="/home/home/profile/{{score.author}}" class="h5">{{score.avator}}</a> {{score.fromTime}}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-        <div class="col-lg-8">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="row col-md-10 col-md-offset-1 col-xs-12">
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Example: Audio with data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <audio id="mp3play" controls>
-                  <!-- <source src="http://playerdemo.iainhouston.com/tests/BeBopAliens.ogg" type="audio/ogg" /> -->
-                  <source src="{{mp3Path}}" type="audio/mpeg" />
-                  <!-- <a href="http://playerdemo.iainhouston.com/tests/BeBopAliens.mp3"></a> -->
-                </audio>
+                  <a class="text-muted m-xs" data-toggle="dropdown"><i class="icon-share " style="font-size:20px" ></i></a>                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                  <ul class="dropdown-menu list-inline">
+                    <li><a (click)="share('weichat')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-wechat" aria-hidden="true"></i></a>微信朋友圈</li>
+                    <li class="divider"></li>
+                    <li><a (click)="share('qq')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-qq" aria-hidden="true"></i></a>QQ空间圈</li>
+                    <li class="divider"></li>
+                    <li><a (click)="share('weibo')" class="btn btn-sm btn-bg btn-rounded btn-default btn-icon"><i class="fa fa-weibo" aria-hidden="true"></i></a>分享微博</li>
+                  </ul>
+                  <a (click)="collect()" class="text-muted m-xs" data-toggle="tooltip" data-placement="top" title="收藏帖子的数量"><i class="icon-star" style="font-size:20px">{{score.collect}}</i></a>                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a (click)="supportScore()" class="text-muted m-xs" data-toggle="tooltip" data-placement="top" title="赞帖子的数量"><i class="glyphicon glyphicon-thumbs-up icon" style="font-size:20px">{{score.support}}</i></a>
+                  <a class="text-muted m-xs" data-toggle="tooltip" data-placement="top" title="帖子已阅读数"><i class="icon-eye " style="font-size:20px">{{score.read}}</i> </a>                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <button *ngIf="!isSelfForum" (click)="addAttention(score.author)" class="btn m-b-xs w-xs" [ngClass]="{'btn-info': hadAttent==false,'disabled':hadAttent==true}"
+                    data-toggle="tooltip" data-placement="top" title="关注后，实时获得帖子动态">{{hadAttent?'已关注':'+关注'}}</button>                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                </div>
               </div>
             </div>
           </div>
-          <!-- 曲谱 -->
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="row  col-md-offset-1 ">
-                <div class=riffbox style="align:center" id="mainscore">
-                  <div id="score" (click)='getClickPosition($event)'  title="" style="position: relative; background-size:contain;    width:650px;    height:841px; background-repeat:no-repeat;">
-                    <div class="layer1" id="layer1"></div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="row col-md-10 col-md-offset-1 col-xs-12">
+                  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Example: Audio with data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+                  <audio id="mp3play" controls>
+                    <!-- <source src="http://playerdemo.iainhouston.com/tests/BeBopAliens.ogg" type="audio/ogg" /> -->
+                    <source src="{{mp3Path}}" type="audio/mpeg" />
+                    <!-- <a href="http://playerdemo.iainhouston.com/tests/BeBopAliens.mp3"></a> -->
+                  </audio>
+                </div>
+              </div>
+            </div>
+            <!-- 曲谱 -->
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="row  col-md-offset-1 ">
+                  <div class=riffbox style="align:center" id="mainscore">
+                    <div id="score" (click)='getClickPosition($event)' title="" style="position: relative; background-size:contain;    width:650px;    height:841px; background-repeat:no-repeat;">
+                      <div class="layer1" id="layer1"></div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row col-md-2 col-md-offset-5">
+                  <div class="  btn-group" style="margin-right: auto; margin-left: auto">
+                    <button (click)="prepage()" type="button" class="btn btn-lg btn-bg btn-default" [ngClass]="{'disabled': curPage==0}"><i class="fa fa-chevron-left"></i></button>
+                    <button (click)="nextpage()" type="button" class="btn btn-lg btn-bg btn-default" [ngClass]="{'disabled': curPage>=filesPath.length-1}"><i class="fa fa-chevron-right"></i></button>
                   </div>
                 </div>
-
-              </div>
-              <div class="row col-md-2 col-md-offset-5">
-                <div class="  btn-group" style="margin-right: auto; margin-left: auto">
-                  <button (click)="prepage()" type="button" class="btn btn-lg btn-bg btn-default" [ngClass]="{'disabled': curPage==0}" ><i class="fa fa-chevron-left"></i></button>
-                  <button (click)="nextpage()" type="button" class="btn btn-lg btn-bg btn-default" [ngClass]="{'disabled': curPage>=filesPath.length-1}"><i class="fa fa-chevron-right"></i></button>
-                </div>
               </div>
             </div>
           </div>
-
-
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="col-sm-12">
+              <div ui-jq="froalaEditor" name="scoreComment" id="scoreComment" [(ngModel)]="scoreComment" ngDefaultControl></div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <div class="col-sm-2 col-sm-offset-10">
+                <button type="submit" (click)="submitComment()" class="btn btn-info">发表评论</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12" id="forumCommentDiv">
+            <div class="col-lg-12 col-md-12 col-sm-12 wrapper bg-white b-b" style="padding:10px" *ngIf="commentList.length > 0">
+              <span>用户热评</span>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 padder" *ngIf="commentList.length > 0">
+              <div class="streamline b-l b-info m-l-lg m-b padder-v">
+                <div *ngFor="let rep of commentList">
+                  <a routerLink="/home/home/profile/{{rep.author}}" class="pull-left thumb-sm avatar m-l-n-md">
+              <img *ngIf="rep.avatorPath!=''" src="{{rep.avatorPath}}" class="img-circle" alt="{{rep.avator}}">
+              
+              <img *ngIf="rep.avatorPath==''" src="./public/img/PersonIcon.png" class="img-circle" alt="{{rep.avator}}">
+            </a>
+                  <div class="m-l-lg">
+                    <div class="m-b-xs">
+                      <a routerLink="/home/home/profile/{{rep.author}}" class="h6">{{rep.avator}}</a>
+                      <span class="text-muted m-l-sm pull-right">
+                  {{rep.fromTime}}
+                </span>
+                    </div>
+                    <div class="m-b">
+                      <div [innerHTML]="rep.contentSafe"></div>
+                      <div class="m-t-sm">
+                        <a (click)="replyComment(rep._id,rep.avator)" class="text-muted m-xs" data-toggle="modal" data-target="#commentbymodal"><i class="icon-action-redo"></i></a>
+                        <a (click)="supportComment(rep._id)" class="text-muted m-xs"><i class="glyphicon glyphicon-thumbs-up">{{rep.support}}</i></a>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- .comment-reply -->
+                  <div class="m-l-lg" *ngFor="let subCom of rep.subComments">
+                    <a routerLink="/home/home/profile/{{subCom.author}}" class="pull-left thumb-sm avatar">
+                <img src="{{subCom.avatorPath}}" alt="...">
+                </a>
+                    <div class="m-l-xxl panel b-a">
+                      <div class="panel-heading pos-rlt">
+                        <span class="arrow left pull-up"></span>
+                        <span class="text-muted m-l-sm pull-right">
+                    {{subCom.fromTime}}
+                  </span>
+                        <a routerLink="/home/home/profile/{{subCom.author}}" class="h6">{{subCom.avator}}</a>
+                        <div [innerHTML]="subCom.contentSafe"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- / .comment-reply -->
+                </div>
+              </div>
+            </div>
+            <div class="figure_loading" *ngIf="isloading">正在为你加载更多...</div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-12 col-sm-12 wrapper bg-white b-b" style="padding:10px">
+          <div class="channel">
+            <h3 class="channel_title">相关乐谱</h3>
+            <div class="channel_list">
+              <ul style="padding:5px" class="channel_list_show" *ngFor="let rescore of relateScores">
+                <li><a routerLink="/home/home/score/scoreplay/{{rescore._id}}" title="{{rescore.title}}">{{rescore.title}}</a>
+                  <div class="channel_subtitle">
+                      {{rescore.avator}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{rescore.difficult}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{rescore.support}}赞 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      {{rescore.read}}查看
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="commentbymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">@{{commentAvatorName}}</h4>
+          </div>
+          <div class="modal-body">
+            <div class="col-sm-12">
+              <div ui-jq="froalaEditor" name="Commentconent" id="Commentconent" ngDefaultControl></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" (click)="repSubmit()" class="btn btn-info">回复评论</button>
+          </div>
         </div>
       </div>
     </div>
