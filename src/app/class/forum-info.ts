@@ -15,6 +15,7 @@ export class ForumInfo {
     avatorPath:string;
     issueTime:Date;
     fromTime:string;
+    duration:string;
     images:string[];
     videos:string[];
     comment:string;

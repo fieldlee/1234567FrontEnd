@@ -64,7 +64,7 @@
                           <div class="lbox">
                             <a class="img-wrap" routerLink="../../content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
                               class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                              <i  class="ftype video"> <span> 4:05 </span> </i>
+                              <i  class="ftype video" *ngIf=" forumObj.duration != undefined "> <span> {{forumObj.duration}} </span> </i>
                             </a>
                           </div>
 

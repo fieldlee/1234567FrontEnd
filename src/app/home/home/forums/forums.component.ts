@@ -46,6 +46,7 @@ export class ForumsComponent implements OnInit {
           // console.log(resp);
           this.page = parseInt(resp.page);
           this.forumlist = resp.results as ForumInfo[];
+          
           $('#forumTab a:first').tab('show');//每次都打开第一个tab
         })
 

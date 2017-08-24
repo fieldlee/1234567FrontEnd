@@ -63,7 +63,7 @@ export class IssueComponent implements OnInit {
       if(this.id){
         this.httpService.getForumsById(this.id).then(resp=>{
             this.forum = resp;
-            $("#forumContent").froalaEditor('html.set', this.forum.content);
+            $("#forumissueContent").froalaEditor('html.set', this.forum.content);
 
             if (this.forum.type != undefined) {
               this.httpService.getSubType(this.forum.type).then(
@@ -113,7 +113,7 @@ export class IssueComponent implements OnInit {
     const self = this;
 
     this.loadJq.reloadJQ(null);
-    this.loadJq.froalaEditor("forumContent", function (imageurl: string) {
+    this.loadJq.froalaEditor("forumissueContent", function (imageurl: string) {
       if (self.forum.images == undefined) {
         self.forum.images = new Array<string>();
       }
@@ -168,7 +168,7 @@ export class IssueComponent implements OnInit {
       this.forum.product = this.productid;
     }
     this.forum.tags = $("input[name=tags]").tagsinput('items');
-    this.forum.content = $("#forumContent").froalaEditor('html.get', true);
+    this.forum.content = $("#forumissueContent").froalaEditor('html.get', true);
     console.log(this.forum);
     this.httpService.createForum(this.forum).then(resp=>{
       this.forum._id = resp._id;
