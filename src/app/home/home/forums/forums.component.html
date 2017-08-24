@@ -22,7 +22,7 @@
               <div class="app-content-body " style="padding:0">
                 <div class="wrapper-md" style="background:#fff;padding:10px;height:100px">
                   <div class="input-group col-md-11 pull-right">
-                    <input type="text" style="height:35px" (keyup.enter)="keypress($event)" name="forumsearch" [(ngModel)]="searchString" class="form-control input-sm bg-light no-border rounded padder"
+                    <input type="text" style="height:35px" (change)="changeListener($event)" (keyup.enter)="keypress($event)" name="forumsearch" [(ngModel)]="searchString" class="form-control input-sm bg-light no-border rounded padder"
                       placeholder="查询帖子...">
                     <span class="input-group-btn">
                               <button (click)="search()" style="height:35px" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
@@ -32,7 +32,9 @@
                   <div class="form-group">
                     <label class="col-sm-1 control-label">标签:</label>
                     <div class="col-sm-11">
-                      <button (click)="search()" class="btn btn-default bg-light rounded">钢琴</button>
+                      <!-- <div > -->
+                        <button (click)="check(tag)" style="margin-left:5px" class="btn btn-md rounded" [ngClass]="{'btn-info': tag==searchString,'btn-default':tag != searchString}"  *ngFor="let tag of taglist">{{tag}}</button>
+                      <!-- </div> -->
                     </div>
                   </div>
                 </div>
@@ -43,7 +45,7 @@
                       <!-- <li><a href data-toggle="tab" data-target="#tab_2">钢琴<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
                       <li><a href data-toggle="tab" data-target="#tab_3">其他<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li> -->
                       <li style="float:right">
-                        <button class="btn btn-success btn-block" (click)="issue()">+发布帖子</button>
+                        <button class="btn btn-info btn-block" (click)="issue()">+发布帖子</button>
                       </li>
                     </ul>
                     <div class="tab-content">

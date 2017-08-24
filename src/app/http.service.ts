@@ -435,6 +435,20 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+  getTagByType(type:string):Promise<any>{
+    const url = `${this.rootUrl}/web/tag/${type}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  getTagByTypeAndSub(type:string,subType:string):Promise<any>{
+    const url = `${this.rootUrl}/web/tag/${type}/${subType}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
   // 论坛发布
   getRecentForums(): Promise<any> {
     const url = `${this.rootUrl}/web/forum/sub/recent`;

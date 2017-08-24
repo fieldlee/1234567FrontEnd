@@ -191,7 +191,11 @@ export class LiveStreamComponent implements OnInit {
     this.say="@"+avator+":"
     this.sayto = from;
   }
-
+  keypress(event) {
+    if (event.keyCode == "13") {
+      this.send();
+    }
+  }
   send() {
     const payload = {
       "type": "message",

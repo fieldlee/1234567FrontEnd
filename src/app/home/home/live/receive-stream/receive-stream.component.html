@@ -67,7 +67,7 @@
                   <a class="pull-left thumb-xs avatar"><img src="{{avatorPath}}" class="img-circle" alt="{{avator}}"></a>
                   <form class="m-b-none m-l-xl">
                     <div class="input-group">
-                      <input type="text" name="leaveMessge" [(ngModel)]="say" class="form-control" placeholder="请输入...">
+                      <input type="text" name="leaveMessge" [(ngModel)]="say" (keyup.enter)="keypress($event)" class="form-control" placeholder="请输入...">
                       <span class="input-group-btn">
                                   <button (click)="send()" class="btn btn-default" type="button">发送</button>
                                 </span>

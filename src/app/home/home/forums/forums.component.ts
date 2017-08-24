@@ -4,6 +4,7 @@ import { HttpService } from '../../../http.service';
 import { ContantService } from '../../../contant.service';
 import { ForumInfo } from '../../../class/forum-info';
 import { Ads } from '../../../class/ads';
+import { Tag } from '../../../class/tag';
 declare var $: any;
 @Component({
   selector: 'app-forums',
@@ -24,6 +25,7 @@ export class ForumsComponent implements OnInit {
   page: number = 1;
   adslist: Ads[] = [];
   searchString = "";
+  taglist:string[] = [];
   constructor(private route: ActivatedRoute,
     private router: Router,
     private contantService: ContantService,
@@ -41,10 +43,16 @@ export class ForumsComponent implements OnInit {
         this.instrumentType = this.contantService.getInstrumentType(this.key);
         this.instrumentSubForums = this.contantService.getSubForums(this.key);
         this.httpService.getForumsByType(this.instrumentType, this.page.toString()).then(resp => {
-          console.log(resp);
+          // console.log(resp);
           this.page = parseInt(resp.page);
           this.forumlist = resp.results as ForumInfo[];
           $('#forumTab a:first').tab('show');//每次都打开第一个tab
+        })
+
+        this.httpService.getTagByType(this.instrumentType).then(resp=>{
+          if (resp.success) {
+            this.taglist = resp.results ;
+          }
         })
       }
     });
@@ -55,7 +63,15 @@ export class ForumsComponent implements OnInit {
 
     this.httpService.getHotForums().then(resp=>{
       this.hotlist = resp.results as ForumInfo[];
-    })
+    });
+
+    
+  }
+
+  changeListener($event){
+    if(this.searchString==""){
+      this.search();
+    }
   }
 
   keypress(event) {
@@ -64,9 +80,17 @@ export class ForumsComponent implements OnInit {
     }
   }
 
+  check(tag){
+    if(this.searchString == tag){
+      this.searchString = "";
+    }else{
+      this.searchString = tag;
+    }
+    this.search();
+  }
+
   search() {
     this.page = 1;
-
     var tabindex = $('ul.nav-tabs li.active a').attr('target').replace("#tab_", "").trim();
     var numIndex = parseInt(tabindex);
     var subInstrumentType = this.instrumentSubForums[numIndex];
@@ -183,6 +207,12 @@ export class ForumsComponent implements OnInit {
           }
           self.page = parseInt(resp.page);
           self.isloading = false;
+        });
+        // 
+        self.httpService.getTagByType(self.instrumentType).then(resp=>{
+          if (resp.success) {
+            self.taglist = resp.results;
+          }
         })
       } else {
         self.httpService.getForumsByTypeAndSub(self.instrumentType, subInstrumentType, self.page.toString()).then(resp => {
@@ -195,6 +225,12 @@ export class ForumsComponent implements OnInit {
           }
           self.page = parseInt(resp.page);
           self.isloading = false;
+        });
+        // 
+        self.httpService.getTagByTypeAndSub(self.instrumentType,subInstrumentType).then(resp=>{
+          if (resp.success) {
+            self.taglist = resp.results;
+          }
         })
       }
 
