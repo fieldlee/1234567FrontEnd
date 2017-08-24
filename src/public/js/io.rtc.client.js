@@ -113,7 +113,6 @@ var PeerManager = (function () {
   }
   function send(type, to, payload) {
     console.log('sending ' + type + ' to ' + to);
-
     socket.emit('message', {
       to: to,
       type: type,
@@ -150,28 +149,22 @@ var PeerManager = (function () {
       }
       localStream = stream;
     },
-
     toggleLocalStream: function (remoteId) {
       peer = peerDatabase[remoteId] || addPeer(remoteId);
       toggleLocalStream(peer.pc);
     },
-
     peerInit: function (remoteId) {
       peer = peerDatabase[remoteId] || addPeer(remoteId);
       send('init', remoteId, null);
     },
-
     peerRenegociate: function (remoteId) {
       offer(remoteId);
     },
-
     send: function (type, payload) {
       socket.emit(type, payload);
     }
   };
-
 });
-
 var Peer = function (pcConfig, pcConstraints) {
   this.pc = new RTCPeerConnection(pcConfig, pcConstraints);
   this.remoteVideoEl = window.document.createElement('video');

@@ -17,6 +17,7 @@ export class ReceiveStreamComponent implements OnInit {
   remoteStreams = [];
   client: any;
   showId = "";
+  type = "";
   show:Show;
   streamId = "";
   avator = "";
@@ -38,6 +39,7 @@ export class ReceiveStreamComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.showId = params["id"];
+      this.type = params["type"];
       if (this.showId != undefined) {
         this.httpService.getShowById(this.showId).then(resp=>{
           if (resp.success) {
@@ -98,6 +100,8 @@ export class ReceiveStreamComponent implements OnInit {
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
+    this.client.send('leave',{id:this.showId});
+
     // 离开直播
     this.liveSercie.leaveShow(this.showId,this.client.getId(),"member").then(resp=>{
       if (resp.success) {
@@ -116,6 +120,7 @@ export class ReceiveStreamComponent implements OnInit {
   send() {
     const payload = {
       "type": "message",
+      "room":this.showId,
       "to": this.streamId,
       "avator": this.avator,
       "avatorPath": this.avatorPath,
@@ -171,8 +176,10 @@ export class ReceiveStreamComponent implements OnInit {
     this.client.toggleLocalStream(stream.id);
     if (stream.isPlaying) {
       this.client.peerRenegociate(stream.id);
+      this.client.send('leave',{id:this.showId}); // 离开直播
     } else {
       this.client.peerInit(stream.id);
+      this.client.send('readyToStream', { name: window.localStorage.getItem("username"),type:this.type,id:this.showId });
     }
     stream.isPlaying = !stream.isPlaying;
   }

@@ -159,7 +159,7 @@ export class LiveStreamComponent implements OnInit {
     } else {
       this.camera.stop()
         .then(result => {
-          this.client.send('leave');
+          this.client.send('leave',{id:this.id});
           this.client.setLocalStream(null);
           // 主播离开直播
           this.liveService.leaveShow(this.id,this.client.getId(),"main").then(resp=>{
@@ -195,6 +195,7 @@ export class LiveStreamComponent implements OnInit {
   send() {
     const payload = {
       "type": "message",
+      "room":this.id,
       "to": this.sayto==""?this.client.getId():this.sayto,
       "avator": this.avator,
       "avatorPath": this.avatorPath,

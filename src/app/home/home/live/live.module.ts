@@ -17,7 +17,7 @@ const LiveRoutes: Routes = [
       { path: 'live/:type/:id',  component: LiveStreamComponent },
       { path: 'classauth', component:ClassauthComponent},
       { path: 'classauth/:id', component:ClassauthComponent},
-      { path: 'receive/:id', component: ReceiveStreamComponent },
+      { path: 'receive/:type/:id', component: ReceiveStreamComponent },
       { path: 'joinclass/:id', component: JoinclassComponent }
     ];
 

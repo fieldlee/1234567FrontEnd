@@ -29,7 +29,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">演奏的乐器</label>
                   <div class="col-sm-10">
-                    <select ui-jq="chosen" id="selecttypes"  name="focus" placeholder="请选择演奏乐器" [(ngModel)]="show.types" multiple class="w-md">
+                    <select ui-jq="chosen" id="selecttypes"  name="selecttypes" placeholder="请选择演奏乐器" [(ngModel)]="show.types" multiple class="w-md">
                      <option *ngFor="let b of instruments" value="{{b}}">{{b}}</option>
                     </select>
                   </div>

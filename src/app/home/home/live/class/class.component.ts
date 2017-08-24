@@ -70,7 +70,7 @@ export class ClassComponent implements OnInit {
     if(show.author == window.localStorage.getItem("username")){
       this.router.navigate(['/home/home/live/live/show/'+show._id])
     }else{
-      this.router.navigate(['/home/home/live/receive/'+show._id]);
+      this.router.navigate(['/home/home/live/receive/show/'+show._id]);
     }
   }
 

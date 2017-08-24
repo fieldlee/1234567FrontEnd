@@ -443,9 +443,24 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+  getHotForums(): Promise<any> {
+    const url = `${this.rootUrl}/web/forum/sub/hot`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
   getForumsByUsername(username: String): Promise<any> {
     const url = `${this.rootUrl}/web/forum/sub/byusername/${username}`;
     return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  postForumsByType(type: String, page: string,searchKey:string): Promise<any> {
+    const url = `${this.rootUrl}/web/forum/${type}/${page}`;
+    return this.http.post(url,JSON.stringify({'search':searchKey}),{ headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
@@ -455,6 +470,13 @@ export class HttpService {
     const url = `${this.rootUrl}/web/forum/${type}/${page}?${time}`;
     console.log(url);
     return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+  postForumsByTypeAndSub(type: String, subtype: String, page: string,searchKey:string): Promise<any> {
+    const url = `${this.rootUrl}/web/forum/${type}/${subtype}/${page}`;
+    return this.http.post(url,JSON.stringify({'search':searchKey}),{ headers: this.constructHeader() })
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
