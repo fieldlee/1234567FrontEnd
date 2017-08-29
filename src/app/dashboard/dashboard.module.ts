@@ -11,7 +11,6 @@ import { ForumListComponent } from './dashboard/forum-list/forum-list.component'
 import { BrandComponent } from './dashboard/brand/brand.component';
 import { ProductComponent } from './dashboard/product/product.component';
 // import { BrandHotComponent } from './dashboard/brand-hot/brand-hot.component';
-import { FroalaEditorModule, FroalaViewModule} from 'angular2-froala-wysiwyg';
 import { BasicProviceComponent } from './basic-provice/basic-provice.component';
 import { BasicCityComponent } from './basic-city/basic-city.component';
 import { BasicDistrictComponent } from './basic-district/basic-district.component';
@@ -24,9 +23,7 @@ import { DelegateComponent } from './dashboard/delegate/delegate.component';
   imports: [
     CommonModule,
     FormsModule,
-    DashboardRoutingModule,
-    FroalaEditorModule.forRoot(),
-    FroalaViewModule.forRoot()
+    DashboardRoutingModule
   ],
   declarations: [
    DashboardComponent,
