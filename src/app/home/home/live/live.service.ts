@@ -5,10 +5,36 @@ import 'rxjs/add/operator/toPromise';
 declare var $: any;
 @Injectable()
 export class LiveService {
-  client: any
   private fileheaders = new Headers({ 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarysd3pNkhHgm8eLc2k' });//{ 'Content-Type': 'multipart/form-data'}
   private rootUrl = '/api';
-  constructor(private http: Http) { }
+  client: any
+  LiveStatus = {
+    PLAN:"预报",
+    LIVE:"直播中",
+    OVER:"直播结束",
+    CLOSE:"关闭"
+  };
+  ClassStatus = {
+    PLAN:"预报",
+    LIVE:"讲课中",
+    OVER:"课堂结束",
+    CLOSE:"关闭"
+  };
+  AdwardValues = [
+    "1","2","3","4","5","10","2","4","6","8","10","20",
+    "3","6","9","12","15","30"
+  ];
+  AdwardNames = [
+    "草莓","樱桃","香蕉","密桃","苹果","菠萝","可口可乐","苏打水","果汁","红茶","牛奶","咖啡",
+    "蛋挞","三明治","火腿","虾","鱼","火鸡"
+  ];
+  Adwardlist = [
+    "strawberry","cherry","banana","peach","apple","pineapple","cacocl","soda","juice","tea",
+    "milk","coffee","cupcake","sanwitch","ham","shrimp","fish","turkey"
+  ];
+  constructor(private http: Http) { 
+
+  }
   constructHeader() {
     var header = new Headers();
     header.append('Content-Type', 'application/json');
@@ -19,14 +45,10 @@ export class LiveService {
     if (window.localStorage.getItem("username")) {
       header.append('x-access-username', window.localStorage.getItem("username"));
     }
-    // if (window.localStorage.getItem("avator")) {
-    //   header.append('x-access-avator', window.localStorage.getItem("avator"));
-    // }
     return header;
   }
 
   getClient() {
-    console.log(this.client);
     if (this.client == undefined) {
       this.client = new PeerManager();
       return this.client;
@@ -74,7 +96,7 @@ export class LiveService {
     }
     return fmt;
   }
-
+// show 
   updateShowMainid(showid,mainid){
     const url = `${this.rootUrl}/web/show/update`;
     return this.http.post(url, JSON.stringify({"showid":showid,"mainid":mainid}), { headers: this.constructHeader() })
@@ -106,6 +128,39 @@ export class LiveService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+// class
+  updateClassMainid(classid,mainid){
+    const url = `${this.rootUrl}/web/class/update`;
+    return this.http.post(url, JSON.stringify({"classid":classid,"mainid":mainid}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  startClass(classid,mainid){
+    const url = `${this.rootUrl}/web/class/start`;
+    return this.http.post(url, JSON.stringify({"classid":classid,"mainid":mainid}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  leaveClass(classid,memberid,type){
+    const url = `${this.rootUrl}/web/class/leave`;
+    return this.http.post(url, JSON.stringify({"classid":classid,"memberid":memberid,"type":type}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  joinClass(classid,memberid){
+    const url = `${this.rootUrl}/web/class/inclass`;
+    return this.http.post(url, JSON.stringify({"classid":classid,"memberid":memberid}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

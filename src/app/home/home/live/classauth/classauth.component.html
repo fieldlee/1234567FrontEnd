@@ -154,9 +154,10 @@
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
                 <div class="form-group">
-                  <div class="col-sm-4 col-sm-offset-8">
+                  <div class="col-sm-6 col-sm-offset-6">
                     <button (click)="submit()" class="btn btn-info">发布课程</button>
                     <button *ngIf="classid != undefined" (click)="close()" class="btn btn-danger">关闭课程</button>
+                    <a (click)="openClass()"  class="btn btn-info btn-rounded font-bold" >开启课堂</a>
                   </div>
                 </div>
                 <div class="line line-dashed b-b line-lg pull-in"></div>
@@ -288,8 +289,9 @@
                   </div>
 
                   <div class="line line-dashed b-b line-lg pull-in"></div>
-                  <div class="col-sm-2 col-sm-offset-10">
+                  <div class="col-sm-4 col-sm-offset-8">
                     <a (click)="joinclass()" class="btn btn-info btn-rounded font-bold" [ngClass]="{'disabled': curHadJoin==true}">{{(curHadJoin==true)?'您已加入':'加入，学习'}}</a>
+                    <a (click)="inClass()" *ngIf="curHadJoin" class="btn btn-info btn-rounded font-bold" >进入课堂</a>
                   </div>
 
                 </div>

@@ -248,4 +248,13 @@ export class ClassauthComponent implements OnInit {
       }
     });
   }
+
+  inClass(){
+    this.router.navigate(['/home/home/live/receive/class/'+this.classid])
+  }
+
+  openClass(){
+    this.router.navigate(['/home/home/live/live/class/'+this.classid])
+  }
+
 }

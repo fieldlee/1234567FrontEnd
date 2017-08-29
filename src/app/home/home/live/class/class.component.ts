@@ -18,11 +18,14 @@ export class ClassComponent implements OnInit {
   classmyjoin :Class[]=[];
 
   showlist:Show[]=[];
+  client : any;
   constructor(private route:ActivatedRoute,
     private router:Router,
     private contantService:ContantService,
     private liveService:LiveService,
-    private httpService:HttpService) { }
+    private httpService:HttpService) { 
+      this.client = liveService.getClient();//读取客户端的client
+    }
 
   ngOnInit() {
     this.httpService.getShow().then(resp=>{
@@ -33,36 +36,54 @@ export class ClassComponent implements OnInit {
     this.httpService.getClass().then(resp=>{
       if(resp.results.length>0){
         this.classlist = resp.results as Class[];
+        
         for(var i =0;i<this.classlist.length;i++){
           this.classlist[i].start = this.liveService.formatDate(new Date(this.classlist[i].start));
           this.classlist[i].end = this.liveService.formatDate(new Date(this.classlist[i].end));
-          if(this.classlist[i].status=="progress"||this.classlist[i].status=="waiting"){
-            if(this.classlist[i].status=="progress"){
-              this.classlist[i].status = "开课中";
-            }
-            if(this.classlist[i].status=="waiting"){
-              this.classlist[i].status = "待开课";
-            }
-            this.classlisting.push(this.classlist[i]);
-          }else{
-            if(this.classlist[i].status=="end"){
-              this.classlist[i].status = "课程完成";
-            }
-            if(this.classlist[i].status=="close"){
-              this.classlist[i].status = "课程关闭";
-            }
-            this.classlistover.push(this.classlist[i]);
-          }
-          // 我参加的课程
-          this.classmyjoin = this.classlisting.filter(function(item){
-            for(var j=0;j<item.joins.length;j++){
-              if (item.joins[j].joinUsername == window.localStorage.getItem("username")){
-                return item;
-              }
-            }
-          })
         }
+
+        const self = this;
+        this.classlisting = this.classlist.filter(function(t){
+          if (t.status != self.liveService.ClassStatus.CLOSE) {
+            return t;
+          }
+        });
+        this.classlistover = this.classlist.filter(function(t) {
+          if (t.status == self.liveService.ClassStatus.CLOSE) {
+            return t;
+          }
+        });
+        
+        this.classmyjoin = this.classlisting.filter(function(item){
+          for(var j=0;j<item.joins.length;j++){
+            if (item.joins[j].joinUsername == window.localStorage.getItem("username")){
+              return item;
+            }
+          }
+        });
       }
+    });
+  }
+
+  ngAfterContentInit() {
+    const self = this;
+    //mainLeave 主播离场通告
+    this.client.getSocket().on('mainLeave', function (message) {
+      console.log("mainLeave");
+      //  当有人 ready 了，刷新列表
+      self.httpService.getShow().then(resp=>{
+        if(resp.success){
+          self.showlist = resp.results as Show[];
+        }
+      });
+    });
+    this.client.getSocket().on('readyToStream', function (message) {
+      //  当有人 ready 了，刷新列表
+      self.httpService.getShow().then(resp=>{
+        if(resp.success){
+          self.showlist = resp.results as Show[];
+        }
+      });
     });
   }
 

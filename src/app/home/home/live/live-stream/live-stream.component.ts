@@ -3,8 +3,10 @@ import { HttpService } from '../../../../http.service';
 import { LoadJQService } from '../../../../load-jq.service';
 import { LiveService } from '../live.service';
 import { Show } from '../../../../class/show';
+import { Class } from '../../../../class/class';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 declare var $: any;
+
 declare var MediaRecorder: any;
 declare var requestUserMedia: any;
 declare var attachMediaStream: any;
@@ -17,7 +19,8 @@ declare var attachMediaStream: any;
 export class LiveStreamComponent implements OnInit {
 
   client: any;
-  mediaConfig = { audio: true, video: { mandatory: {}, optional: [] } };
+  // { width: 1280, height: 720 } ,mandatory: {}, optional: [] 
+  mediaConfig = { audio: true, video: { width:640,height:360} };
   camera: any = {};
   cameraIsOn: boolean = false;
   name = '';
@@ -34,6 +37,8 @@ export class LiveStreamComponent implements OnInit {
   type:string;
   id:string;
   show:Show;
+  class:Class;
+  liveTitle = "";
   constructor(
     private httpService: HttpService,
     private liveService: LiveService,
@@ -42,6 +47,7 @@ export class LiveStreamComponent implements OnInit {
 
     this.client = liveService.getClient();//获得创建的问题
     this.show  = new Show();
+    this.class = new Class();
   }
 
   ngOnInit() {
@@ -52,6 +58,15 @@ export class LiveStreamComponent implements OnInit {
         this.httpService.getShowById(this.id).then(resp=>{
           if (resp.success) {
             this.show = resp.data as Show;
+            this.liveTitle = this.show.sign;
+          }
+        })
+      }
+      if (this.type == "class") {
+        this.httpService.getClassById(this.id).then(resp=>{
+          if (resp.success) {
+            this.class = resp.data as Class;
+            this.liveTitle = this.class.title;
           }
         })
       }
@@ -104,16 +119,26 @@ export class LiveStreamComponent implements OnInit {
       }
     });
 //  监听id emit 事件
-
     this.client.getSocket().on('id', function (id) {
       console.log("------live stream start-----");
-      console.log(id);
-      // 获取更新后的show
-      self.liveService.updateShowMainid(self.id,id).then(resp=>{
+      self.client.send('joinRoom',{room:self.id,id:id});
+      if(self.type == "show"){
+        // 获取更新后的show
+        self.liveService.updateShowMainid(self.id,id).then(resp=>{
           if(resp.success){
             self.show = resp.data as Show;
           }
-      });
+        });
+      }
+
+      if(self.type == "class"){
+        self.liveService.updateClassMainid(self.id,id).then(resp=>{
+          if (resp.success) {
+            self.class = resp.data as Class;
+          }
+        })
+      }
+      
       console.log("------live stream end-----");
     });
   }
@@ -133,12 +158,19 @@ export class LiveStreamComponent implements OnInit {
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
+    this.client.send('leave',{room:this.id,id:this.client.getId()});
     //主播离开
-    this.liveService.leaveShow(this.id,this.client.getId(),"main").then(resp=>{
-      if(resp.success){
-        this.show = resp.data as Show;
-      }
-    });
+    // this.liveService.leaveShow(this.id,this.client.getId(),"main").then(resp=>{
+    //   if(resp.success){
+    //     this.show = resp.data as Show;
+    //   }
+    // });
+    // this.liveService.leaveClass(this.id,this.client.getId(),"main").then(resp=>{
+    //   if(resp.success){
+    //     this.class = resp.data as Class;
+    //   }
+    // });
+
   }
 
   startLive() {
@@ -146,27 +178,45 @@ export class LiveStreamComponent implements OnInit {
     if (this.cameraIsOn == false) {
       this.camera.start().then(result => {
         this.link = this.client.getId();
-        console.log(this.name);
         this.client.send('readyToStream', { name: this.name,type:this.type,id:this.id });
-        this.liveService.startShow(this.id,this.client.getId()).then(resp=>{
+        if (this.type == "show") {
+          this.liveService.startShow(this.id,this.client.getId()).then(resp=>{
             if (resp.success) {
               this.show = resp.data as Show;
             }
-        });
+          });
+        }
+        if (this.type == "class") {
+          this.liveService.startClass(this.id,this.client.getId()).then(resp=>{
+              if (resp.success) {
+                this.class = resp.data as Class;
+              }
+          })
+        }
       }).catch(function (err) {
         console.log(err);
       });
     } else {
       this.camera.stop()
         .then(result => {
-          this.client.send('leave',{id:this.id});
+          this.client.send('leave',{room:this.id,id:this.client.getId()});
+          // this.client.send('leave',{id:this.id});
           this.client.setLocalStream(null);
           // 主播离开直播
-          this.liveService.leaveShow(this.id,this.client.getId(),"main").then(resp=>{
+          if (this.type == "show") {
+            this.liveService.leaveShow(this.id,this.client.getId(),"main").then(resp=>{
               if(resp.success){
                 this.show = resp.data as Show;
               }
-          });
+            });
+          }
+          if (this.type == "class") {
+            this.liveService.leaveClass(this.id,this.client.getId(),"main").then(resp=>{
+              if(resp.success){
+                this.class  = resp.data as Class;
+              }
+            })
+          }
         })
         .catch(function (err) {
           console.log(err);
@@ -192,7 +242,7 @@ export class LiveStreamComponent implements OnInit {
     this.sayto = from;
   }
   keypress(event) {
-    if (event.keyCode == "13") {
+    if (event.keyCode == "13" && this.say != "") {
       this.send();
     }
   }

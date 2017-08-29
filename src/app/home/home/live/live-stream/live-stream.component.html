@@ -16,12 +16,13 @@
         <!--广告位信息  -->
         <div class="col-lg-8 col-md-12 col-sm-12">
           <div class="panel panel-default">
-            <div class="panel-heading font-bold">直播课程</div>
+            <div class="panel-heading font-bold">{{liveTitle}}</div>
             <div class="panel-body">
-              <video id="localVideo" width="640" height="480" muted="muted" autoplay="true" poster="./public/img/background1.png"></video>
+              <video id="localVideo" class="col-md-10 col-md-offset-1 video-js" controls
+              preload="auto" style="height:360px" muted="muted"  autoplay="true" >
+              </video>
               <canvas style="display:none"></canvas>
               <a id="link"></a>
-              <input type="text" name="link" [(ngModel)]="link" class="form-control rounded">
             </div>
             <div class="panel-footer bg-light lter">
               <button (click)="startLive()" class="btn  pull-right btn-md" [ngClass]="{'btn-info': cameraIsOn==false,'btn-danger':cameraIsOn==true}"><i class="fa fa-circle"></i> {{cameraIsOn==false?"开始课程":"结束课程"}}</button>
@@ -45,25 +46,31 @@
                     <div class="panel-body"  [ngSwitch]="mes.to"  *ngFor="let mes of messagelist">
                       <div *ngSwitchCase="undefined">
                         <div class="m-x">
-                          <a (click)="anwser(mes.from,mes.avator)" class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="..."></a>
+                          <a (click)="anwser(mes.from,mes.avator)" class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="...">
+                            <br><small class="text-muted"><i class="fa fa-ok text-success"></i> {{mes.avator}}</small>
+                          </a>
+                          
                           <div class="m-l-xxl">
                             <div class="pos-rlt wrapper b b-light r r-2x">
                               <span class="arrow left pull-up"></span>
-                              <p class="m-b-none">{{mes.message}}</p>
+                              <p class="m-b-none" [innerHTML]="mes.message"></p>
                             </div>
-                            <small class="text-muted"><i class="fa fa-ok text-success"></i> {{mes.avator}}</small>
+                            
                           </div>
                         </div>
                       </div>
                       <div *ngSwitchDefault>
                         <div class="m-x">
-                          <a  class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="..."></a>
+                          <a  class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="...">
+                            <br><small class="text-muted">{{mes.avator}}</small>
+                          </a>
+                          
                           <div class="m-r-xxl">
                             <div class="pos-rlt wrapper bg-primary r r-2x">
                               <span class="arrow right pull-up arrow-primary"></span>
-                              <p class="m-b-none">{{mes.message}}</p>
+                              <p class="m-b-none" [innerHTML]="mes.message"></p>
                             </div>
-                            <small class="text-muted">{{mes.avator}}</small>
+                            
                           </div>
                         </div>
                       </div>

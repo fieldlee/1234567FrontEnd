@@ -12,6 +12,10 @@ export class Class {
     telphone:string;
     lecture:string;
     lecturename:string;
+    idcard:string;
+    idno:string;
+    mainid:string;
+    members:string[];
     certifyfile:string;
     certifyfilename:string;
     materials:any[];

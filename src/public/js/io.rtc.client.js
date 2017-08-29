@@ -37,11 +37,11 @@ var PeerManager = (function () {
     };
     peer.pc.onaddstream = function (event) {
       attachMediaStream(peer.remoteVideoEl, event.stream);
-      remoteVideosContainer.appendChild(peer.remoteVideoEl);
+      // remoteVideosContainer.appendChild(peer.remoteVideoEl);
     };
     peer.pc.onremovestream = function (event) {
       peer.remoteVideoEl.src = '';
-      remoteVideosContainer.removeChild(peer.remoteVideoEl);
+      // remoteVideosContainer.removeChild(peer.remoteVideoEl);
     };
     peer.pc.oniceconnectionstatechange = function (event) {
       switch (
@@ -49,9 +49,9 @@ var PeerManager = (function () {
         || event.target) // Firefox
         .iceConnectionState) {
         case 'disconnected':
-        if (remoteVideosContainer != undefined){
-          remoteVideosContainer.removeChild(peer.remoteVideoEl);
-        }
+        // if (remoteVideosContainer != undefined){
+          // remoteVideosContainer.removeChild(peer.remoteVideoEl);
+        // }
           
           break;
       }
@@ -167,7 +167,5 @@ var PeerManager = (function () {
 });
 var Peer = function (pcConfig, pcConstraints) {
   this.pc = new RTCPeerConnection(pcConfig, pcConstraints);
-  this.remoteVideoEl = window.document.createElement('video');
-  this.remoteVideoEl.controls = true;
-  this.remoteVideoEl.autoplay = true;
+  this.remoteVideoEl = window.document.getElementById("receiveVideo");
 }

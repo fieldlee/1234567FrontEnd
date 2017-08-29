@@ -193,7 +193,6 @@ if (navigator.mozGetUserMedia) {
 
   // Attach a media stream to an element.
   attachMediaStream = function(element, stream) {
-    console.log(element);
     if (typeof element.srcObject !== 'undefined') {
       element.srcObject = stream;
     } else if (typeof element.mozSrcObject !== 'undefined') {
@@ -211,6 +210,14 @@ if (navigator.mozGetUserMedia) {
   };
 } else {
   console.log('Browser does not appear to be WebRTC-capable');
+  navigator.getUserMedia || 
+  (navigator.getUserMedia = navigator.mozGetUserMedia ||  navigator.webkitGetUserMedia || navigator.msGetUserMedia);
+
+  if (navigator.getUserMedia) {
+    //do something
+  } else {
+    console.log('your browser not support getUserMedia');
+  }
 }
 
 // Returns the result of getUserMedia as a Promise.

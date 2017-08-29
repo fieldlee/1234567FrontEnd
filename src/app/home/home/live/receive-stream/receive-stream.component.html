@@ -18,6 +18,9 @@
           <div class="panel panel-default">
             <div class="panel-heading font-bold">直播</div>
             <div class="panel-body" id="remoteVideosContainer">
+              <video id="receiveVideo" class="col-md-10 col-md-offset-1 video-js" controls preload="auto" style="height:360px" muted="muted"
+                autoplay="true">
+              </video>
               <canvas style="display:none"></canvas>
               <a id="link"></a>
             </div>
@@ -32,31 +35,35 @@
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12 ">
 
-          <div class="wrapper-md">
+          <!-- <div class="wrapper-md"> -->
             <div class="panel panel-default">
               <div class="panel-heading">在线沟通</div>
               <div [ngSwitch]="mes.to" class="panel-body" *ngFor="let mes of messagelist">
                 <div *ngSwitchCase="undefined">
                   <div class="m-x">
-                    <a href class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="..."></a>
+                    <a href class="pull-left thumb-sm avatar"><img src="{{mes.avatorPath}}" alt="...">
+                      <br><small class="text-muted"><i class="fa fa-ok text-success"></i> {{mes.avator}}</small>
+                    </a>
                     <div class="m-l-xxl">
                       <div class="pos-rlt wrapper b b-light r r-2x">
                         <span class="arrow left pull-up"></span>
-                        <p class="m-b-none">{{mes.message}}</p>
+                        <p class="m-b-none" [innerHTML]="mes.message"></p>
                       </div>
-                      <small class="text-muted"><i class="fa fa-ok text-success"></i> {{mes.avator}}</small>
+                      
                     </div>
                   </div>
                 </div>
                 <div *ngSwitchDefault>
                   <div class="m-x">
-                    <a href class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="..."></a>
+                    <a href class="pull-right thumb-sm avatar"><img src="{{mes.avatorPath}}" class="img-circle" alt="...">
+                      <br><small class="text-muted">{{mes.avator}}</small>
+                    </a>
                     <div class="m-r-xxl">
                       <div class="pos-rlt wrapper bg-primary r r-2x">
                         <span class="arrow right pull-up arrow-primary"></span>
-                        <p class="m-b-none">{{mes.message}}</p>
+                        <p class="m-b-none" [innerHTML]="mes.message"></p>
                       </div>
-                      <small class="text-muted">{{mes.avator}}</small>
+                     
                     </div>
                   </div>
                 </div>
@@ -76,6 +83,17 @@
                 </div>
               </footer>
             </div>
+          <!-- </div> -->
+
+            <div class="panel panel-default">
+              <div class="panel-heading font-bold">打赏区</div>
+              <div class="panel-body">
+                  <div class="row no-gutter">
+                <div class="col-lg-2 col-md-2 col-sm-2" style="background:#ccc" *ngFor="let adward of rewardlist;let i = index">
+                  <a (click)="reward(adward,rewardnames[i],rewardvalues[i])" title="{{rewardnames[i]}}"><img style="width:100%" alt="{{rewardnames[i]}}" class="img-thumbnail"  src="./public/img/food/{{adward}}.png"></a>
+                </div>
+              </div>
+              </div>
           </div>
         </div>
       </div>
