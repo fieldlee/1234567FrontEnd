@@ -63,10 +63,10 @@ export class LoadJQService {
       // Set max image size to 5MB.
       imageMaxSize: 5 * 1024 * 1024,
       fileMaxSize: 5 * 1024 * 1024,
-      videoMaxSize: 30 * 1024 * 1024,
+      videoMaxSize: 50 * 1024 * 1024,
       // Allow to upload PNG and JPG.
       fileAllowedTypes: ['*'],
-      videoAllowedTypes: ['webm', 'mp4', 'ogg','3gp'],
+      videoAllowedTypes: ['webm', 'mp4', 'ogg','3gpp'],
       imageAllowedTypes: ['jpeg', 'jpg', 'png',"pdf"]
     })
       .on('froalaEditor.image.beforeUpload', function (e, editor, images) {
