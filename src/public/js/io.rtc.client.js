@@ -17,7 +17,7 @@ var PeerManager = (function () {
   peerDatabase = {},
   localStream,
   remoteVideoContainer = document.getElementById('remoteVideosContainer'),
-  socket = io("http://localhost:3000");
+  socket = io("http://106.14.209.183:3000");
 
   socket.on('message', handleMessage);
   socket.on('id', function (id) {
