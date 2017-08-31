@@ -3,6 +3,7 @@ import { HttpService } from '../../../http.service';
 import { LoadJQService } from '../../../load-jq.service';
 import { News } from '../../../class/news';
 declare var BootstrapDialog: any;
+declare var $: any;
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
@@ -42,7 +43,7 @@ export class NewsComponent implements OnInit {
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    
+    this.loadJqService.froalaEditor("newsContent", null,null,null,null);
   }
 
   update(n: News) {
@@ -97,6 +98,7 @@ export class NewsComponent implements OnInit {
             alert("请输入新闻发布标题");
             return;
           }
+          self.editNews.content = $("#newsContent").froalaEditor('html.get', true);
           self.editNews.author = window.localStorage.getItem("username");
           self.editNews.issueTime = new Date();
           self.httpService.createNews(self.editNews).then(resp => {
@@ -104,6 +106,7 @@ export class NewsComponent implements OnInit {
             self.editNews = resp;
             self.httpService.getNews("1").then(resp => {
               self.newses = resp;
+              $("#newsContent").froalaEditor('html.set', "");
             });
           });
         }

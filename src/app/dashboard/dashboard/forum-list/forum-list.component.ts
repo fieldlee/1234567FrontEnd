@@ -100,6 +100,9 @@ delete(pro: ForumInfo) {
       callback: function (result) {
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if (result) {
+
+          self.forum.content = $("#forumContent").froalaEditor('html.get', true);
+
           if (self.forum.title == "") {
             alert("请输入论坛标题");
             return
@@ -112,6 +115,7 @@ delete(pro: ForumInfo) {
             console.log(resp);
             self.httpService.getForums().then(responses => {
               self.forums = responses
+              $("#forumContent").froalaEditor('html.set', "");
             });
           });
         }
