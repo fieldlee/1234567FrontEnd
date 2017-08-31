@@ -47,12 +47,15 @@ export class LoadJQService {
 
   froalaEditor(froalaEditorObjid: string, callback1: (imageurl: string) => void, callback2: (imageurl: string) => void,
     callback3: (videourl: string) => void, callback4: (videourl: string) => void) {
-      console.log("froalaEditor");
     $('#' + froalaEditorObjid).froalaEditor({
       language: 'zh_cn',
       // Set the image upload URL.
       toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|',  'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable','|',  'insertHR', 'clearFormatting', '|', 'undo', 'redo'],
+      toolbarButtonsXS:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|',  'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable','|',  'insertHR', 'clearFormatting', '|', 'undo', 'redo'],
       emoticonsStep: 8,
+      heightMin: 160,
+      heightMax: 800,
+      placeholderText: '请说点啥吧',
       // toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent'],
       fileUploadURL: '/api/web/upload/upload_file',
       videoUploadURL: '/api/web/upload/upload_file',
@@ -63,7 +66,7 @@ export class LoadJQService {
       videoMaxSize: 30 * 1024 * 1024,
       // Allow to upload PNG and JPG.
       fileAllowedTypes: ['*'],
-      videoAllowedTypes: ['webm', 'mp4', 'ogg'],
+      videoAllowedTypes: ['webm', 'mp4', 'ogg','3gp'],
       imageAllowedTypes: ['jpeg', 'jpg', 'png',"pdf"]
     })
       .on('froalaEditor.image.beforeUpload', function (e, editor, images) {
