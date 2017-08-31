@@ -27,7 +27,11 @@ export class IssueshowComponent implements OnInit {
      }
 
   ngOnInit() {
-
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
   }
   showToast(message,type) {
     $.notify(message, {
@@ -119,6 +123,11 @@ export class IssueshowComponent implements OnInit {
   }
   // 发布直播
   issueshow(){
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     if(this.show.sign == undefined || this.show.sign == ""){
       this.showToast('请填写直播签名','warning');
       return;

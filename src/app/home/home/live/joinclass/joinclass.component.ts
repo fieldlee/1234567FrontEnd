@@ -10,6 +10,7 @@ export class JoinclassComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

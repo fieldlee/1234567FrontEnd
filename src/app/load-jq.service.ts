@@ -40,18 +40,18 @@ export class LoadJQService {
   froalaEditorComment(froalaEditorObjid: string) {
     $('#' + froalaEditorObjid).froalaEditor({
       language: 'zh_cn',
-      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent','html'],
+      toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough',  'fontSize', '|', 'color', 'emoticons'],
       emoticonsStep: 8
     });
   }
 
   froalaEditor(froalaEditorObjid: string, callback1: (imageurl: string) => void, callback2: (imageurl: string) => void,
     callback3: (videourl: string) => void, callback4: (videourl: string) => void) {
-
+      console.log("froalaEditor");
     $('#' + froalaEditorObjid).froalaEditor({
       language: 'zh_cn',
       // Set the image upload URL.
-      toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable', '|',  'insertHR', 'selectAll', 'clearFormatting', '|', 'undo', 'redo'],
+      toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|',  'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable','|',  'insertHR', 'clearFormatting', '|', 'undo', 'redo'],
       emoticonsStep: 8,
       // toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent'],
       fileUploadURL: '/api/web/upload/upload_file',

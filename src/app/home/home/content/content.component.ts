@@ -30,6 +30,7 @@ export class ContentComponent implements OnInit {
   page: Number = 1;
   hadSupport: boolean = false;
   hadAttent: boolean = false;
+  isAdmin:boolean = false;
   constructor(private _location: Location,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
@@ -95,6 +96,10 @@ export class ContentComponent implements OnInit {
 
       }
     })
+    this.isAdmin = false;
+    if(window.localStorage.getItem("admin") && window.localStorage.getItem("admin")!=null){
+      this.isAdmin = true;
+    }
   }
   goBack() {
     this._location.back();
@@ -334,6 +339,10 @@ export class ContentComponent implements OnInit {
   }
   // 提交reply
   repSubmit() {
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     // this.commentContent = $("#Commentconent").froalaEditor('html.get', true);
     if ($("#Commentconent").froalaEditor('html.get', true) == undefined || $("#Commentconent").froalaEditor('html.get', true) == "") {
       $.notify("请输入评论内容", {
@@ -379,6 +388,12 @@ export class ContentComponent implements OnInit {
 
   // 提交评论
   submitComment() {
+
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
+
     this.commentContent = $("#forumComment").froalaEditor('html.get', true);
     if (this.commentContent == undefined || this.commentContent == "") {
       $.notify("请输入评论内容", {

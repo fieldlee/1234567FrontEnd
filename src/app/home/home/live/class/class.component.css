@@ -23,15 +23,15 @@
    border-bottom: 1px solid #CCCCCC;
 }
 .top {
-        float: top;
-        margin-top: 5px;
+    position: absolute;
+    margin-top: -140px;
+    display: inline-block;
+    vertical-align: top;
     }
 .status {
-
     float: right;
     vertical-align: middle;
-    /* padding-bottom: -40px; */
-    margin-top: -40px;
+    margin-top: -30px;
 }
 .status-text {
     color: #fff;

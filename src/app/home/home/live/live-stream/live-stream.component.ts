@@ -51,6 +51,11 @@ export class LiveStreamComponent implements OnInit {
   }
 
   ngOnInit() {
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     this.route.params.subscribe(params => {
       this.id = params["id"];
       this.type = params["type"];

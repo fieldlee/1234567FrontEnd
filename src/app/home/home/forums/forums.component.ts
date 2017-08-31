@@ -239,8 +239,14 @@ export class ForumsComponent implements OnInit {
   }
   // 发布帖子
   issue() {
-    console.log(this.key);
-    console.log(this.contantService.getInstrumentType(this.key));
+
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
+
+    // console.log(this.key);
+    // console.log(this.contantService.getInstrumentType(this.key));
     var tabindex = $('ul.nav-tabs li.active a').attr('target').replace("#tab_", "").trim();
     var numIndex = parseInt(tabindex);
     var subInstrumentType = this.instrumentSubForums[numIndex];

@@ -35,6 +35,7 @@ export class ClassauthComponent implements OnInit {
     }
 
   ngOnInit() {
+
     this.route.params.subscribe(params => {
       this.classid = params["id"];
       if (this.classid != undefined) {
@@ -195,6 +196,11 @@ export class ClassauthComponent implements OnInit {
   }
 
   submit(){
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     if($('input[name="switchrecord"]').prop('checked')){
       this.class.record = true
     }else{
@@ -224,6 +230,11 @@ export class ClassauthComponent implements OnInit {
   }
 
   joinclass(){
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     const joinBody = { "classid":this.class._id,"joinTel":this.joinTel,"joinUsername":window.localStorage.getItem("username"),"joinPayStatus":this.joinPayStatus};
     this.httpService.joinClass(joinBody).then(resp=>{
       if(resp.success){

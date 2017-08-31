@@ -9,11 +9,11 @@
     <div class="wrapper-sm">
       <div class="row">
         <!--广告位信息  -->
-        <div class="col-lg-12">
+        <!-- <div class="col-lg-12">
           <div class="panel ">
             <div class="panel-body">col-lg-12</div>
           </div>
-        </div>
+        </div> -->
         <!--广告位信息  -->
         <!--论坛内容的位子  -->
         <div class="col-lg-8 col-md-12 col-sm-12">
@@ -48,7 +48,7 @@
                         data-toggle="tooltip" data-placement="top" title="关注后，实时获得帖子动态">{{hadAttent?'已关注':'+关注'}}</button>                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <button *ngIf="isSelfForum" routerLink="/home/home/issuebyid/{{forum._id}}" class="btn m-b-xs w-xs btn-primary" data-toggle="tooltip"
                         data-placement="top" title="编辑发布的帖子">编辑</button>
-                      <button *ngIf="isSelfForum" (click)="topup(forum._id)" class="btn m-b-xs w-xs btn-primary" >置顶</button>
+                      <button *ngIf="isAdmin" (click)="topup(forum._id)" class="btn m-b-xs w-xs btn-primary" >置顶</button>
                     </div>
                   </div>
                 </div>

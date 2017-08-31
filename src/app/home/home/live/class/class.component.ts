@@ -5,6 +5,7 @@ import { ContantService } from '../../../../contant.service';
 import { Class } from '../../../../class/class';
 import { Show } from '../../../../class/show';
 import { LiveService } from '../live.service';
+declare var $ :any;
 @Component({
   selector: 'app-class',
   templateUrl: './class.component.html',
@@ -88,6 +89,11 @@ export class ClassComponent implements OnInit {
   }
 
   openlive(show:Show){
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     if(show.author == window.localStorage.getItem("username")){
       this.router.navigate(['/home/home/live/live/show/'+show._id])
     }else{
@@ -96,6 +102,11 @@ export class ClassComponent implements OnInit {
   }
 
   issue(){
+    //确认登录
+    if (window.localStorage.getItem("username")=="" || window.localStorage.getItem("username") == undefined) {
+      $('#loginModel').appendTo("body").modal('show');
+      return;
+    }
     this.router.navigate(['/home/home/live/classauth'])
   }
 }

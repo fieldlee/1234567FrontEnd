@@ -8,11 +8,11 @@
     <div class="wrapper-sm">
       <div class="row">
         <!--广告位信息  -->
-        <div class="col-lg-12">
+        <!-- <div class="col-lg-12">
           <div class="panel">
             <div class="panel-body">col-lg-12</div>
           </div>
-        </div>
+        </div> -->
         <!--广告位信息  -->
         <!--论坛的位子  -->
         <div class="col-lg-8 col-md-8 col-sm-12">
@@ -21,7 +21,7 @@
             <div class="panel panel-default">
               <div class="app-content-body " style="padding:0">
                 <div class="wrapper-md" style="background:#fff;padding:10px;height:100px">
-                  <div class="input-group col-md-11 pull-right">
+                  <div class="input-group col-md-10 pull-right">
                     <input type="text" style="height:35px" (change)="changeListener($event)" (keyup.enter)="keypress($event)" name="forumsearch" [(ngModel)]="searchString" class="form-control input-sm bg-light no-border rounded padder"
                       placeholder="查询帖子...">
                     <span class="input-group-btn">
@@ -30,11 +30,11 @@
                   </div>
                   <div class="line line-dashed b-b line-lg pull-in"></div>
                   <div class="form-group">
-                    <label class="col-sm-1 control-label">标签:</label>
-                    <div class="col-sm-11">
-                      <!-- <div > -->
-                        <button (click)="check(tag)" style="margin-left:5px" class="btn btn-md rounded" [ngClass]="{'btn-info': tag==searchString,'btn-default':tag != searchString}"  *ngFor="let tag of taglist">{{tag}}</button>
-                      <!-- </div> -->
+                    <label class="col-sm-2 control-label">标签:</label>
+                    <div class="col-sm-10">
+                      <div >
+                        <button (click)="check(tag)" style="margin-left:5px" class="btn btn-xs rounded" [ngClass]="{'btn-info': tag==searchString,'btn-default':tag != searchString}"  *ngFor="let tag of taglist">{{tag}}</button>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -14,7 +14,7 @@
       <a routerLink="/home" class="navbar-brand text-lt">
           <i class="fa fa-btc"></i>
           <img src="./public/img/logo.png" alt="." class="hide">
-          <span class="hidden-folded m-l-xs">乐器之家</span>
+          <span class="hidden-folded m-l-xs">异曲汇</span>
         </a>
       <!-- / brand -->
     </div>
@@ -347,7 +347,7 @@
         <nav ui-nav class="navi clearfix">
           <ul class="nav">
             <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
-              <span><b>乐器之家</b></span>
+              <span><b>异曲汇</b></span>
             </li>
             <li>
               <a routerLink="/home" class="auto">
@@ -395,6 +395,7 @@
                   <span class="font-bold">直播</span>
                 </a>
             </li>
+            <!-- 
             <li class="line dk"></li>
             <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
               <span><b>曲谱</b></span>
@@ -403,7 +404,7 @@
               <a routerLink="/home/home/score" [ngClass]="{auto:true}">
                  <b class="badge bg-info pull-right">9</b>
                  <i><img style="width:25px" src="./public/img/FindScore.png"></i>
-                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
+                 <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>
                   <span class="font-bold">曲谱</span>
                 </a>
             </li>
@@ -415,10 +416,10 @@
               <a routerLink="/home/home/find" [ngClass]="{auto:true}">
                  <b class="badge bg-info pull-right">9</b>
                  <i><img style="width:25px" src="./public/img/Find.png"></i>
-                  <!-- <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>  -->
+                 <i class="glyphicon  glyphicon-search icon text-info-lter" style="font-size: 25px"></i>
                   <span class="font-bold">发现</span>
                 </a>
-            </li>
+            </li> -->
             <li class="line dk"></li>
 
             <li class="hidden-folded padder m-t m-b-sm text-muted text-xs" style="font-size:15px">
@@ -546,4 +547,141 @@
     </div>
   </footer>
   <!-- / footer -->
+</div>
+
+
+
+<div class="modal fade" id="loginModel" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">登录</h4>
+      </div>
+      <div class="modal-body">
+        <div class="m-b-lg">
+          <!-- <div class="wrapper text-center">
+            <strong>通过手机和邮箱登录</strong>
+          </div> -->
+          <form name="form" #f="ngForm" (ngSubmit)="login()">
+            <!-- <div class="text-danger wrapper text-center" ng-show="authError">
+    
+            </div> -->
+            <div class="list-group list-group-sm">
+              <div class="list-group-item">
+                <input type="email" name="username" placeholder="邮箱地址或手机号码" class="form-control no-border" [(ngModel)]="loginusername" required>
+              </div>
+              <div class="list-group-item">
+                <input type="password" name="password" placeholder="密码" class="form-control no-border" [(ngModel)]="password" required>
+              </div>
+            </div>
+            <div class="alert alert-danger" *ngIf="isErr">
+            <ul class="margin-bottom-none padding-left-lg">
+              <li *ngFor="let msg of messages">{{msg}}</li>
+            </ul>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" (click)="login()" >登录</button>
+            <div class="text-center m-t m-b"><a  (click)="forget()" data-dismiss="modal">忘记密码?</a></div>
+            <div class="line line-dashed"></div>
+            <p class="text-center"><small>还没有账号?</small></p>
+            <a (click)="register()" class="btn btn-lg btn-default btn-block" data-dismiss="modal">创建账号</a>
+          </form>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" (click)="getBackImageData()" class="btn btn-info" data-dismiss="modal">确认</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="registerModel" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">注册</h4>
+      </div>
+      <div class="modal-body">
+        <div class="m-b-lg">
+          <!-- <div class="wrapper text-center">
+            <strong>创建账号发现您感兴趣的信息!</strong>
+          </div> -->
+          <form name="registerform" #f="ngForm" (ngSubmit)="register">
+            <div class="text-danger wrapper text-center" ng-show="authError">
+    
+            </div>
+            <div class="list-group list-group-sm">
+              <div [ngClass]="{'list-group-item': true,'has-error':true}">
+                <input placeholder="昵称" name="avatorName" class="form-control no-border" [(ngModel)]="loginavatorName"  required>
+              </div>
+              <div class="list-group-item">
+                <input type="email" name="username" placeholder="邮箱地址或手机号码" class="form-control no-border" [(ngModel)]="loginusername" required>
+              </div>
+              <div class="list-group-item">
+                <input type="password" name="password" placeholder="密码" class="form-control no-border" [(ngModel)]="password" required>
+              </div>
+            </div>
+            <div class="checkbox m-b-md m-t-none">
+              <label class="i-checks">
+                  <input type="checkbox" name="checked" [(ngModel)]="checked" required><i></i> 同意 <a href="#">本网站的规则</a>
+                </label>
+            </div>
+            <div class="alert alert-danger" *ngIf="showAlert">
+            <ul class="margin-bottom-none padding-left-lg">
+              <li *ngFor="let mes of messages">{{mes}}</li>
+            </ul>
+          </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" (click)="signup()">注册</button>
+            <div class="line line-dashed"></div>
+            <p class="text-center"><small>已经有账号?</small></p>
+            <a (click)="openlogin()"  class="btn btn-lg btn-default btn-block" data-dismiss="modal">登录</a>
+          </form>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" (click)="getBackImageData()" class="btn btn-info" data-dismiss="modal">确认</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="forgetModel" tabindex="-1" role="dialog" data-backdrop="false" style="background-color: rgba(0, 0, 0, 0.5);">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">忘记密码</h4>
+      </div>
+      <div class="modal-body">
+        <div class="m-b-lg">
+          <div class="wrapper text-center">
+            <strong>请输入注册时填写的邮件地址或手机号码</strong>
+          </div>
+    
+          <form name="reset" ng-init="isCollapsed=true" #F="ngForm" (ngSubmit)="send()" >
+            <div class="list-group list-group-sm">
+              <div class="list-group-item">
+                <input type="email" name="username" placeholder="请输入邮件地址或手机号码" [(ngModel)]="loginusername" class="form-control no-border" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" >发送</button>
+          </form>
+          <div collapse="isCollapsed" class="m-t" *ngIf="isErr">
+            <div class="alert alert-danger">
+              <p> {{message}} </p>
+            </div>
+          </div>
+          <div collapse="isCollapsed" class="m-t" *ngIf="isSuccuess">
+            <div class="alert alert-success">
+              <p>{{message}} <a (click)="reLogin()" data-dismiss="modal" class="btn btn-sm btn-success">登录</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" (click)="getBackImageData()" class="btn btn-info" data-dismiss="modal">确认</button>
+      </div> -->
+    </div>
+  </div>
 </div>
