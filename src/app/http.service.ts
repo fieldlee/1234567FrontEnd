@@ -253,6 +253,16 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+
+  getHotScores(type:string): Promise<any> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/score/hot/${type}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
   getScoresByType(type:string,page:string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/score/type/${type}/${page}?${time}`;
@@ -261,6 +271,23 @@ export class HttpService {
       .then(response => response.json())
       .catch(this.handleError);
   }
+  getScoresByTypeAndKey(type:string,key:string): Promise<any> {
+    const time = (new Date()).getTime();
+    const url = `${this.rootUrl}/web/score/search/${type}/${key}?${time}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  getScoresByTypeAndFilter(type:string,filterJson:any): Promise<any> {
+    const url = `${this.rootUrl}/web/score/fitler/${type}`;
+    return this.http.post(url, JSON.stringify(filterJson), { headers: this.constructHeader() })
+    .toPromise()
+    .then(response => response.json())
+    .catch(this.handleError);
+  }
+
   getScoreById(id: string): Promise<any> {
     const time = (new Date()).getTime();
     const url = `${this.rootUrl}/web/score/id/${id}?${time}`;
@@ -851,6 +878,47 @@ export class HttpService {
       .catch(this.handleError);
   }
 
+  // maintain
+
+  getNotes(info:any){
+    const url = `${this.rootUrl}/web/maintain/notes`;
+    this.http.post(url, JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(resp => { console.log(resp) })
+      .catch(this.handleError);
+  }
+  createNotes(){
+    const url = `${this.rootUrl}/web/maintain/generateNotes`;
+    this.http.post(url, JSON.stringify({}), { headers: this.constructHeader() })
+      .toPromise()
+      .then(resp => { console.log(resp) })
+      .catch(this.handleError);
+  }
+//usernames
+  createUsers(info:any){
+    const url = `${this.rootUrl}/web/maintain/usernames`;
+    this.http.post(url, JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(resp => { console.log(resp) })
+      .catch(this.handleError);
+  }
+
+// 生成forum videoPath
+  createVideoForum(info:any){
+    const url = `${this.rootUrl}/web/maintain/videos`;
+    this.http.post(url, JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(resp => { console.log(resp) })
+      .catch(this.handleError);
+  }
+  // /format
+  changeVideoFormat(info:any){
+    const url = `${this.rootUrl}/web/maintain/format`;
+    this.http.post(url, JSON.stringify(info), { headers: this.constructHeader() })
+      .toPromise()
+      .then(resp => { console.log(resp) })
+      .catch(this.handleError);
+  }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);

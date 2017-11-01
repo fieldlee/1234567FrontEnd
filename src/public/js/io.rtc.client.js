@@ -17,7 +17,7 @@ var PeerManager = (function () {
   peerDatabase = {},
   localStream,
   remoteVideoContainer = document.getElementById('remoteVideosContainer'),
-  socket = io("http://106.14.209.183:3000");
+  socket = io("http://localhost:3000");
 
   socket.on('message', handleMessage);
   socket.on('id', function (id) {
@@ -85,9 +85,6 @@ var PeerManager = (function () {
     var type = message.type,
       from = message.from,
       pc = (peerDatabase[from] || addPeer(from)).pc;
-
-    console.log('received ' + type + ' from ' + from);
-
     switch (type) {
       case 'init':
         toggleLocalStream(pc);
@@ -112,7 +109,6 @@ var PeerManager = (function () {
     }
   }
   function send(type, to, payload) {
-    console.log('sending ' + type + ' to ' + to);
     socket.emit('message', {
       to: to,
       type: type,
@@ -121,6 +117,7 @@ var PeerManager = (function () {
   }
   function toggleLocalStream(pc) {
     if (localStream) {
+      console.log(localStream);
       (!!pc.getLocalStreams().length) ? pc.removeStream(localStream) : pc.addStream(localStream);
     }
   }

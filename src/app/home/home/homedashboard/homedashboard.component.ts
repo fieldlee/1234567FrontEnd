@@ -67,6 +67,10 @@ export class HomedashboardComponent implements OnInit {
       this.newslist = resp;
     });
 
+    this.httpService.getForumsByType("键盘乐器", this.page.toString()).then(resp => {
+      this.forumlist = resp.results as ForumInfo[];
+    })
+
     this.httpService.getRecentForums().then(resp => {
       this.forumrecent = resp.results as ForumInfo[];
     });
@@ -103,10 +107,10 @@ export class HomedashboardComponent implements OnInit {
 
     var win = $(window);
     var self = this;
-    var tab_1 = $("#tab_1");
+    var tab_2 = $("#tab_2");
     // Each time the user scrolls
     win.scroll(function() {
-        if ($(window).scrollTop() + $(window).height() >= tab_1.height()+tab_1.offset().top) {
+        if ($(window).scrollTop() + $(window).height() >= tab_2.height()+tab_2.offset().top) {
           $(".fixed_tool").addClass("show");
         }
     });

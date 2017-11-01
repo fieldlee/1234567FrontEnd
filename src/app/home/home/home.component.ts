@@ -74,7 +74,6 @@ export class HomeComponent implements OnInit {
     this.username = window.localStorage.getItem("username");
 
     this.httpService.getNewsNumber().then(resp=>{
-      console.log(resp);
         if(resp.success){
           this.newsNumber = resp.count+"";
         }
@@ -119,7 +118,7 @@ export class HomeComponent implements OnInit {
     this.messages = new Array();
     if (this.loginusername == "" || this.loginusername == undefined) {
       this.isErr = true;
-      this.messages.push("请输入用户名（邮箱地址或手机号码）");
+      this.messages.push("请输入手机号码");
       return;
     }
     if (this.password == "" || this.password == undefined) {
@@ -235,7 +234,7 @@ export class HomeComponent implements OnInit {
 
     if(this.loginusername =="" || this.loginusername == undefined){
       this.showAlert = true;
-      this.messages.push("请输入用户名（邮件地址或手机号码）");
+      this.messages.push("请输入手机号码");
       return
     }else{
        this.showAlert = false;
@@ -282,7 +281,7 @@ export class HomeComponent implements OnInit {
     console.log(this.loginusername);
     if(this.loginusername==undefined || this.loginusername==""){
       this.isErr = true;
-      this.message = "请输入邮箱地址或手机号码";
+      this.message = "请输入手机号码";
       return
     }
     this.httpService.forget({"username":this.loginusername}).then(resp=>{

@@ -19,7 +19,6 @@ export class RegisterComponent implements OnInit {
 
   messages:string[];
 
- 
   constructor(private httpService:HttpService,private route: ActivatedRoute,
     private router: Router) { 
     this.showAlert = false;
@@ -44,7 +43,7 @@ export class RegisterComponent implements OnInit {
 
     if(this.username =="" || this.username == undefined){
       this.showAlert = true;
-      this.messages.push("请输入用户名（邮件地址或手机号码）");
+      this.messages.push("请输入手机号码");
       return
     }else{
        this.showAlert = false;

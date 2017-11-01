@@ -41,7 +41,7 @@
                 <div class="wrapper-xs">
                   <div class="tab-container">
                     <ul class="nav nav-tabs" id="forumTab">
-                      <li [ngClass]="{active: i == 0}" *ngFor="let subForum of instrumentSubForums;let i = index"><a href data-toggle="tab" data-target="#tab_{{i}}"> <i><img style="width:20px" src="./public/img/{{key}}{{i}}.png"></i> {{subForum}} </a></li>
+                      <li (click)="changeTab(i)" [ngClass]="{active: i == 0}" *ngFor="let subForum of instrumentSubForums;let i = index"><a href data-toggle="tab" data-target="#tab_{{i}}"> <i><img style="width:20px" src="./public/img/{{key}}{{i}}.png"></i> {{subForum}} </a></li>
                       <!-- <li><a href data-toggle="tab" data-target="#tab_2">钢琴<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li>
                       <li><a href data-toggle="tab" data-target="#tab_3">其他<span class="badge bg-primary badge-sm m-l-xs">9</span></a></li> -->
                       <li style="float:right">
@@ -84,58 +84,63 @@
           </div>
           <!--找琴的位子  -->
         </div>
-        <!--广告位信息  -->
-        <div class="col-lg-4 col-md-4 col-sm-12" *ngIf="adslist.length>0">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-              <li data-target="#carousel-example-generic" [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index"></li>
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-              <div class="item " [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index">
-                <a (click)="adsClick(ads)"><img src="{{ads.path}}"  alt="{{ads.subtitle}}"></a>
-                <div class="carousel-caption">
-                  <h3>{{ads.title}}</h3>
-                  <p>{{ads.subtitle}}</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">上一页</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">下一页</span>
-            </a>
-          </div>
-        </div>
-        <!--广告位信息  -->
         <div class="col-lg-4 col-md-8 col-sm-12">
-          <div class="panel panel-default">
-            <div class="panel-heading font-bold">最热的帖子</div>
-            <div class="panel-body">
-              <div class="padder-md">
-                <div class="figure flex-block" *ngFor="let forumObj of hotlist">
-                  <div class="article flex-1">
-                    <h2 class="figcaption"><a routerLink="../../content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
-                    <br>
-                    <div class="subtitle"><span>{{forumObj.avator}}</span>
-                      <span>   {{forumObj.fromTime}}</span>
-                      <span>   {{forumObj.comment}}评论</span>
-                      <span>   {{forumObj.read}}查看</span>
-
-                    </div>
+        <!--广告位信息  -->
+          <div class="col-md-12" *ngIf="adslist.length>0">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index"></li>
+              </ol>
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item " [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index">
+                  <a (click)="adsClick(ads)"><img src="{{ads.path}}"  alt="{{ads.subtitle}}"></a>
+                  <div class="carousel-caption">
+                    <h3>{{ads.title}}</h3>
+                    <p>{{ads.subtitle}}</p>
                   </div>
+                </div>
+              </div>
 
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">上一页</span>
+              </a>
+              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">下一页</span>
+              </a>
+            </div>
+          </div>
+          <!--广告位信息  -->
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading font-bold">最热的帖子</div>
+              <div class="panel-body">
+                <div class="padder-md">
+                  <div class="figure flex-block" *ngFor="let forumObj of hotlist">
+                    <div class="article flex-1">
+                      <h2 class="figcaption"><a routerLink="../../content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
+                      <br>
+                      <div class="subtitle"><span>{{forumObj.avator}}</span>
+                        <span>   {{forumObj.fromTime}}</span>
+                        <span>   {{forumObj.comment}}评论</span>
+                        <span>   {{forumObj.read}}查看</span>
+
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
+        
       </div>
     </div>
   </div>
+</div>

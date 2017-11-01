@@ -86,7 +86,9 @@ export class LiveStreamComponent implements OnInit {
     const self = this;
     this.camera.start = function () {
       return requestUserMedia(self.mediaConfig).then(stream => {
-        // console.log(stream);
+        console.log("stream===start");
+        console.log(stream);
+        console.log("stream===end");
         attachMediaStream(self.camera.preview, stream);
         self.client.setLocalStream(stream);
         self.camera.stream = stream;
@@ -146,12 +148,6 @@ export class LiveStreamComponent implements OnInit {
       
       console.log("------live stream end-----");
     });
-  }
-
-  ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    
   }
 
   ngAfterViewChecked() {

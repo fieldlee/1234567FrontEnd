@@ -34,6 +34,7 @@ export class ForumsComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("ngOnInit");
     this.route.params.subscribe(params => {
       this.key = params["key"];
 
@@ -117,7 +118,51 @@ export class ForumsComponent implements OnInit {
       }
     }
   }
+  changeTab(index){
 
+    var subInstrumentType = this.instrumentSubForums[index];
+    this.forumlist = []; // 初始化论坛数据
+    this.page = 1;
+    this.loadingable = true; // 可以加载
+    this.isloading = true; // 修改loading 标志
+    if (index == 0) {
+      this.httpService.getForumsByType(this.instrumentType, this.page.toString()).then(resp => {
+        // console.log(resp);
+        if (resp.results.length == 0) {
+          this.loadingable = false;
+        } else {
+          this.forumlist = this.forumlist.concat(resp.results as ForumInfo[]);
+        }
+        this.page = parseInt(resp.page);
+        this.isloading = false;
+      });
+      // 
+      this.httpService.getTagByType(this.instrumentType).then(resp=>{
+        if (resp.success) {
+          this.taglist = resp.results;
+        }
+      })
+    } else {
+      this.httpService.getForumsByTypeAndSub(this.instrumentType, subInstrumentType, this.page.toString()).then(resp => {
+        // console.log(resp);
+        
+        if (resp.results.length == 0) {
+          this.loadingable = false;
+        }
+        else {
+          this.forumlist = this.forumlist.concat(resp.results as ForumInfo[]);
+        }
+        this.page = parseInt(resp.page);
+        this.isloading = false;
+      });
+      // 
+      this.httpService.getTagByTypeAndSub(this.instrumentType,subInstrumentType).then(resp=>{
+        if (resp.success) {
+          this.taglist = resp.results;
+        }
+      })
+    }
+  }
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
@@ -186,56 +231,7 @@ export class ForumsComponent implements OnInit {
         }
       }
     });
-    //  论坛tab标签切换
-    $('#forumTab a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show');
 
-      var tabindex = $('ul.nav-tabs li.active a').attr('target').replace("#tab_", "").trim();
-      var numIndex = parseInt(tabindex);
-      var subInstrumentType = self.instrumentSubForums[numIndex];
-      self.forumlist = []; // 初始化论坛数据
-      self.page = 1;
-      self.loadingable = true; // 可以加载
-      self.isloading = true; // 修改loading 标志
-      if (numIndex == 0) {
-        self.httpService.getForumsByType(self.instrumentType, self.page.toString()).then(resp => {
-          console.log(resp);
-          if (resp.results.length == 0) {
-            self.loadingable = false;
-          } else {
-            self.forumlist = self.forumlist.concat(resp.results as ForumInfo[]);
-          }
-          self.page = parseInt(resp.page);
-          self.isloading = false;
-        });
-        // 
-        self.httpService.getTagByType(self.instrumentType).then(resp=>{
-          if (resp.success) {
-            self.taglist = resp.results;
-          }
-        })
-      } else {
-        self.httpService.getForumsByTypeAndSub(self.instrumentType, subInstrumentType, self.page.toString()).then(resp => {
-          console.log(resp);
-          if (resp.results.length == 0) {
-            self.loadingable = false;
-          }
-          else {
-            self.forumlist = self.forumlist.concat(resp.results as ForumInfo[]);
-          }
-          self.page = parseInt(resp.page);
-          self.isloading = false;
-        });
-        // 
-        self.httpService.getTagByTypeAndSub(self.instrumentType,subInstrumentType).then(resp=>{
-          if (resp.success) {
-            self.taglist = resp.results;
-          }
-        })
-      }
-
-    });
   }
   // 发布帖子
   issue() {

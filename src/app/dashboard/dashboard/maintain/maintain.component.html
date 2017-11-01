@@ -1,0 +1,119 @@
+<div id="content" class="app-content" role="main">
+  <div class="app-content-body ">
+    <div class="bg-light lter b-b wrapper-md">
+      <h1 class="m-n font-thin h3">维护页面</h1>
+    </div>
+    <div class="wrapper-md">
+      <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+          8notes维护页面
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" >
+            <div class="form-group">
+              <label class="col-sm-2 control-label">8notesUrl</label>
+              <div class="col-sm-10">
+                <input type="text" name="8notesValue" id="8notesValue" [(ngModel)]="notesurl" class="form-control ">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">type</label>
+              <div class="col-sm-2">
+                <input type="text" name="typeValue" id="typeValue" [(ngModel)]="type" class="form-control ">
+              </div>
+              <label class="col-sm-2 control-label">lvl</label>
+              <div class="col-sm-2">
+                <input type="text" name="lvlValue" id="lvlValue" [(ngModel)]="lvl" class="form-control ">
+              </div>
+              <label class="col-sm-2 control-label">region</label>
+              <div class="col-sm-2">
+                <input type="text" name="regionValue" id="regionValue" [(ngModel)]="region" class="form-control ">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">style</label>
+              <div class="col-sm-4">
+                <input type="text" name="styleValue" id="styleValue" [(ngModel)]="style" class="form-control ">
+              </div>
+              <label class="col-sm-2 control-label">8notes</label>
+              <div class="col-sm-6">
+                <button type="button" (click)="get8notes()" class="btn btn-default">获得8notes</button>
+                <button type="button" (click)="create8notes()" class="btn btn-default">生成8notes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+          forum维护页面
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal"  >
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">videoPath</label>
+              <div class="col-sm-10">
+                <input type="text" name="videoPath" id="videoPath" [(ngModel)]="videoPath" class="form-control ">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">type</label>
+              <div class="col-sm-4">
+                <input type="text" name="type" id="type" [(ngModel)]="type" class="form-control ">
+              </div>
+              <label class="col-sm-2 control-label">subtype</label>
+              <div class="col-sm-4">
+                <input type="text" name="subtype" id="subtype" [(ngModel)]="subtype" class="form-control ">
+              </div>
+            </div>
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">videoForum</label>
+              <div class="col-sm-10">
+                <button type="button" (click)="createForum()" class="btn btn-default">生成forums</button>
+                <button type="button" (click)="changeVideoFormat()" class="btn btn-default">video格式</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+          <div class="panel-heading font-bold">
+            用户维护页面
+          </div>
+          <div class="panel-body">
+            <form class="form-horizontal"  >
+  
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">usernames</label>
+                <div class="col-sm-10">
+                  <input type="text" name="usernames" id="usernames" [(ngModel)]="usernames" class="form-control ">
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">avators</label>
+                <div class="col-sm-10">
+                  <input type="text" name="avators" id="avators" [(ngModel)]="avators" class="form-control ">
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">创建用户</label>
+                <div class="col-sm-10">
+                  <button type="button" (click)="createUsername()" class="btn btn-default">生成用户</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

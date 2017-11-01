@@ -65,6 +65,7 @@ if (navigator.mozGetUserMedia) {
 
   // getUserMedia shim (only difference is the prefix).
   // Code from Adam Barth.
+
   getUserMedia = navigator.mozGetUserMedia.bind(navigator);
   navigator.getUserMedia = getUserMedia;
 
@@ -130,7 +131,9 @@ if (navigator.mozGetUserMedia) {
 
   // Attach a media stream to an element.
   attachMediaStream = function(element, stream) {
-    console.log('Attaching media stream');
+    console.log('Attaching media stream===start');
+    console.log(stream);
+    console.log('Attaching media stream====end');
     element.mozSrcObject = stream;
   };
 

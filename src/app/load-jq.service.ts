@@ -40,6 +40,9 @@ export class LoadJQService {
   froalaEditorComment(froalaEditorObjid: string) {
     $('#' + froalaEditorObjid).froalaEditor({
       language: 'zh_cn',
+      placeholderText: '请说点啥吧',
+      heightMin: 150,
+      heightMax: 400,
       toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough',  'fontSize', '|', 'color', 'emoticons'],
       emoticonsStep: 8
     });
@@ -53,7 +56,7 @@ export class LoadJQService {
       toolbarButtons:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|',  'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable','|',  'insertHR', 'clearFormatting', '|', 'undo', 'redo'],
       toolbarButtonsXS:['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', '|',  'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertImage', 'insertVideo','insertLink', 'insertTable','|',  'insertHR', 'clearFormatting', '|', 'undo', 'redo'],
       emoticonsStep: 8,
-      heightMin: 160,
+      heightMin: 200,
       heightMax: 800,
       placeholderText: '请说点啥吧',
       // toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'color', 'emoticons',  '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent'],
@@ -105,8 +108,6 @@ export class LoadJQService {
         callback3($video.contents().get(0).src);
       })
       .on('froalaEditor.video.removed', function (e, editor, $video) {
-        
-
         $.ajax({
           method: "POST",
           url: "/api/web/upload/delete_file",

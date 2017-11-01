@@ -29,7 +29,7 @@ export class ForgetComponent implements OnInit {
     this.isSuccuess = false;
     if(this.username==undefined || this.username==""){
       this.isErr = true;
-      this.message = "请输入邮箱地址或手机号码";
+      this.message = "请输入手机号码";
       return
     }
     this.httpService.forget({"username":this.username}).then(resp=>{

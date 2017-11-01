@@ -130,16 +130,39 @@
               </div>
             </div>
           </div> -->
-
-          <!--新闻资讯  论坛分类-->
+          <!--新闻资讯  -->
+          <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
+            <div class="panel panel-default">
+              <div class="panel-heading font-bold">
+                <i><img style="width:20px" src="./public/img/News.png"></i> 资讯
+              </div>
+              <div class="panel-body">
+                <div class="figure flex-block" *ngFor="let new of newslist">
+                  <div class="article flex-1">
+                    <h2 class="figcaption"><a routerLink="/home/home/newcontent/{{new._id}}" title="{{new.title}}"> {{new.title}}</a></h2>
+                    <br>
+                    <div class="subtitle"><span>{{new.avator}}</span><span>{{new.fromTime}}</span><span> {{new.comment}}评论</span></div>
+                  </div>
+                  <a routerLink="/home/home/newcontent/{{new._id}}" *ngIf="new.images.length>0" title=" {{new.title}}" class="img" [ngStyle]="{'background-image': 'url(' + new.images[0] + ')'}"></a>
+                </div>
+                <!--  -->
+                <div>
+                  <p>
+                    <button (click)="changetoNews('news')" class="btn btn-default btn-block"><i class="fa fa-bars pull-left"></i> 点击查看更多资讯</button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--新闻资讯 end -->
+          <!--论坛  -->
           <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0">
             <div class="panel ">
               <div class="app-content-body " style="padding:0">
                 <div class="wrapper-xs">
                   <div class="tab-container">
                     <ul class="nav nav-tabs" id="homeTab">
-                      <li class="active"><a (click)="changeTab(1)" data-toggle="tab" data-target="#tab_1" index="1"><i><img style="width:20px" src="./public/img/News.png"></i> 资讯 </a></li>
-                      <li><a (click)="changeTab(2)" data-toggle="tab" data-target="#tab_2" index="2"><i><img style="width:20px" src="./public/img/Piano.png"></i> 键盘乐器</a></li>
+                      <li class="active"><a (click)="changeTab(2)" data-toggle="tab" data-target="#tab_2" index="2"><i><img style="width:20px" src="./public/img/Piano.png"></i> 键盘乐器</a></li>
                       <li><a (click)="changeTab(3)" data-toggle="tab" data-target="#tab_3" index="3"><i><img style="width:20px" src="./public/img/Sax.png"></i> 管式乐器</a></li>
                       <li><a (click)="changeTab(4)" data-toggle="tab" data-target="#tab_4" index="4"><i><img style="width:20px" src="./public/img/Pull.png"></i> 拉弦乐器</a></li>
                       <li><a (click)="changeTab(5)" data-toggle="tab" data-target="#tab_5" index="5"><i><img style="width:20px" src="./public/img/Ball.png"></i> 弹拨乐器</a></li>
@@ -147,39 +170,27 @@
                       <li><a (click)="changeTab(7)" data-toggle="tab" data-target="#tab_7" index="7"><i><img style="width:20px" src="./public/img/Blow.png"></i> 吹奏乐器</a></li>
                     </ul>
                     <div class="tab-content">
-                      <div class="tab-pane active" id="tab_1">
-                        <div class="figure flex-block" *ngFor="let new of newslist">
-                          <div class="article flex-1">
-                            <h2 class="figcaption"><a routerLink="/home/home/newcontent/{{new._id}}" title="{{new.title}}"> {{new.title}}</a></h2>
-                            <br>
-                            <div class="subtitle"><span>{{new.avator}}</span><span>{{new.fromTime}}</span><span> {{new.comment}}评论</span></div>
-                          </div>
-                          <a routerLink="/home/home/newcontent/{{new._id}}" *ngIf="new.images.length>0" title=" {{new.title}}" class="img" [ngStyle]="{'background-image': 'url(' + new.images[0] + ')'}"></a>
-                        </div>
-                        <div class="fixed_tool">
-                            <!-- 首页不需要返回首页的功能 -->
-                            <img src="./public/img/News.png" (click)="changetoNews('news')" class="fixed_tool_showallnews" alt="查看全部资讯">
-                        </div>
-                      </div>
-                      <div class="tab-pane" id="tab_2">
+                      <div class="tab-pane active" id="tab_2">
                         <div class="figure flex-block" *ngFor="let forumObj of forumlist">
                           <div class="article flex-1">
                             <h2 class="figcaption"><a routerLink="/home/home/content/{{forumObj._id}}" title="{{forumObj.title}}"> {{forumObj.title}}</a></h2>
                             <br>
                             <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
-                          
-                            <div  class="lbox" > 
-                                <a  class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
-                                  [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                                  <i  class="ftype video"> <span> 4:05 </span> </i>
+                          <div class="lbox">
+                            <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
+                              class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
+                                  <i  class="ftype video"> <span> {{forumObj.duration}} </span> </i>
                                 </a>
-                            </div>
+                          </div>
                         </div>
-                        <div class="fixed_tool">
-                            <!-- 首页不需要返回首页的功能 -->
-                            <img src="./public/img/Piano.png" (click)="changetoNews('A')" class="fixed_tool_showallnews" alt="查看全部资讯">
+                        <div>
+                          <!-- 首页不需要返回首页的功能 -->
+                          <p>
+                            <button (click)="changetoNews('A')" class="btn btn-default btn-block"><i class="fa fa-bars pull-left"></i> 点击查看全部键盘乐器信息</button>
+                          </p>
                         </div>
+
                       </div>
                       <div class="tab-pane" id="tab_3">
                         <div class="figure flex-block" *ngFor="let forumObj of forumlist">
@@ -188,20 +199,22 @@
                             <br>
                             <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
-                          
 
-                            <div  class="lbox" > 
-                                <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
-                                  [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                                  <i  class="ftype video"> <span> 4:05 </span> </i>
+
+                          <div class="lbox">
+                            <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
+                              class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
+                                  <i  class="ftype video"> <span> {{forumObj.duration}}  </span> </i>
                                 </a>
-                            </div>
+                          </div>
                         </div>
-                    
-                        <div class="fixed_tool">
+
+                        <div>
                             <!-- 首页不需要返回首页的功能 -->
-                            <img src="./public/img/Sax.png" (click)="changetoNews('B')" class="fixed_tool_showallnews" alt="查看全部资讯">
-                        </div>
+                            <p>
+                              <button (click)="changetoNews('B')" class="btn btn-default btn-block"><i class="fa fa-bars pull-left"></i> 点击查看全部管式乐器信息</button>
+                            </p>
+                          </div>
                       </div>
                       <div class="tab-pane" id="tab_4">
                         <div class="figure flex-block" *ngFor="let forumObj of forumlist">
@@ -211,17 +224,17 @@
                             <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
 
-                          <div  class="lbox" > 
-                              <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
-                                [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                                <i  class="ftype video"> <span> 4:05 </span> </i>
+                          <div class="lbox">
+                            <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
+                              class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
+                                <i  class="ftype video"> <span> {{forumObj.duration}}  </span> </i>
                               </a>
-                            
+
                           </div>
-                          
+
                         </div>
-                        <div class="fixed_tool col-lg-2 col-md-2 col-sm-2">
-                          <button class="btn btn-primary btn-block" (click)="changetoNews('C')"><i class="fa fa-circle pull-left"></i>点击查看全部</button>
+                        <div >
+                          <button class="btn btn-primary btn-block" (click)="changetoNews('C')"><i class="fa fa-circle pull-left"></i>点击查看全部拉弦乐器信息</button>
                         </div>
                       </div>
                       <div class="tab-pane" id="tab_5">
@@ -231,18 +244,18 @@
                             <br>
                             <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
-                          <div  class="lbox" > 
-                              <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
-                                [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                                <i  class="ftype video"> <span> 4:05 </span> </i>
+                          <div class="lbox">
+                            <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
+                              class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
+                                <i  class="ftype video"> <span> {{forumObj.duration}}  </span> </i>
                               </a>
-                            
+
                           </div>
-                          
+
                         </div>
-                        <div class="fixed_tool col-lg-2 col-md-2 col-sm-2">
-                          <button class="btn btn-primary btn-block" (click)="changetoNews('D')"><i class="fa fa-circle"></i>点击查看全部</button>
-                        </div>
+                        <div >
+                            <button class="btn btn-primary btn-block" (click)="changetoNews('D')"><i class="fa fa-circle pull-left"></i>点击查看全部弹拨乐器信息</button>
+                          </div>
                       </div>
                       <div class="tab-pane" id="tab_6">
                         <div class="figure flex-block" *ngFor="let forumObj of forumlist">
@@ -251,17 +264,17 @@
                             <br>
                             <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
-                          <div  class="lbox" > 
-                              <a  class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
-                                [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                                <i  class="ftype video"> <span> 4:05 </span> </i>
+                          <div class="lbox">
+                            <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
+                              class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
+                                <i  class="ftype video"> <span> {{forumObj.duration}} </span> </i>
                               </a>
                           </div>
-                          
+
                         </div>
-                        <div class="fixed_tool col-lg-2 col-md-2 col-sm-2">
-                          <button class="btn btn-primary btn-block" (click)="changetoNews('E')"><i class="fa fa-circle"></i>点击查看全部</button>
-                        </div>
+                        <div >
+                            <button class="btn btn-primary btn-block" (click)="changetoNews('E')"><i class="fa fa-circle pull-left"></i>点击查看全部打击乐器信息</button>
+                          </div>
                       </div>
                       <div class="tab-pane" id="tab_7">
                         <div class="figure flex-block" *ngFor="let forumObj of forumlist">
@@ -270,17 +283,17 @@
                             <br>
                             <div class="subtitle"><span>{{forumObj.avator}}</span><span>{{forumObj.fromTime}}</span><span> {{forumObj.comment}}评论</span></div>
                           </div>
-                          <div  class="lbox" > 
-                              <a  class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}" class="img"
-                                [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
-                                <i  class="ftype video"> <span> 4:05 </span> </i>
+                          <div class="lbox">
+                            <a class="img-wrap" routerLink="/home/home/content/{{forumObj._id}}" *ngIf="forumObj.images.length>0" title=" {{forumObj.title}}"
+                              class="img" [ngStyle]="{'background-image': 'url(' + forumObj.images[0] + ')'}">
+                                <i  class="ftype video"> <span> {{forumObj.duration}}  </span> </i>
                               </a>
                           </div>
-                          
+
                         </div>
-                        <div class="fixed_tool col-lg-2 col-md-2 col-sm-2">
-                          <button class="btn btn-primary btn-block" (click)="changetoNews('F')"><i class="fa fa-circle"></i>点击查看全部</button>
-                        </div>
+                        <div >
+                            <button class="btn btn-primary btn-block" (click)="changetoNews('E')"><i class="fa fa-circle pull-left"></i>点击查看全部吹奏乐器信息</button>
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -294,13 +307,13 @@
         <!--找琴的位子  -->
         <!--广告位信息  -->
         <div class="col-lg-4 col-md-8 col-sm-12" *ngIf="adslist.length>0">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" >
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
-            <ol class="carousel-indicators" >
-              <li data-target="#carousel-example-generic"  [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index"></li>
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index"></li>
             </ol>
             <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox" >
+            <div class="carousel-inner" role="listbox">
               <div class="item " [ngClass]="{'active': i==0}" *ngFor="let ads of adslist;let i = index">
                 <a (click)="adsClick(ads)"><img src="{{ads.path}}"  alt="{{ads.subtitle}}"></a>
                 <div class="carousel-caption">

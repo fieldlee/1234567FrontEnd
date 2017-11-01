@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl, SafeUrl, SafeHtml } from '@angular/platform-browser';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 declare var $: any;
-
+declare var videojs :any;
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
@@ -31,6 +31,8 @@ export class ContentComponent implements OnInit {
   hadSupport: boolean = false;
   hadAttent: boolean = false;
   isAdmin:boolean = false;
+
+  isOnlyVideo = false;
   constructor(private _location: Location,
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
@@ -49,6 +51,13 @@ export class ContentComponent implements OnInit {
           if (resp) {
             resp.contentSafe = this.sanitizer.bypassSecurityTrustHtml(resp.content);
             this.forum = resp;
+            // console.log(this.forum.content.length);
+            if (this.forum.videos.length>0) {
+              if (this.forum.videos.length==1 && this.forum.images.length == 1 && this.forum.content.length<= 500) {
+                this.isOnlyVideo = true;
+                
+              }
+            }
             // 读取相关的帖子
             this.httpService.getForumsByType(this.forum.type, "1").then(resp => {
               if (resp.success) {
@@ -222,7 +231,7 @@ export class ContentComponent implements OnInit {
       return;
     })
   }
-
+  
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
@@ -410,7 +419,7 @@ export class ContentComponent implements OnInit {
         });
       return;
     }
-    console.log(this.commentContent);
+    // console.log(this.commentContent);
     this.curComment.content = this.commentContent;
     this.curComment.author = window.localStorage.getItem("username");
     this.curComment.issueTime = new Date();

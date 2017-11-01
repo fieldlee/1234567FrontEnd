@@ -18,9 +18,11 @@
           <div class="panel panel-default">
             <div class="panel-heading font-bold">直播</div>
             <div class="panel-body" id="remoteVideosContainer">
-              <video id="receiveVideo" class="col-md-10 col-md-offset-1 video-js" controls preload="auto" style="height:360px" muted="muted"
+              <video id="receiveVideo" class="col-md-10 col-md-offset-1 video-js" controls preload="auto" style="height:480px" 
                 autoplay="true">
+                <!-- <source src="/api/web/streams" type='video/mp4'> -->
               </video>
+
               <canvas style="display:none"></canvas>
               <a id="link"></a>
             </div>
